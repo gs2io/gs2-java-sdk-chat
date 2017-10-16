@@ -42,11 +42,11 @@ public class Lobby implements Serializable {
 	/** 通知方式 */
 	String notificationType;
 
-	/** gs2-in-game-push-notification を選択した際の GS2-InGamePushNotification のゲームGRN */
-	String notificationGameId;
-
 	/** 作成日時(エポック秒) */
 	Integer createAt;
+
+	/** gs2-in-game-push-notification を選択した際の GS2-InGamePushNotification のゲームGRN */
+	String notificationGameName;
 
 	/** http/https を選択した際の通知先URL */
 	String notificationUrl;
@@ -134,24 +134,6 @@ public class Lobby implements Serializable {
 	}
 
 	/**
-	 * gs2-in-game-push-notification を選択した際の GS2-InGamePushNotification のゲームGRNを取得
-	 *
-	 * @return gs2-in-game-push-notification を選択した際の GS2-InGamePushNotification のゲームGRN
-	 */
-	public String getNotificationGameId() {
-		return notificationGameId;
-	}
-
-	/**
-	 * gs2-in-game-push-notification を選択した際の GS2-InGamePushNotification のゲームGRNを設定
-	 *
-	 * @param notificationGameId gs2-in-game-push-notification を選択した際の GS2-InGamePushNotification のゲームGRN
-	 */
-	public void setNotificationGameId(String notificationGameId) {
-		this.notificationGameId = notificationGameId;
-	}
-
-	/**
 	 * 作成日時(エポック秒)を取得
 	 *
 	 * @return 作成日時(エポック秒)
@@ -167,6 +149,24 @@ public class Lobby implements Serializable {
 	 */
 	public void setCreateAt(Integer createAt) {
 		this.createAt = createAt;
+	}
+
+	/**
+	 * gs2-in-game-push-notification を選択した際の GS2-InGamePushNotification のゲームGRNを取得
+	 *
+	 * @return gs2-in-game-push-notification を選択した際の GS2-InGamePushNotification のゲームGRN
+	 */
+	public String getNotificationGameName() {
+		return notificationGameName;
+	}
+
+	/**
+	 * gs2-in-game-push-notification を選択した際の GS2-InGamePushNotification のゲームGRNを設定
+	 *
+	 * @param notificationGameName gs2-in-game-push-notification を選択した際の GS2-InGamePushNotification のゲームGRN
+	 */
+	public void setNotificationGameName(String notificationGameName) {
+		this.notificationGameName = notificationGameName;
 	}
 
 	/**

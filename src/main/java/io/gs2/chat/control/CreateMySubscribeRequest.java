@@ -35,6 +35,12 @@ public class CreateMySubscribeRequest extends Gs2UserRequest<CreateMySubscribeRe
 	/** ルームID */
 	String roomId;
 
+	/** GS2-InGamePushNotification 使用時にオフライン転送を使用するか */
+	Boolean enableOfflineTransfer;
+
+	/** GS2-InGamePushNotification 使用時のモバイルプッシュ通知で使用する通知音 */
+	String offlineTransferSound;
+
 
 	/**
 	 * ロビーの名前を取得
@@ -91,6 +97,64 @@ public class CreateMySubscribeRequest extends Gs2UserRequest<CreateMySubscribeRe
 	 */
 	public CreateMySubscribeRequest withRoomId(String roomId) {
 		setRoomId(roomId);
+		return this;
+	}
+
+	/**
+	 * GS2-InGamePushNotification 使用時にオフライン転送を使用するかを取得
+	 *
+	 * @return GS2-InGamePushNotification 使用時にオフライン転送を使用するか
+	 */
+	public Boolean getEnableOfflineTransfer() {
+		return enableOfflineTransfer;
+	}
+
+	/**
+	 * GS2-InGamePushNotification 使用時にオフライン転送を使用するかを設定
+	 *
+	 * @param enableOfflineTransfer GS2-InGamePushNotification 使用時にオフライン転送を使用するか
+	 */
+	public void setEnableOfflineTransfer(Boolean enableOfflineTransfer) {
+		this.enableOfflineTransfer = enableOfflineTransfer;
+	}
+
+	/**
+	 * GS2-InGamePushNotification 使用時にオフライン転送を使用するかを設定
+	 *
+	 * @param enableOfflineTransfer GS2-InGamePushNotification 使用時にオフライン転送を使用するか
+	 * @return this
+	 */
+	public CreateMySubscribeRequest withEnableOfflineTransfer(Boolean enableOfflineTransfer) {
+		setEnableOfflineTransfer(enableOfflineTransfer);
+		return this;
+	}
+
+	/**
+	 * GS2-InGamePushNotification 使用時のモバイルプッシュ通知で使用する通知音を取得
+	 *
+	 * @return GS2-InGamePushNotification 使用時のモバイルプッシュ通知で使用する通知音
+	 */
+	public String getOfflineTransferSound() {
+		return offlineTransferSound;
+	}
+
+	/**
+	 * GS2-InGamePushNotification 使用時のモバイルプッシュ通知で使用する通知音を設定
+	 *
+	 * @param offlineTransferSound GS2-InGamePushNotification 使用時のモバイルプッシュ通知で使用する通知音
+	 */
+	public void setOfflineTransferSound(String offlineTransferSound) {
+		this.offlineTransferSound = offlineTransferSound;
+	}
+
+	/**
+	 * GS2-InGamePushNotification 使用時のモバイルプッシュ通知で使用する通知音を設定
+	 *
+	 * @param offlineTransferSound GS2-InGamePushNotification 使用時のモバイルプッシュ通知で使用する通知音
+	 * @return this
+	 */
+	public CreateMySubscribeRequest withOfflineTransferSound(String offlineTransferSound) {
+		setOfflineTransferSound(offlineTransferSound);
 		return this;
 	}
 

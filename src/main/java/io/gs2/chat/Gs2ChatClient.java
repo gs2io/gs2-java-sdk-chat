@@ -262,6 +262,8 @@ public class Gs2ChatClient extends AbstractGs2Client<Gs2ChatClient> {
 	public CreateMySubscribeResult createMySubscribe(CreateMySubscribeRequest request) {
 		ObjectNode body = JsonNodeFactory.instance.objectNode();
 
+		if(request.getEnableOfflineTransfer() != null) body.put("enableOfflineTransfer", request.getEnableOfflineTransfer());
+		if(request.getOfflineTransferSound() != null) body.put("offlineTransferSound", request.getOfflineTransferSound());
 		HttpPost post = createHttpPost(
 				Gs2Constant.ENDPOINT_HOST + "/lobby/" + (request.getLobbyName() == null ? "null" : EncodingUtil.urlEncode(request.getLobbyName())) + "/room/" + (request.getRoomId() == null ? "null" : EncodingUtil.urlEncode(request.getRoomId())) + "/subscribe",
 				credential,
@@ -518,8 +520,8 @@ public class Gs2ChatClient extends AbstractGs2Client<Gs2ChatClient> {
 				.put("notificationType", request.getNotificationType())
 				.put("serviceClass", request.getServiceClass());
 
-        if(request.getNotificationGameId() != null) body.put("notificationGameId", request.getNotificationGameId());
         if(request.getDescription() != null) body.put("description", request.getDescription());
+        if(request.getNotificationGameName() != null) body.put("notificationGameName", request.getNotificationGameName());
         if(request.getNotificationUrl() != null) body.put("notificationUrl", request.getNotificationUrl());
 		HttpPut put = createHttpPut(
 				Gs2Constant.ENDPOINT_HOST + "/lobby/" + (request.getLobbyName() == null ? "null" : EncodingUtil.urlEncode(request.getLobbyName())) + "",
@@ -645,7 +647,7 @@ public class Gs2ChatClient extends AbstractGs2Client<Gs2ChatClient> {
 				.put("serviceClass", request.getServiceClass())
 				.put("notificationType", request.getNotificationType());
 
-        if(request.getNotificationGameId() != null) body.put("notificationGameId", request.getNotificationGameId());
+        if(request.getNotificationGameName() != null) body.put("notificationGameName", request.getNotificationGameName());
         if(request.getNotificationUrl() != null) body.put("notificationUrl", request.getNotificationUrl());
         if(request.getDescription() != null) body.put("description", request.getDescription());
 		HttpPost post = createHttpPost(
@@ -702,6 +704,8 @@ public class Gs2ChatClient extends AbstractGs2Client<Gs2ChatClient> {
 	public CreateSubscribeResult createSubscribe(CreateSubscribeRequest request) {
 		ObjectNode body = JsonNodeFactory.instance.objectNode();
 
+		if(request.getEnableOfflineTransfer() != null) body.put("enableOfflineTransfer", request.getEnableOfflineTransfer());
+		if(request.getOfflineTransferSound() != null) body.put("offlineTransferSound", request.getOfflineTransferSound());
 		HttpPost post = createHttpPost(
 				Gs2Constant.ENDPOINT_HOST + "/lobby/" + (request.getLobbyName() == null ? "null" : EncodingUtil.urlEncode(request.getLobbyName())) + "/room/" + (request.getRoomId() == null ? "null" : EncodingUtil.urlEncode(request.getRoomId())) + "/user/" + (request.getUserId() == null ? "null" : EncodingUtil.urlEncode(request.getUserId())) + "/subscribe",
 				credential,

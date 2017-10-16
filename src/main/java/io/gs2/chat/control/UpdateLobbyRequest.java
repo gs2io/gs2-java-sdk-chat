@@ -36,14 +36,14 @@ public class UpdateLobbyRequest extends Gs2BasicRequest<UpdateLobbyRequest> {
 	/** 通知方式 */
 	String notificationType;
 
-	/** 通知先 GS2-InGamePushNotification の ゲームGRN */
-	String notificationGameId;
-
 	/** サービスクラス */
 	String serviceClass;
 
 	/** 説明文 */
 	String description;
+
+	/** 通知先 GS2-InGamePushNotification の ゲーム名 */
+	String notificationGameName;
 
 	/** 通知先URL */
 	String notificationUrl;
@@ -108,35 +108,6 @@ public class UpdateLobbyRequest extends Gs2BasicRequest<UpdateLobbyRequest> {
 	}
 
 	/**
-	 * 通知先 GS2-InGamePushNotification の ゲームGRNを取得
-	 *
-	 * @return 通知先 GS2-InGamePushNotification の ゲームGRN
-	 */
-	public String getNotificationGameId() {
-		return notificationGameId;
-	}
-
-	/**
-	 * 通知先 GS2-InGamePushNotification の ゲームGRNを設定
-	 *
-	 * @param notificationGameId 通知先 GS2-InGamePushNotification の ゲームGRN
-	 */
-	public void setNotificationGameId(String notificationGameId) {
-		this.notificationGameId = notificationGameId;
-	}
-
-	/**
-	 * 通知先 GS2-InGamePushNotification の ゲームGRNを設定
-	 *
-	 * @param notificationGameId 通知先 GS2-InGamePushNotification の ゲームGRN
-	 * @return this
-	 */
-	public UpdateLobbyRequest withNotificationGameId(String notificationGameId) {
-		setNotificationGameId(notificationGameId);
-		return this;
-	}
-
-	/**
 	 * サービスクラスを取得
 	 *
 	 * @return サービスクラス
@@ -191,6 +162,35 @@ public class UpdateLobbyRequest extends Gs2BasicRequest<UpdateLobbyRequest> {
 	 */
 	public UpdateLobbyRequest withDescription(String description) {
 		setDescription(description);
+		return this;
+	}
+
+	/**
+	 * 通知先 GS2-InGamePushNotification の ゲーム名を取得
+	 *
+	 * @return 通知先 GS2-InGamePushNotification の ゲーム名
+	 */
+	public String getNotificationGameName() {
+		return notificationGameName;
+	}
+
+	/**
+	 * 通知先 GS2-InGamePushNotification の ゲーム名を設定
+	 *
+	 * @param notificationGameName 通知先 GS2-InGamePushNotification の ゲーム名
+	 */
+	public void setNotificationGameName(String notificationGameName) {
+		this.notificationGameName = notificationGameName;
+	}
+
+	/**
+	 * 通知先 GS2-InGamePushNotification の ゲーム名を設定
+	 *
+	 * @param notificationGameName 通知先 GS2-InGamePushNotification の ゲーム名
+	 * @return this
+	 */
+	public UpdateLobbyRequest withNotificationGameName(String notificationGameName) {
+		setNotificationGameName(notificationGameName);
 		return this;
 	}
 

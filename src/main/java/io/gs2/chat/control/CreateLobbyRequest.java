@@ -30,11 +30,11 @@ public class CreateLobbyRequest extends Gs2BasicRequest<CreateLobbyRequest> {
 		public static final String FUNCTION = "CreateLobby";
 	}
 
-	/** 通知先 GS2-InGamePushNotification の ゲームGRN */
-	String notificationGameId;
-
 	/** ロビー名 */
 	String name;
+
+	/** 通知先 GS2-InGamePushNotification の ゲーム名 */
+	String notificationGameName;
 
 	/** 通知先URL */
 	String notificationUrl;
@@ -48,35 +48,6 @@ public class CreateLobbyRequest extends Gs2BasicRequest<CreateLobbyRequest> {
 	/** 説明文 */
 	String description;
 
-
-	/**
-	 * 通知先 GS2-InGamePushNotification の ゲームGRNを取得
-	 *
-	 * @return 通知先 GS2-InGamePushNotification の ゲームGRN
-	 */
-	public String getNotificationGameId() {
-		return notificationGameId;
-	}
-
-	/**
-	 * 通知先 GS2-InGamePushNotification の ゲームGRNを設定
-	 *
-	 * @param notificationGameId 通知先 GS2-InGamePushNotification の ゲームGRN
-	 */
-	public void setNotificationGameId(String notificationGameId) {
-		this.notificationGameId = notificationGameId;
-	}
-
-	/**
-	 * 通知先 GS2-InGamePushNotification の ゲームGRNを設定
-	 *
-	 * @param notificationGameId 通知先 GS2-InGamePushNotification の ゲームGRN
-	 * @return this
-	 */
-	public CreateLobbyRequest withNotificationGameId(String notificationGameId) {
-		setNotificationGameId(notificationGameId);
-		return this;
-	}
 
 	/**
 	 * ロビー名を取得
@@ -104,6 +75,35 @@ public class CreateLobbyRequest extends Gs2BasicRequest<CreateLobbyRequest> {
 	 */
 	public CreateLobbyRequest withName(String name) {
 		setName(name);
+		return this;
+	}
+
+	/**
+	 * 通知先 GS2-InGamePushNotification の ゲーム名を取得
+	 *
+	 * @return 通知先 GS2-InGamePushNotification の ゲーム名
+	 */
+	public String getNotificationGameName() {
+		return notificationGameName;
+	}
+
+	/**
+	 * 通知先 GS2-InGamePushNotification の ゲーム名を設定
+	 *
+	 * @param notificationGameName 通知先 GS2-InGamePushNotification の ゲーム名
+	 */
+	public void setNotificationGameName(String notificationGameName) {
+		this.notificationGameName = notificationGameName;
+	}
+
+	/**
+	 * 通知先 GS2-InGamePushNotification の ゲーム名を設定
+	 *
+	 * @param notificationGameName 通知先 GS2-InGamePushNotification の ゲーム名
+	 * @return this
+	 */
+	public CreateLobbyRequest withNotificationGameName(String notificationGameName) {
+		setNotificationGameName(notificationGameName);
 		return this;
 	}
 
