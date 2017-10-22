@@ -250,6 +250,60 @@ public class Gs2ChatClient extends AbstractGs2Client<Gs2ChatClient> {
 
 
 	/**
+	 * メッセージを送信します。<br>
+	 * <br>
+	 *
+	 * @param request リクエストパラメータ
+	 * @return 結果
+	 */
+	public SendMessageNoAuthResult sendMessageNoAuth(SendMessageNoAuthRequest request) {
+		ObjectNode body = JsonNodeFactory.instance.objectNode()
+				.put("message", request.getMessage());
+
+		if(request.getUserId() != null) body.put("userId", request.getUserId());
+		if(request.getMeta() != null) body.put("meta", request.getMeta());
+		HttpPost post = createHttpPost(
+				Gs2Constant.ENDPOINT_HOST + "/lobby/" + (request.getLobbyName() == null ? "null" : EncodingUtil.urlEncode(request.getLobbyName())) + "/room/" + (request.getRoomId() == null ? "null" : EncodingUtil.urlEncode(request.getRoomId())) + "/message/force",
+				credential,
+				ENDPOINT,
+				SendMessageNoAuthRequest.Constant.MODULE,
+				SendMessageNoAuthRequest.Constant.FUNCTION,
+				body.toString());
+
+		return doRequest(post, SendMessageNoAuthResult.class);
+	}
+
+
+	/**
+	 * メッセージの一覧を取得します。<br>
+	 * <br>
+	 *
+	 * @param request リクエストパラメータ
+	 * @return 結果
+	 */
+	public DescribeMessageNoAuthResult describeMessageNoAuth(DescribeMessageNoAuthRequest request) {
+		String url = Gs2Constant.ENDPOINT_HOST + "/lobby/" + (request.getLobbyName() == null ? "null" : EncodingUtil.urlEncode(request.getLobbyName())) + "/room/" + (request.getRoomId() == null ? "null" : EncodingUtil.urlEncode(request.getRoomId())) + "/message/force";
+
+		List<NameValuePair> queryString = new ArrayList<>();
+		if(request.getStartAt() != null) queryString.add(new BasicNameValuePair("startAt", String.valueOf(request.getStartAt())));
+		if(request.getLimit() != null) queryString.add(new BasicNameValuePair("limit", String.valueOf(request.getLimit())));
+
+
+		if(queryString.size() > 0) {
+			url += "?" + URLEncodedUtils.format(queryString, "UTF-8");
+		}
+		HttpGet get = createHttpGet(
+				url,
+				credential,
+				ENDPOINT,
+				DescribeMessageNoAuthRequest.Constant.MODULE,
+				DescribeMessageNoAuthRequest.Constant.FUNCTION);
+
+		return doRequest(get, DescribeMessageNoAuthResult.class);
+	}
+
+
+	/**
 	 * ルームを購読します。<br>
 	 * <br>
 	 * ルームを購読すると、ルームに対する新着メッセージを受信したときに通知を受けることが出来ます。<br>
