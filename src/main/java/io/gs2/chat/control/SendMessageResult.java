@@ -29,7 +29,7 @@ import io.gs2.chat.model.Message;
 public class SendMessageResult {
 
 	/** メッセージ */
-	Message item;
+	private Message item;
 
 
 	/**

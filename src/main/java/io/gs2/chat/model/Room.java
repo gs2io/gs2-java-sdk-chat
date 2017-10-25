@@ -31,16 +31,16 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 public class Room implements Serializable {
 
 	/** ルームID */
-	String roomId;
+	private String roomId;
 
 	/** メッセージの送受信にパスワードが必要か */
-	Boolean needPassword;
+	private Boolean needPassword;
 
 	/** 参加可能なユーザIDリスト */
-	List<String> allowUserIds;
+	private List<String> allowUserIds;
 
 	/** 作成日時(エポック秒) */
-	Integer createAt;
+	private Integer createAt;
 
 
 	/**

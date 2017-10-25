@@ -31,10 +31,10 @@ import io.gs2.chat.model.Lobby;
 public class DescribeLobbyResult {
 
 	/** 次のページを読み込むためのトークン */
-	String nextPageToken;
+	private String nextPageToken;
 
 	/** ロビー */
-	List<Lobby> items;
+	private List<Lobby> items;
 
 
 	/**

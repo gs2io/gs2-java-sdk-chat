@@ -31,22 +31,22 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 public class MessageLog implements Serializable {
 
 	/** 作成日時(エポック秒) */
-	Integer createAt;
+	private Integer createAt;
 
 	/** メッセージメタデータ */
-	String meta;
+	private String meta;
 
 	/** メッセージID */
-	String messageId;
+	private String messageId;
 
 	/** ルームID */
-	String roomId;
+	private String roomId;
 
 	/** メッセージテキスト */
-	String message;
+	private String message;
 
 	/** 発言者ユーザID */
-	String userId;
+	private String userId;
 
 
 	/**

@@ -31,34 +31,34 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 public class Lobby implements Serializable {
 
 	/** ロビーID */
-	String lobbyId;
+	private String lobbyId;
 
 	/** ゲーム名 */
-	String name;
+	private String name;
 
 	/** サービスクラス */
-	String serviceClass;
+	private String serviceClass;
 
 	/** 通知方式 */
-	String notificationType;
+	private String notificationType;
 
 	/** 作成日時(エポック秒) */
-	Integer createAt;
+	private Integer createAt;
 
 	/** gs2-in-game-push-notification を選択した際の GS2-InGamePushNotification のゲームGRN */
-	String notificationGameName;
+	private String notificationGameName;
 
 	/** http/https を選択した際の通知先URL */
-	String notificationUrl;
+	private String notificationUrl;
 
 	/** オーナーID */
-	String ownerId;
+	private String ownerId;
 
 	/** 最終更新日時(エポック秒) */
-	Integer updateAt;
+	private Integer updateAt;
 
 	/** 説明文 */
-	String description;
+	private String description;
 
 
 	/**

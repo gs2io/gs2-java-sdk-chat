@@ -31,17 +31,13 @@ public class DescribeRoomRequest extends Gs2BasicRequest<DescribeRoomRequest> {
 	}
 
 	/** ロビーの名前 */
-	String lobbyName;
+	private String lobbyName;
 
-	/** データの取得を開始する位置を指定するトークン
+	/** データの取得を開始する位置を指定するトークン */
+	private String pageToken;
 
-省略すると先頭から取得します */
-	String pageToken;
-
-	/** データの取得件数
-
-省略すると30件取得します */
-	Integer limit;
+	/** データの取得件数 */
+	private Integer limit;
 
 
 	/**
@@ -74,39 +70,27 @@ public class DescribeRoomRequest extends Gs2BasicRequest<DescribeRoomRequest> {
 	}
 
 	/**
-	 * データの取得を開始する位置を指定するトークン
-
-省略すると先頭から取得しますを取得
+	 * データの取得を開始する位置を指定するトークンを取得
 	 *
 	 * @return データの取得を開始する位置を指定するトークン
-
-省略すると先頭から取得します
 	 */
 	public String getPageToken() {
 		return pageToken;
 	}
 
 	/**
-	 * データの取得を開始する位置を指定するトークン
-
-省略すると先頭から取得しますを設定
+	 * データの取得を開始する位置を指定するトークンを設定
 	 *
 	 * @param pageToken データの取得を開始する位置を指定するトークン
-
-省略すると先頭から取得します
 	 */
 	public void setPageToken(String pageToken) {
 		this.pageToken = pageToken;
 	}
 
 	/**
-	 * データの取得を開始する位置を指定するトークン
-
-省略すると先頭から取得しますを設定
+	 * データの取得を開始する位置を指定するトークンを設定
 	 *
 	 * @param pageToken データの取得を開始する位置を指定するトークン
-
-省略すると先頭から取得します
 	 * @return this
 	 */
 	public DescribeRoomRequest withPageToken(String pageToken) {
@@ -115,39 +99,27 @@ public class DescribeRoomRequest extends Gs2BasicRequest<DescribeRoomRequest> {
 	}
 
 	/**
-	 * データの取得件数
-
-省略すると30件取得しますを取得
+	 * データの取得件数を取得
 	 *
 	 * @return データの取得件数
-
-省略すると30件取得します
 	 */
 	public Integer getLimit() {
 		return limit;
 	}
 
 	/**
-	 * データの取得件数
-
-省略すると30件取得しますを設定
+	 * データの取得件数を設定
 	 *
 	 * @param limit データの取得件数
-
-省略すると30件取得します
 	 */
 	public void setLimit(Integer limit) {
 		this.limit = limit;
 	}
 
 	/**
-	 * データの取得件数
-
-省略すると30件取得しますを設定
+	 * データの取得件数を設定
 	 *
 	 * @param limit データの取得件数
-
-省略すると30件取得します
 	 * @return this
 	 */
 	public DescribeRoomRequest withLimit(Integer limit) {

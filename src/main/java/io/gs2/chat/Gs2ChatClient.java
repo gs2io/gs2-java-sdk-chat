@@ -258,10 +258,10 @@ public class Gs2ChatClient extends AbstractGs2Client<Gs2ChatClient> {
 	 */
 	public SendMessageNoAuthResult sendMessageNoAuth(SendMessageNoAuthRequest request) {
 		ObjectNode body = JsonNodeFactory.instance.objectNode()
-				.put("message", request.getMessage());
+				.put("message", request.getMessage())
+				.put("userId", request.getUserId());
 
-		if(request.getUserId() != null) body.put("userId", request.getUserId());
-		if(request.getMeta() != null) body.put("meta", request.getMeta());
+        if(request.getMeta() != null) body.put("meta", request.getMeta());
 		HttpPost post = createHttpPost(
 				Gs2Constant.ENDPOINT_HOST + "/lobby/" + (request.getLobbyName() == null ? "null" : EncodingUtil.urlEncode(request.getLobbyName())) + "/room/" + (request.getRoomId() == null ? "null" : EncodingUtil.urlEncode(request.getRoomId())) + "/message/force",
 				credential,
@@ -282,11 +282,11 @@ public class Gs2ChatClient extends AbstractGs2Client<Gs2ChatClient> {
 	 * @return 結果
 	 */
 	public DescribeMessageNoAuthResult describeMessageNoAuth(DescribeMessageNoAuthRequest request) {
-		String url = Gs2Constant.ENDPOINT_HOST + "/lobby/" + (request.getLobbyName() == null ? "null" : EncodingUtil.urlEncode(request.getLobbyName())) + "/room/" + (request.getRoomId() == null ? "null" : EncodingUtil.urlEncode(request.getRoomId())) + "/message/force";
+	    String url = Gs2Constant.ENDPOINT_HOST + "/lobby/" + (request.getLobbyName() == null ? "null" : EncodingUtil.urlEncode(request.getLobbyName())) + "/room/" + (request.getRoomId() == null ? "null" : EncodingUtil.urlEncode(request.getRoomId())) + "/message/force";
 
-		List<NameValuePair> queryString = new ArrayList<>();
-		if(request.getStartAt() != null) queryString.add(new BasicNameValuePair("startAt", String.valueOf(request.getStartAt())));
-		if(request.getLimit() != null) queryString.add(new BasicNameValuePair("limit", String.valueOf(request.getLimit())));
+        List<NameValuePair> queryString = new ArrayList<>();
+        if(request.getStartAt() != null) queryString.add(new BasicNameValuePair("startAt", String.valueOf(request.getStartAt())));
+        if(request.getLimit() != null) queryString.add(new BasicNameValuePair("limit", String.valueOf(request.getLimit())));
 
 
 		if(queryString.size() > 0) {
@@ -316,8 +316,9 @@ public class Gs2ChatClient extends AbstractGs2Client<Gs2ChatClient> {
 	public CreateMySubscribeResult createMySubscribe(CreateMySubscribeRequest request) {
 		ObjectNode body = JsonNodeFactory.instance.objectNode();
 
-		if(request.getEnableOfflineTransfer() != null) body.put("enableOfflineTransfer", request.getEnableOfflineTransfer());
-		if(request.getOfflineTransferSound() != null) body.put("offlineTransferSound", request.getOfflineTransferSound());
+        if(request.getEnableOfflineTransfer() != null) body.put("enableOfflineTransfer", request.getEnableOfflineTransfer());
+        if(request.getPassword() != null) body.put("password", request.getPassword());
+        if(request.getOfflineTransferSound() != null) body.put("offlineTransferSound", request.getOfflineTransferSound());
 		HttpPost post = createHttpPost(
 				Gs2Constant.ENDPOINT_HOST + "/lobby/" + (request.getLobbyName() == null ? "null" : EncodingUtil.urlEncode(request.getLobbyName())) + "/room/" + (request.getRoomId() == null ? "null" : EncodingUtil.urlEncode(request.getRoomId())) + "/subscribe",
 				credential,
@@ -670,6 +671,10 @@ public class Gs2ChatClient extends AbstractGs2Client<Gs2ChatClient> {
 	 * http/https を設定した場合は、新しい発言があるたびに指定されたURLに通知を出します。<br>
 	 * 通知は以下のフォーマットで通知されます。<br>
 	 * {<br>
+	 *   "_gs2_service": "GS2-Chat#Receive",<br>
+	 *   "notificationUserIds": [<br>
+	 *     通知先ユーザID<br>
+	 *   ],<br>
 	 *   "roomId": 発言されたルームID,<br>
 	 *   "userId": 発言したユーザのユーザID,<br>
 	 *   "message": {<br>
@@ -682,6 +687,7 @@ public class Gs2ChatClient extends AbstractGs2Client<Gs2ChatClient> {
 	 * {<br>
 	 *   "subject": メッセージテキスト,<br>
 	 *   "body": {<br>
+	 *     "_gs2_service": "GS2-Chat#Receive",<br>
 	 *     "roomId": 発言されたルームID,<br>
 	 *     "userId": 発言したユーザのユーザID,<br>
 	 *     "message": {<br>
@@ -758,8 +764,9 @@ public class Gs2ChatClient extends AbstractGs2Client<Gs2ChatClient> {
 	public CreateSubscribeResult createSubscribe(CreateSubscribeRequest request) {
 		ObjectNode body = JsonNodeFactory.instance.objectNode();
 
-		if(request.getEnableOfflineTransfer() != null) body.put("enableOfflineTransfer", request.getEnableOfflineTransfer());
-		if(request.getOfflineTransferSound() != null) body.put("offlineTransferSound", request.getOfflineTransferSound());
+        if(request.getEnableOfflineTransfer() != null) body.put("enableOfflineTransfer", request.getEnableOfflineTransfer());
+        if(request.getPassword() != null) body.put("password", request.getPassword());
+        if(request.getOfflineTransferSound() != null) body.put("offlineTransferSound", request.getOfflineTransferSound());
 		HttpPost post = createHttpPost(
 				Gs2Constant.ENDPOINT_HOST + "/lobby/" + (request.getLobbyName() == null ? "null" : EncodingUtil.urlEncode(request.getLobbyName())) + "/room/" + (request.getRoomId() == null ? "null" : EncodingUtil.urlEncode(request.getRoomId())) + "/user/" + (request.getUserId() == null ? "null" : EncodingUtil.urlEncode(request.getUserId())) + "/subscribe",
 				credential,

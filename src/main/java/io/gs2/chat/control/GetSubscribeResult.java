@@ -29,7 +29,7 @@ import io.gs2.chat.model.Subscribe;
 public class GetSubscribeResult {
 
 	/** 購読 */
-	Subscribe item;
+	private Subscribe item;
 
 
 	/**

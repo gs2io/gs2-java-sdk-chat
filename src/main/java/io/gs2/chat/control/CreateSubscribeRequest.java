@@ -31,19 +31,22 @@ public class CreateSubscribeRequest extends Gs2BasicRequest<CreateSubscribeReque
 	}
 
 	/** ロビーの名前 */
-	String lobbyName;
+	private String lobbyName;
 
 	/** ルームID */
-	String roomId;
+	private String roomId;
 
 	/** ユーザID */
-	String userId;
+	private String userId;
 
 	/** GS2-InGamePushNotification 使用時にオフライン転送を使用するか */
-	Boolean enableOfflineTransfer;
+	private Boolean enableOfflineTransfer;
+
+	/** パスワード */
+	private String password;
 
 	/** GS2-InGamePushNotification 使用時のモバイルプッシュ通知で使用する通知音 */
-	String offlineTransferSound;
+	private String offlineTransferSound;
 
 
 	/**
@@ -159,6 +162,35 @@ public class CreateSubscribeRequest extends Gs2BasicRequest<CreateSubscribeReque
 	 */
 	public CreateSubscribeRequest withEnableOfflineTransfer(Boolean enableOfflineTransfer) {
 		setEnableOfflineTransfer(enableOfflineTransfer);
+		return this;
+	}
+
+	/**
+	 * パスワードを取得
+	 *
+	 * @return パスワード
+	 */
+	public String getPassword() {
+		return password;
+	}
+
+	/**
+	 * パスワードを設定
+	 *
+	 * @param password パスワード
+	 */
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	/**
+	 * パスワードを設定
+	 *
+	 * @param password パスワード
+	 * @return this
+	 */
+	public CreateSubscribeRequest withPassword(String password) {
+		setPassword(password);
 		return this;
 	}
 

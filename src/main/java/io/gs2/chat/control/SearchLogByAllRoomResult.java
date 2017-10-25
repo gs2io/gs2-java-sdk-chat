@@ -31,13 +31,13 @@ import io.gs2.chat.model.MessageLog;
 public class SearchLogByAllRoomResult {
 
 	/** 次のページを読み込むためのトークン */
-	String nextPageToken;
+	private String nextPageToken;
 
 	/** メッセージ */
-	List<MessageLog> items;
+	private List<MessageLog> items;
 
 	/** 検索時にスキャンしたログデータサイズ */
-	Integer scanSize;
+	private Integer scanSize;
 
 
 	/**

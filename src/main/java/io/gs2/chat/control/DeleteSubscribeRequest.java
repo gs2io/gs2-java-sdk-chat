@@ -31,13 +31,13 @@ public class DeleteSubscribeRequest extends Gs2BasicRequest<DeleteSubscribeReque
 	}
 
 	/** ロビーの名前 */
-	String lobbyName;
+	private String lobbyName;
 
 	/** ルームID */
-	String roomId;
+	private String roomId;
 
 	/** ユーザID */
-	String userId;
+	private String userId;
 
 
 	/**

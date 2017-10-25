@@ -30,21 +30,19 @@ public class DescribeMessageRequest extends Gs2UserRequest<DescribeMessageReques
 	}
 
 	/** ロビーの名前 */
-	String lobbyName;
+	private String lobbyName;
 
 	/** ルームID */
-	String roomId;
+	private String roomId;
 
 	/** パスワード */
-	String password;
+	private String password;
 
 	/** メッセージの取得を開始する日時(エポック秒) */
-	Integer startAt;
+	private Integer startAt;
 
-	/** データの取得件数
-
-省略すると100件取得します */
-	Integer limit;
+	/** データの取得件数 */
+	private Integer limit;
 
 
 	/**
@@ -164,39 +162,27 @@ public class DescribeMessageRequest extends Gs2UserRequest<DescribeMessageReques
 	}
 
 	/**
-	 * データの取得件数
-
-省略すると100件取得しますを取得
+	 * データの取得件数を取得
 	 *
 	 * @return データの取得件数
-
-省略すると100件取得します
 	 */
 	public Integer getLimit() {
 		return limit;
 	}
 
 	/**
-	 * データの取得件数
-
-省略すると100件取得しますを設定
+	 * データの取得件数を設定
 	 *
 	 * @param limit データの取得件数
-
-省略すると100件取得します
 	 */
 	public void setLimit(Integer limit) {
 		this.limit = limit;
 	}
 
 	/**
-	 * データの取得件数
-
-省略すると100件取得しますを設定
+	 * データの取得件数を設定
 	 *
 	 * @param limit データの取得件数
-
-省略すると100件取得します
 	 * @return this
 	 */
 	public DescribeMessageRequest withLimit(Integer limit) {

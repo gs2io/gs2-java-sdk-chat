@@ -27,7 +27,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 public class CheckEstimateScanByteByRoomResult {
 
 	/** 予想されるスキャンサイズ */
-	Integer scanSize;
+	private Integer scanSize;
 
 
 	/**

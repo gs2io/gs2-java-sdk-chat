@@ -31,10 +31,10 @@ import io.gs2.chat.model.Subscribe;
 public class DescribeSubscribeByRoomIdResult {
 
 	/** 次のページを読み込むためのトークン */
-	String nextPageToken;
+	private String nextPageToken;
 
 	/** 購読 */
-	List<Subscribe> items;
+	private List<Subscribe> items;
 
 
 	/**

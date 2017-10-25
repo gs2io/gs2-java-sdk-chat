@@ -31,16 +31,16 @@ public class CreateRoomRequest extends Gs2BasicRequest<CreateRoomRequest> {
 	}
 
 	/** ロビーの名前 */
-	String lobbyName;
+	private String lobbyName;
 
 	/** ルームID（指定しない場合は自動的に採番されます） */
-	String roomId;
+	private String roomId;
 
 	/** ルームにアクセスする際にパスワードを要求する場合は文字列を指定 */
-	String password;
+	private String password;
 
 	/** ルームへのアクセスを許可するユーザIDリストをカンマ区切りで指定 */
-	String allowUserIds;
+	private String allowUserIds;
 
 
 	/**

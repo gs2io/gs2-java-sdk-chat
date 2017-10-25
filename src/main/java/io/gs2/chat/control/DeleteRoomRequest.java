@@ -31,10 +31,10 @@ public class DeleteRoomRequest extends Gs2BasicRequest<DeleteRoomRequest> {
 	}
 
 	/** ロビーの名前 */
-	String lobbyName;
+	private String lobbyName;
 
 	/** ルームID */
-	String roomId;
+	private String roomId;
 
 
 	/**

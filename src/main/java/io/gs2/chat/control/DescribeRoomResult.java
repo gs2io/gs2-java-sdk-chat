@@ -31,10 +31,10 @@ import io.gs2.chat.model.Room;
 public class DescribeRoomResult {
 
 	/** 次のページを読み込むためのトークン */
-	String nextPageToken;
+	private String nextPageToken;
 
 	/** ルーム */
-	List<Room> items;
+	private List<Room> items;
 
 
 	/**

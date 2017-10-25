@@ -30,10 +30,10 @@ public class GetMySubscribeRequest extends Gs2UserRequest<GetMySubscribeRequest>
 	}
 
 	/** ロビーの名前 */
-	String lobbyName;
+	private String lobbyName;
 
 	/** ルームID */
-	String roomId;
+	private String roomId;
 
 
 	/**

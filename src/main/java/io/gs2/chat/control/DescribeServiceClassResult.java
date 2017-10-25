@@ -27,7 +27,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 public class DescribeServiceClassResult {
 
 	/** サービスクラス一覧 */
-	List<String> items;
+	private List<String> items;
 
 
 	/**

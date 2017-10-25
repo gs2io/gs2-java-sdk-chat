@@ -31,7 +31,7 @@ public class GetLobbyRequest extends Gs2BasicRequest<GetLobbyRequest> {
 	}
 
 	/** ロビーの名前 */
-	String lobbyName;
+	private String lobbyName;
 
 
 	/**

@@ -31,19 +31,19 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 public class Subscribe implements Serializable {
 
 	/** ルームID */
-	String roomId;
+	private String roomId;
 
 	/** オフライン転送を使用するか */
-	Boolean enableOfflineTransfer;
+	private Boolean enableOfflineTransfer;
 
 	/** ユーザID */
-	String userId;
+	private String userId;
 
 	/** 通知音 */
-	String offlineTransferSound;
+	private String offlineTransferSound;
 
 	/** 購読日時(エポック秒) */
-	Integer subscribeAt;
+	private Integer subscribeAt;
 
 
 	/**

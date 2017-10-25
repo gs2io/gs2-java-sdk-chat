@@ -31,13 +31,13 @@ public class GetSubscribeRequest extends Gs2BasicRequest<GetSubscribeRequest> {
 	}
 
 	/** ロビーの名前 */
-	String lobbyName;
+	private String lobbyName;
 
 	/** ルームID */
-	String roomId;
+	private String roomId;
 
 	/** ユーザID */
-	String userId;
+	private String userId;
 
 
 	/**

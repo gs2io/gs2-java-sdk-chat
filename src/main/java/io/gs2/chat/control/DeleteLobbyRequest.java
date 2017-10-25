@@ -31,7 +31,7 @@ public class DeleteLobbyRequest extends Gs2BasicRequest<DeleteLobbyRequest> {
 	}
 
 	/** ロビーの名前 */
-	String lobbyName;
+	private String lobbyName;
 
 
 	/**

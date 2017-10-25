@@ -31,7 +31,7 @@ import io.gs2.chat.model.Message;
 public class DescribeMessageResult {
 
 	/** メッセージ */
-	List<Message> items;
+	private List<Message> items;
 
 
 	/**

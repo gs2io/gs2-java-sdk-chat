@@ -27,7 +27,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 public class GetLobbyStatusResult {
 
 	/** ステータス */
-	String status;
+	private String status;
 
 
 	/**

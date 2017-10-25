@@ -31,10 +31,10 @@ public class GetRoomRequest extends Gs2BasicRequest<GetRoomRequest> {
 	}
 
 	/** ロビーの名前 */
-	String lobbyName;
+	private String lobbyName;
 
 	/** ルームID */
-	String roomId;
+	private String roomId;
 
 
 	/**

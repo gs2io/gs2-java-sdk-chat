@@ -18,10 +18,9 @@ jobs:
         run:
           name: OSの初期設定
           command: |
-            sudo apt-get update && sudo apt-get install gnupg2 python2.7
-            sudo -O curl -kL https://bootstrap.pypa.io/get-pip.py
-            python get-pip.py --user
-            pip install awscli --user
+            sudo curl -O https://bootstrap.pypa.io/get-pip.py
+            sudo python get-pip.py
+            sudo pip install awscli
       -
         run:
           name: Publishスクリプトを取得

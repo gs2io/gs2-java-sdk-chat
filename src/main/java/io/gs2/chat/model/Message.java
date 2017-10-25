@@ -31,19 +31,19 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 public class Message implements Serializable {
 
 	/** 発言者ユーザID */
-	String userId;
+	private String userId;
 
 	/** メッセージテキスト */
-	String message;
+	private String message;
 
 	/** 作成日時(エポック秒) */
-	Integer createAt;
+	private Integer createAt;
 
 	/** メッセージメタデータ */
-	String meta;
+	private String meta;
 
 	/** メッセージID */
-	String messageId;
+	private String messageId;
 
 
 	/**

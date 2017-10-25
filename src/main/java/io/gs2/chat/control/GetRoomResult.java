@@ -29,7 +29,7 @@ import io.gs2.chat.model.Room;
 public class GetRoomResult {
 
 	/** ルーム */
-	Room item;
+	private Room item;
 
 
 	/**

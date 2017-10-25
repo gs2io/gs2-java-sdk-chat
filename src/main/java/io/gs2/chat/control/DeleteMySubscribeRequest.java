@@ -30,10 +30,10 @@ public class DeleteMySubscribeRequest extends Gs2UserRequest<DeleteMySubscribeRe
 	}
 
 	/** ロビーの名前 */
-	String lobbyName;
+	private String lobbyName;
 
 	/** ルームID */
-	String roomId;
+	private String roomId;
 
 
 	/**

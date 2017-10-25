@@ -30,19 +30,19 @@ public class SendMessageRequest extends Gs2UserRequest<SendMessageRequest> {
 	}
 
 	/** ロビーの名前 */
-	String lobbyName;
+	private String lobbyName;
 
 	/** ルームID */
-	String roomId;
+	private String roomId;
 
 	/** メッセージテキスト */
-	String message;
+	private String message;
 
 	/** パスワード */
-	String password;
+	private String password;
 
 	/** メッセージメタデータ */
-	String meta;
+	private String meta;
 
 
 	/**

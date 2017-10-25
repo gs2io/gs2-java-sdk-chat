@@ -31,19 +31,19 @@ public class SendMessageNoAuthRequest extends Gs2BasicRequest<SendMessageNoAuthR
 	}
 
 	/** ロビーの名前 */
-	String lobbyName;
+	private String lobbyName;
 
 	/** ルームID */
-	String roomId;
+	private String roomId;
 
 	/** メッセージテキスト */
-	String message;
+	private String message;
 
 	/** メッセージメタデータ */
-	String meta;
+	private String meta;
 
 	/** ユーザID */
-	String userId;
+	private String userId;
 
 
 	/**

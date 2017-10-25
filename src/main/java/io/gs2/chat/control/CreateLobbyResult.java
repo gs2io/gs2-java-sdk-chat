@@ -29,7 +29,7 @@ import io.gs2.chat.model.Lobby;
 public class CreateLobbyResult {
 
 	/** ロビー */
-	Lobby item;
+	private Lobby item;
 
 
 	/**

@@ -31,22 +31,22 @@ public class CreateLobbyRequest extends Gs2BasicRequest<CreateLobbyRequest> {
 	}
 
 	/** ロビー名 */
-	String name;
+	private String name;
 
 	/** 通知先 GS2-InGamePushNotification の ゲーム名 */
-	String notificationGameName;
+	private String notificationGameName;
 
 	/** 通知先URL */
-	String notificationUrl;
+	private String notificationUrl;
 
 	/** サービスクラス */
-	String serviceClass;
+	private String serviceClass;
 
 	/** 通知方式 */
-	String notificationType;
+	private String notificationType;
 
 	/** 説明文 */
-	String description;
+	private String description;
 
 
 	/**
