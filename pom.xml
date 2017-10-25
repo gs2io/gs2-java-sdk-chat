@@ -22,9 +22,9 @@
         </dependency>
     </dependencies>
 
-    <name>Game Server Services GS2-InGamePushNotification SDK for Java</name>
+    <name>Game Server Services GS2-Chat SDK for Java</name>
     <url>https://gs2.io/</url>
-    <description>Game Server Services GS2-InGamePushNotification SDK for Java</description>
+    <description>Game Server Services GS2-Chat SDK for Java</description>
 
     <licenses>
         <license>
