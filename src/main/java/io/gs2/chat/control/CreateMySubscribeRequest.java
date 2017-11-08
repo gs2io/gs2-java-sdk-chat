@@ -16,6 +16,8 @@
 
 package io.gs2.chat.control;
 
+import org.json.JSONObject;
+import java.util.List;
 import io.gs2.chat.Gs2Chat;
 import io.gs2.control.Gs2UserRequest;
 

@@ -16,13 +16,10 @@
 
 package io.gs2.chat.control;
 
+import org.json.JSONObject;
 import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
-import java.util.List;
-
-import io.gs2.chat.model.MessageLog;
-
+import io.gs2.chat.model.*;
 
 /**
  * @author Game Server Services, Inc.
