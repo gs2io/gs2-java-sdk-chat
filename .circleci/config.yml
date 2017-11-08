@@ -18,6 +18,7 @@ jobs:
         run:
           name: OSの初期設定
           command: |
+            sudo apt-get install gnupg2
             sudo curl -O https://bootstrap.pypa.io/get-pip.py
             sudo python get-pip.py
             sudo pip install awscli
@@ -44,3 +45,11 @@ jobs:
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
               ~/publish-${PUBLISH_VERSION}/java/publish_maven.sh ~/publish-${PUBLISH_VERSION}/java/
             fi
+      -
+        run:
+          name: javadocファイルをコピー
+          command: |
+            cp ./target/*-javadoc.jar $CIRCLE_ARTIFACTS
+      -
+        store_test_results:
+          path: $CIRCLE_ARTIFACTS
