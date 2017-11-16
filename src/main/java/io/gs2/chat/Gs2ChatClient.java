@@ -66,7 +66,9 @@ public class Gs2ChatClient extends AbstractGs2Client<Gs2ChatClient> {
 	 * <br>
 	 *
 	 * @param request リクエストパラメータ
+
 	 * @return 結果
+
 	 */
 
 	public CheckEstimateScanByteByAllRoomResult checkEstimateScanByteByAllRoom(CheckEstimateScanByteByAllRoomRequest request) {
@@ -109,7 +111,9 @@ public class Gs2ChatClient extends AbstractGs2Client<Gs2ChatClient> {
 	 * <br>
 	 *
 	 * @param request リクエストパラメータ
+
 	 * @return 結果
+
 	 */
 
 	public CheckEstimateScanByteByRoomResult checkEstimateScanByteByRoom(CheckEstimateScanByteByRoomRequest request) {
@@ -180,19 +184,31 @@ public class Gs2ChatClient extends AbstractGs2Client<Gs2ChatClient> {
 	 * <br>
 	 *
 	 * @param request リクエストパラメータ
+
 	 * @return 結果
+
 	 */
 
 	public CreateLobbyResult createLobby(CreateLobbyRequest request) {
 
 		ObjectNode body = JsonNodeFactory.instance.objectNode()
-				.put("name", request.getName())
 				.put("serviceClass", request.getServiceClass())
-				.put("notificationType", request.getNotificationType());
+				.put("notificationType", request.getNotificationType())
+				.put("name", request.getName());
 
+        if(request.getDescription() != null) body.put("description", request.getDescription());
+        if(request.getDeleteRoomTriggerScript() != null) body.put("deleteRoomTriggerScript", request.getDeleteRoomTriggerScript());
+        if(request.getCreateSubscribeDoneTriggerScript() != null) body.put("createSubscribeDoneTriggerScript", request.getCreateSubscribeDoneTriggerScript());
+        if(request.getDeleteRoomDoneTriggerScript() != null) body.put("deleteRoomDoneTriggerScript", request.getDeleteRoomDoneTriggerScript());
+        if(request.getSendMessageTriggerScript() != null) body.put("sendMessageTriggerScript", request.getSendMessageTriggerScript());
+        if(request.getCreateSubscribeTriggerScript() != null) body.put("createSubscribeTriggerScript", request.getCreateSubscribeTriggerScript());
+        if(request.getDeleteSubscribeTriggerScript() != null) body.put("deleteSubscribeTriggerScript", request.getDeleteSubscribeTriggerScript());
+        if(request.getSendMessageDoneTriggerScript() != null) body.put("sendMessageDoneTriggerScript", request.getSendMessageDoneTriggerScript());
+        if(request.getDeleteSubscribeDoneTriggerScript() != null) body.put("deleteSubscribeDoneTriggerScript", request.getDeleteSubscribeDoneTriggerScript());
+        if(request.getCreateRoomDoneTriggerScript() != null) body.put("createRoomDoneTriggerScript", request.getCreateRoomDoneTriggerScript());
         if(request.getNotificationGameName() != null) body.put("notificationGameName", request.getNotificationGameName());
         if(request.getNotificationUrl() != null) body.put("notificationUrl", request.getNotificationUrl());
-        if(request.getDescription() != null) body.put("description", request.getDescription());
+        if(request.getCreateRoomTriggerScript() != null) body.put("createRoomTriggerScript", request.getCreateRoomTriggerScript());
 		HttpPost post = createHttpPost(
 				Gs2Constant.ENDPOINT_HOST + "/lobby",
 				credential,
@@ -215,7 +231,9 @@ public class Gs2ChatClient extends AbstractGs2Client<Gs2ChatClient> {
 	 * <br>
 	 *
 	 * @param request リクエストパラメータ
+
 	 * @return 結果
+
 	 */
 
 	public CreateMySubscribeResult createMySubscribe(CreateMySubscribeRequest request) {
@@ -261,7 +279,9 @@ public class Gs2ChatClient extends AbstractGs2Client<Gs2ChatClient> {
 	 * <br>
 	 *
 	 * @param request リクエストパラメータ
+
 	 * @return 結果
+
 	 */
 
 	public CreateRoomResult createRoom(CreateRoomRequest request) {
@@ -293,7 +313,9 @@ public class Gs2ChatClient extends AbstractGs2Client<Gs2ChatClient> {
 	 * <br>
 	 *
 	 * @param request リクエストパラメータ
+
 	 * @return 結果
+
 	 */
 
 	public CreateSubscribeResult createSubscribe(CreateSubscribeRequest request) {
@@ -322,6 +344,7 @@ public class Gs2ChatClient extends AbstractGs2Client<Gs2ChatClient> {
 	 * <br>
 	 *
 	 * @param request リクエストパラメータ
+
 	 */
 
 	public void deleteLobby(DeleteLobbyRequest request) {
@@ -348,6 +371,7 @@ public class Gs2ChatClient extends AbstractGs2Client<Gs2ChatClient> {
 	 * <br>
 	 *
 	 * @param request リクエストパラメータ
+
 	 */
 
 	public void deleteMySubscribe(DeleteMySubscribeRequest request) {
@@ -375,6 +399,7 @@ public class Gs2ChatClient extends AbstractGs2Client<Gs2ChatClient> {
 	 * <br>
 	 *
 	 * @param request リクエストパラメータ
+
 	 */
 
 	public void deleteRoom(DeleteRoomRequest request) {
@@ -401,6 +426,7 @@ public class Gs2ChatClient extends AbstractGs2Client<Gs2ChatClient> {
 	 * <br>
 	 *
 	 * @param request リクエストパラメータ
+
 	 */
 
 	public void deleteSubscribe(DeleteSubscribeRequest request) {
@@ -427,7 +453,9 @@ public class Gs2ChatClient extends AbstractGs2Client<Gs2ChatClient> {
 	 * <br>
 	 *
 	 * @param request リクエストパラメータ
+
 	 * @return 結果
+
 	 */
 
 	public DescribeLobbyResult describeLobby(DescribeLobbyRequest request) {
@@ -460,7 +488,9 @@ public class Gs2ChatClient extends AbstractGs2Client<Gs2ChatClient> {
 	 * <br>
 	 *
 	 * @param request リクエストパラメータ
+
 	 * @return 結果
+
 	 */
 
 	public DescribeMessageResult describeMessage(DescribeMessageRequest request) {
@@ -495,7 +525,9 @@ public class Gs2ChatClient extends AbstractGs2Client<Gs2ChatClient> {
 	 * <br>
 	 *
 	 * @param request リクエストパラメータ
+
 	 * @return 結果
+
 	 */
 
 	public DescribeMessageNoAuthResult describeMessageNoAuth(DescribeMessageNoAuthRequest request) {
@@ -528,7 +560,9 @@ public class Gs2ChatClient extends AbstractGs2Client<Gs2ChatClient> {
 	 * <br>
 	 *
 	 * @param request リクエストパラメータ
+
 	 * @return 結果
+
 	 */
 
 	public DescribeMySubscribeResult describeMySubscribe(DescribeMySubscribeRequest request) {
@@ -562,7 +596,9 @@ public class Gs2ChatClient extends AbstractGs2Client<Gs2ChatClient> {
 	 * <br>
 	 *
 	 * @param request リクエストパラメータ
+
 	 * @return 結果
+
 	 */
 
 	public DescribeRoomResult describeRoom(DescribeRoomRequest request) {
@@ -595,7 +631,9 @@ public class Gs2ChatClient extends AbstractGs2Client<Gs2ChatClient> {
 	 * <br>
 	 *
 	 * @param request リクエストパラメータ
+
 	 * @return 結果
+
 	 */
 
 	public DescribeServiceClassResult describeServiceClass(DescribeServiceClassRequest request) {
@@ -622,7 +660,9 @@ public class Gs2ChatClient extends AbstractGs2Client<Gs2ChatClient> {
 	 * <br>
 	 *
 	 * @param request リクエストパラメータ
+
 	 * @return 結果
+
 	 */
 
 	public DescribeSubscribeByRoomIdResult describeSubscribeByRoomId(DescribeSubscribeByRoomIdRequest request) {
@@ -655,7 +695,9 @@ public class Gs2ChatClient extends AbstractGs2Client<Gs2ChatClient> {
 	 * <br>
 	 *
 	 * @param request リクエストパラメータ
+
 	 * @return 結果
+
 	 */
 
 	public DescribeSubscribeByUserIdResult describeSubscribeByUserId(DescribeSubscribeByUserIdRequest request) {
@@ -688,7 +730,9 @@ public class Gs2ChatClient extends AbstractGs2Client<Gs2ChatClient> {
 	 * <br>
 	 *
 	 * @param request リクエストパラメータ
+
 	 * @return 結果
+
 	 */
 
 	public GetLobbyResult getLobby(GetLobbyRequest request) {
@@ -715,7 +759,9 @@ public class Gs2ChatClient extends AbstractGs2Client<Gs2ChatClient> {
 	 * <br>
 	 *
 	 * @param request リクエストパラメータ
+
 	 * @return 結果
+
 	 */
 
 	public GetLobbyStatusResult getLobbyStatus(GetLobbyStatusRequest request) {
@@ -742,7 +788,9 @@ public class Gs2ChatClient extends AbstractGs2Client<Gs2ChatClient> {
 	 * <br>
 	 *
 	 * @param request リクエストパラメータ
+
 	 * @return 結果
+
 	 */
 
 	public GetMySubscribeResult getMySubscribe(GetMySubscribeRequest request) {
@@ -770,7 +818,9 @@ public class Gs2ChatClient extends AbstractGs2Client<Gs2ChatClient> {
 	 * <br>
 	 *
 	 * @param request リクエストパラメータ
+
 	 * @return 結果
+
 	 */
 
 	public GetRoomResult getRoom(GetRoomRequest request) {
@@ -797,7 +847,9 @@ public class Gs2ChatClient extends AbstractGs2Client<Gs2ChatClient> {
 	 * <br>
 	 *
 	 * @param request リクエストパラメータ
+
 	 * @return 結果
+
 	 */
 
 	public GetSubscribeResult getSubscribe(GetSubscribeRequest request) {
@@ -840,7 +892,9 @@ public class Gs2ChatClient extends AbstractGs2Client<Gs2ChatClient> {
 	 * <br>
 	 *
 	 * @param request リクエストパラメータ
+
 	 * @return 結果
+
 	 */
 
 	public SearchLogByAllRoomResult searchLogByAllRoom(SearchLogByAllRoomRequest request) {
@@ -893,7 +947,9 @@ public class Gs2ChatClient extends AbstractGs2Client<Gs2ChatClient> {
 	 * <br>
 	 *
 	 * @param request リクエストパラメータ
+
 	 * @return 結果
+
 	 */
 
 	public SearchLogByRoomResult searchLogByRoom(SearchLogByRoomRequest request) {
@@ -931,7 +987,9 @@ public class Gs2ChatClient extends AbstractGs2Client<Gs2ChatClient> {
 	 * <br>
 	 *
 	 * @param request リクエストパラメータ
+
 	 * @return 結果
+
 	 */
 
 	public SendMessageResult sendMessage(SendMessageRequest request) {
@@ -961,7 +1019,9 @@ public class Gs2ChatClient extends AbstractGs2Client<Gs2ChatClient> {
 	 * <br>
 	 *
 	 * @param request リクエストパラメータ
+
 	 * @return 結果
+
 	 */
 
 	public SendMessageNoAuthResult sendMessageNoAuth(SendMessageNoAuthRequest request) {
@@ -990,18 +1050,30 @@ public class Gs2ChatClient extends AbstractGs2Client<Gs2ChatClient> {
 	 * <br>
 	 *
 	 * @param request リクエストパラメータ
+
 	 * @return 結果
+
 	 */
 
 	public UpdateLobbyResult updateLobby(UpdateLobbyRequest request) {
 
 		ObjectNode body = JsonNodeFactory.instance.objectNode()
-				.put("notificationType", request.getNotificationType())
-				.put("serviceClass", request.getServiceClass());
+				.put("serviceClass", request.getServiceClass())
+				.put("notificationType", request.getNotificationType());
 
+        if(request.getDeleteSubscribeTriggerScript() != null) body.put("deleteSubscribeTriggerScript", request.getDeleteSubscribeTriggerScript());
+        if(request.getSendMessageDoneTriggerScript() != null) body.put("sendMessageDoneTriggerScript", request.getSendMessageDoneTriggerScript());
         if(request.getDescription() != null) body.put("description", request.getDescription());
+        if(request.getDeleteRoomTriggerScript() != null) body.put("deleteRoomTriggerScript", request.getDeleteRoomTriggerScript());
+        if(request.getCreateSubscribeDoneTriggerScript() != null) body.put("createSubscribeDoneTriggerScript", request.getCreateSubscribeDoneTriggerScript());
+        if(request.getDeleteRoomDoneTriggerScript() != null) body.put("deleteRoomDoneTriggerScript", request.getDeleteRoomDoneTriggerScript());
+        if(request.getSendMessageTriggerScript() != null) body.put("sendMessageTriggerScript", request.getSendMessageTriggerScript());
+        if(request.getDeleteSubscribeDoneTriggerScript() != null) body.put("deleteSubscribeDoneTriggerScript", request.getDeleteSubscribeDoneTriggerScript());
+        if(request.getCreateRoomDoneTriggerScript() != null) body.put("createRoomDoneTriggerScript", request.getCreateRoomDoneTriggerScript());
         if(request.getNotificationGameName() != null) body.put("notificationGameName", request.getNotificationGameName());
         if(request.getNotificationUrl() != null) body.put("notificationUrl", request.getNotificationUrl());
+        if(request.getCreateRoomTriggerScript() != null) body.put("createRoomTriggerScript", request.getCreateRoomTriggerScript());
+        if(request.getCreateSubscribeTriggerScript() != null) body.put("createSubscribeTriggerScript", request.getCreateSubscribeTriggerScript());
 		HttpPut put = createHttpPut(
 				Gs2Constant.ENDPOINT_HOST + "/lobby/" + (request.getLobbyName() == null ? "null" : request.getLobbyName()) + "",
 				credential,

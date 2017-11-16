@@ -31,8 +31,44 @@ public class CreateLobbyRequest extends Gs2BasicRequest<CreateLobbyRequest> {
 		public static final String FUNCTION = "CreateLobby";
 	}
 
+	/** 説明文 */
+	private String description;
+
+	/** ルーム削除時 に実行されるGS2-Script */
+	private String deleteRoomTriggerScript;
+
+	/** ルーム購読完了時 に実行されるGS2-Script */
+	private String createSubscribeDoneTriggerScript;
+
+	/** ルーム削除完了時 に実行されるGS2-Script */
+	private String deleteRoomDoneTriggerScript;
+
+	/** サービスクラス */
+	private String serviceClass;
+
+	/** メッセージ送信時 に実行されるGS2-Script */
+	private String sendMessageTriggerScript;
+
+	/** 通知方式 */
+	private String notificationType;
+
+	/** ルーム購読時 に実行されるGS2-Script */
+	private String createSubscribeTriggerScript;
+
+	/** ルーム購読解除時 に実行されるGS2-Script */
+	private String deleteSubscribeTriggerScript;
+
+	/** メッセージ送信完了時 に実行されるGS2-Script */
+	private String sendMessageDoneTriggerScript;
+
 	/** ロビー名 */
 	private String name;
+
+	/** ルーム購読解除完了時 に実行されるGS2-Script */
+	private String deleteSubscribeDoneTriggerScript;
+
+	/** ルーム作成完了時 に実行されるGS2-Script */
+	private String createRoomDoneTriggerScript;
 
 	/** 通知先 GS2-InGamePushNotification の ゲーム名 */
 	private String notificationGameName;
@@ -40,15 +76,299 @@ public class CreateLobbyRequest extends Gs2BasicRequest<CreateLobbyRequest> {
 	/** 通知先URL */
 	private String notificationUrl;
 
-	/** サービスクラス */
-	private String serviceClass;
+	/** ルーム作成時 に実行されるGS2-Script */
+	private String createRoomTriggerScript;
 
-	/** 通知方式 */
-	private String notificationType;
 
-	/** 説明文 */
-	private String description;
+	/**
+	 * 説明文を取得
+	 *
+	 * @return 説明文
+	 */
+	public String getDescription() {
+		return description;
+	}
 
+	/**
+	 * 説明文を設定
+	 *
+	 * @param description 説明文
+	 */
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	/**
+	 * 説明文を設定
+	 *
+	 * @param description 説明文
+	 * @return this
+	 */
+	public CreateLobbyRequest withDescription(String description) {
+		setDescription(description);
+		return this;
+	}
+
+	/**
+	 * ルーム削除時 に実行されるGS2-Scriptを取得
+	 *
+	 * @return ルーム削除時 に実行されるGS2-Script
+	 */
+	public String getDeleteRoomTriggerScript() {
+		return deleteRoomTriggerScript;
+	}
+
+	/**
+	 * ルーム削除時 に実行されるGS2-Scriptを設定
+	 *
+	 * @param deleteRoomTriggerScript ルーム削除時 に実行されるGS2-Script
+	 */
+	public void setDeleteRoomTriggerScript(String deleteRoomTriggerScript) {
+		this.deleteRoomTriggerScript = deleteRoomTriggerScript;
+	}
+
+	/**
+	 * ルーム削除時 に実行されるGS2-Scriptを設定
+	 *
+	 * @param deleteRoomTriggerScript ルーム削除時 に実行されるGS2-Script
+	 * @return this
+	 */
+	public CreateLobbyRequest withDeleteRoomTriggerScript(String deleteRoomTriggerScript) {
+		setDeleteRoomTriggerScript(deleteRoomTriggerScript);
+		return this;
+	}
+
+	/**
+	 * ルーム購読完了時 に実行されるGS2-Scriptを取得
+	 *
+	 * @return ルーム購読完了時 に実行されるGS2-Script
+	 */
+	public String getCreateSubscribeDoneTriggerScript() {
+		return createSubscribeDoneTriggerScript;
+	}
+
+	/**
+	 * ルーム購読完了時 に実行されるGS2-Scriptを設定
+	 *
+	 * @param createSubscribeDoneTriggerScript ルーム購読完了時 に実行されるGS2-Script
+	 */
+	public void setCreateSubscribeDoneTriggerScript(String createSubscribeDoneTriggerScript) {
+		this.createSubscribeDoneTriggerScript = createSubscribeDoneTriggerScript;
+	}
+
+	/**
+	 * ルーム購読完了時 に実行されるGS2-Scriptを設定
+	 *
+	 * @param createSubscribeDoneTriggerScript ルーム購読完了時 に実行されるGS2-Script
+	 * @return this
+	 */
+	public CreateLobbyRequest withCreateSubscribeDoneTriggerScript(String createSubscribeDoneTriggerScript) {
+		setCreateSubscribeDoneTriggerScript(createSubscribeDoneTriggerScript);
+		return this;
+	}
+
+	/**
+	 * ルーム削除完了時 に実行されるGS2-Scriptを取得
+	 *
+	 * @return ルーム削除完了時 に実行されるGS2-Script
+	 */
+	public String getDeleteRoomDoneTriggerScript() {
+		return deleteRoomDoneTriggerScript;
+	}
+
+	/**
+	 * ルーム削除完了時 に実行されるGS2-Scriptを設定
+	 *
+	 * @param deleteRoomDoneTriggerScript ルーム削除完了時 に実行されるGS2-Script
+	 */
+	public void setDeleteRoomDoneTriggerScript(String deleteRoomDoneTriggerScript) {
+		this.deleteRoomDoneTriggerScript = deleteRoomDoneTriggerScript;
+	}
+
+	/**
+	 * ルーム削除完了時 に実行されるGS2-Scriptを設定
+	 *
+	 * @param deleteRoomDoneTriggerScript ルーム削除完了時 に実行されるGS2-Script
+	 * @return this
+	 */
+	public CreateLobbyRequest withDeleteRoomDoneTriggerScript(String deleteRoomDoneTriggerScript) {
+		setDeleteRoomDoneTriggerScript(deleteRoomDoneTriggerScript);
+		return this;
+	}
+
+	/**
+	 * サービスクラスを取得
+	 *
+	 * @return サービスクラス
+	 */
+	public String getServiceClass() {
+		return serviceClass;
+	}
+
+	/**
+	 * サービスクラスを設定
+	 *
+	 * @param serviceClass サービスクラス
+	 */
+	public void setServiceClass(String serviceClass) {
+		this.serviceClass = serviceClass;
+	}
+
+	/**
+	 * サービスクラスを設定
+	 *
+	 * @param serviceClass サービスクラス
+	 * @return this
+	 */
+	public CreateLobbyRequest withServiceClass(String serviceClass) {
+		setServiceClass(serviceClass);
+		return this;
+	}
+
+	/**
+	 * メッセージ送信時 に実行されるGS2-Scriptを取得
+	 *
+	 * @return メッセージ送信時 に実行されるGS2-Script
+	 */
+	public String getSendMessageTriggerScript() {
+		return sendMessageTriggerScript;
+	}
+
+	/**
+	 * メッセージ送信時 に実行されるGS2-Scriptを設定
+	 *
+	 * @param sendMessageTriggerScript メッセージ送信時 に実行されるGS2-Script
+	 */
+	public void setSendMessageTriggerScript(String sendMessageTriggerScript) {
+		this.sendMessageTriggerScript = sendMessageTriggerScript;
+	}
+
+	/**
+	 * メッセージ送信時 に実行されるGS2-Scriptを設定
+	 *
+	 * @param sendMessageTriggerScript メッセージ送信時 に実行されるGS2-Script
+	 * @return this
+	 */
+	public CreateLobbyRequest withSendMessageTriggerScript(String sendMessageTriggerScript) {
+		setSendMessageTriggerScript(sendMessageTriggerScript);
+		return this;
+	}
+
+	/**
+	 * 通知方式を取得
+	 *
+	 * @return 通知方式
+	 */
+	public String getNotificationType() {
+		return notificationType;
+	}
+
+	/**
+	 * 通知方式を設定
+	 *
+	 * @param notificationType 通知方式
+	 */
+	public void setNotificationType(String notificationType) {
+		this.notificationType = notificationType;
+	}
+
+	/**
+	 * 通知方式を設定
+	 *
+	 * @param notificationType 通知方式
+	 * @return this
+	 */
+	public CreateLobbyRequest withNotificationType(String notificationType) {
+		setNotificationType(notificationType);
+		return this;
+	}
+
+	/**
+	 * ルーム購読時 に実行されるGS2-Scriptを取得
+	 *
+	 * @return ルーム購読時 に実行されるGS2-Script
+	 */
+	public String getCreateSubscribeTriggerScript() {
+		return createSubscribeTriggerScript;
+	}
+
+	/**
+	 * ルーム購読時 に実行されるGS2-Scriptを設定
+	 *
+	 * @param createSubscribeTriggerScript ルーム購読時 に実行されるGS2-Script
+	 */
+	public void setCreateSubscribeTriggerScript(String createSubscribeTriggerScript) {
+		this.createSubscribeTriggerScript = createSubscribeTriggerScript;
+	}
+
+	/**
+	 * ルーム購読時 に実行されるGS2-Scriptを設定
+	 *
+	 * @param createSubscribeTriggerScript ルーム購読時 に実行されるGS2-Script
+	 * @return this
+	 */
+	public CreateLobbyRequest withCreateSubscribeTriggerScript(String createSubscribeTriggerScript) {
+		setCreateSubscribeTriggerScript(createSubscribeTriggerScript);
+		return this;
+	}
+
+	/**
+	 * ルーム購読解除時 に実行されるGS2-Scriptを取得
+	 *
+	 * @return ルーム購読解除時 に実行されるGS2-Script
+	 */
+	public String getDeleteSubscribeTriggerScript() {
+		return deleteSubscribeTriggerScript;
+	}
+
+	/**
+	 * ルーム購読解除時 に実行されるGS2-Scriptを設定
+	 *
+	 * @param deleteSubscribeTriggerScript ルーム購読解除時 に実行されるGS2-Script
+	 */
+	public void setDeleteSubscribeTriggerScript(String deleteSubscribeTriggerScript) {
+		this.deleteSubscribeTriggerScript = deleteSubscribeTriggerScript;
+	}
+
+	/**
+	 * ルーム購読解除時 に実行されるGS2-Scriptを設定
+	 *
+	 * @param deleteSubscribeTriggerScript ルーム購読解除時 に実行されるGS2-Script
+	 * @return this
+	 */
+	public CreateLobbyRequest withDeleteSubscribeTriggerScript(String deleteSubscribeTriggerScript) {
+		setDeleteSubscribeTriggerScript(deleteSubscribeTriggerScript);
+		return this;
+	}
+
+	/**
+	 * メッセージ送信完了時 に実行されるGS2-Scriptを取得
+	 *
+	 * @return メッセージ送信完了時 に実行されるGS2-Script
+	 */
+	public String getSendMessageDoneTriggerScript() {
+		return sendMessageDoneTriggerScript;
+	}
+
+	/**
+	 * メッセージ送信完了時 に実行されるGS2-Scriptを設定
+	 *
+	 * @param sendMessageDoneTriggerScript メッセージ送信完了時 に実行されるGS2-Script
+	 */
+	public void setSendMessageDoneTriggerScript(String sendMessageDoneTriggerScript) {
+		this.sendMessageDoneTriggerScript = sendMessageDoneTriggerScript;
+	}
+
+	/**
+	 * メッセージ送信完了時 に実行されるGS2-Scriptを設定
+	 *
+	 * @param sendMessageDoneTriggerScript メッセージ送信完了時 に実行されるGS2-Script
+	 * @return this
+	 */
+	public CreateLobbyRequest withSendMessageDoneTriggerScript(String sendMessageDoneTriggerScript) {
+		setSendMessageDoneTriggerScript(sendMessageDoneTriggerScript);
+		return this;
+	}
 
 	/**
 	 * ロビー名を取得
@@ -76,6 +396,64 @@ public class CreateLobbyRequest extends Gs2BasicRequest<CreateLobbyRequest> {
 	 */
 	public CreateLobbyRequest withName(String name) {
 		setName(name);
+		return this;
+	}
+
+	/**
+	 * ルーム購読解除完了時 に実行されるGS2-Scriptを取得
+	 *
+	 * @return ルーム購読解除完了時 に実行されるGS2-Script
+	 */
+	public String getDeleteSubscribeDoneTriggerScript() {
+		return deleteSubscribeDoneTriggerScript;
+	}
+
+	/**
+	 * ルーム購読解除完了時 に実行されるGS2-Scriptを設定
+	 *
+	 * @param deleteSubscribeDoneTriggerScript ルーム購読解除完了時 に実行されるGS2-Script
+	 */
+	public void setDeleteSubscribeDoneTriggerScript(String deleteSubscribeDoneTriggerScript) {
+		this.deleteSubscribeDoneTriggerScript = deleteSubscribeDoneTriggerScript;
+	}
+
+	/**
+	 * ルーム購読解除完了時 に実行されるGS2-Scriptを設定
+	 *
+	 * @param deleteSubscribeDoneTriggerScript ルーム購読解除完了時 に実行されるGS2-Script
+	 * @return this
+	 */
+	public CreateLobbyRequest withDeleteSubscribeDoneTriggerScript(String deleteSubscribeDoneTriggerScript) {
+		setDeleteSubscribeDoneTriggerScript(deleteSubscribeDoneTriggerScript);
+		return this;
+	}
+
+	/**
+	 * ルーム作成完了時 に実行されるGS2-Scriptを取得
+	 *
+	 * @return ルーム作成完了時 に実行されるGS2-Script
+	 */
+	public String getCreateRoomDoneTriggerScript() {
+		return createRoomDoneTriggerScript;
+	}
+
+	/**
+	 * ルーム作成完了時 に実行されるGS2-Scriptを設定
+	 *
+	 * @param createRoomDoneTriggerScript ルーム作成完了時 に実行されるGS2-Script
+	 */
+	public void setCreateRoomDoneTriggerScript(String createRoomDoneTriggerScript) {
+		this.createRoomDoneTriggerScript = createRoomDoneTriggerScript;
+	}
+
+	/**
+	 * ルーム作成完了時 に実行されるGS2-Scriptを設定
+	 *
+	 * @param createRoomDoneTriggerScript ルーム作成完了時 に実行されるGS2-Script
+	 * @return this
+	 */
+	public CreateLobbyRequest withCreateRoomDoneTriggerScript(String createRoomDoneTriggerScript) {
+		setCreateRoomDoneTriggerScript(createRoomDoneTriggerScript);
 		return this;
 	}
 
@@ -138,89 +516,31 @@ public class CreateLobbyRequest extends Gs2BasicRequest<CreateLobbyRequest> {
 	}
 
 	/**
-	 * サービスクラスを取得
+	 * ルーム作成時 に実行されるGS2-Scriptを取得
 	 *
-	 * @return サービスクラス
+	 * @return ルーム作成時 に実行されるGS2-Script
 	 */
-	public String getServiceClass() {
-		return serviceClass;
+	public String getCreateRoomTriggerScript() {
+		return createRoomTriggerScript;
 	}
 
 	/**
-	 * サービスクラスを設定
+	 * ルーム作成時 に実行されるGS2-Scriptを設定
 	 *
-	 * @param serviceClass サービスクラス
+	 * @param createRoomTriggerScript ルーム作成時 に実行されるGS2-Script
 	 */
-	public void setServiceClass(String serviceClass) {
-		this.serviceClass = serviceClass;
+	public void setCreateRoomTriggerScript(String createRoomTriggerScript) {
+		this.createRoomTriggerScript = createRoomTriggerScript;
 	}
 
 	/**
-	 * サービスクラスを設定
+	 * ルーム作成時 に実行されるGS2-Scriptを設定
 	 *
-	 * @param serviceClass サービスクラス
+	 * @param createRoomTriggerScript ルーム作成時 に実行されるGS2-Script
 	 * @return this
 	 */
-	public CreateLobbyRequest withServiceClass(String serviceClass) {
-		setServiceClass(serviceClass);
-		return this;
-	}
-
-	/**
-	 * 通知方式を取得
-	 *
-	 * @return 通知方式
-	 */
-	public String getNotificationType() {
-		return notificationType;
-	}
-
-	/**
-	 * 通知方式を設定
-	 *
-	 * @param notificationType 通知方式
-	 */
-	public void setNotificationType(String notificationType) {
-		this.notificationType = notificationType;
-	}
-
-	/**
-	 * 通知方式を設定
-	 *
-	 * @param notificationType 通知方式
-	 * @return this
-	 */
-	public CreateLobbyRequest withNotificationType(String notificationType) {
-		setNotificationType(notificationType);
-		return this;
-	}
-
-	/**
-	 * 説明文を取得
-	 *
-	 * @return 説明文
-	 */
-	public String getDescription() {
-		return description;
-	}
-
-	/**
-	 * 説明文を設定
-	 *
-	 * @param description 説明文
-	 */
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	/**
-	 * 説明文を設定
-	 *
-	 * @param description 説明文
-	 * @return this
-	 */
-	public CreateLobbyRequest withDescription(String description) {
-		setDescription(description);
+	public CreateLobbyRequest withCreateRoomTriggerScript(String createRoomTriggerScript) {
+		setCreateRoomTriggerScript(createRoomTriggerScript);
 		return this;
 	}
 
