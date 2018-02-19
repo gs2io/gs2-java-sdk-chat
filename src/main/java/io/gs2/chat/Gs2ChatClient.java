@@ -73,7 +73,7 @@ public class Gs2ChatClient extends AbstractGs2Client<Gs2ChatClient> {
 
 	public CheckEstimateScanByteByAllRoomResult checkEstimateScanByteByAllRoom(CheckEstimateScanByteByAllRoomRequest request) {
 
-	    String url = Gs2Constant.ENDPOINT_HOST + "/lobby/" + (request.getLobbyName() == null ? "null" : request.getLobbyName()) + "/log/estimate";
+	    String url = Gs2Constant.ENDPOINT_HOST + "/lobby/" + (request.getLobbyName() == null || request.getLobbyName().equals("") ? "null" : request.getLobbyName()) + "/log/estimate";
 
         List<NameValuePair> queryString = new ArrayList<>();
         if(request.getUserId() != null) queryString.add(new BasicNameValuePair("userId", String.valueOf(request.getUserId())));
@@ -94,6 +94,9 @@ public class Gs2ChatClient extends AbstractGs2Client<Gs2ChatClient> {
 				ENDPOINT,
 				CheckEstimateScanByteByAllRoomRequest.Constant.MODULE,
 				CheckEstimateScanByteByAllRoomRequest.Constant.FUNCTION);
+        if(request.getRequestId() != null) {
+            get.setHeader("X-GS2-REQUEST-ID", request.getRequestId());
+        }
 
 
 		return doRequest(get, CheckEstimateScanByteByAllRoomResult.class);
@@ -118,7 +121,7 @@ public class Gs2ChatClient extends AbstractGs2Client<Gs2ChatClient> {
 
 	public CheckEstimateScanByteByRoomResult checkEstimateScanByteByRoom(CheckEstimateScanByteByRoomRequest request) {
 
-	    String url = Gs2Constant.ENDPOINT_HOST + "/lobby/" + (request.getLobbyName() == null ? "null" : request.getLobbyName()) + "/room/" + (request.getRoomId() == null ? "null" : request.getRoomId()) + "/log/estimate";
+	    String url = Gs2Constant.ENDPOINT_HOST + "/lobby/" + (request.getLobbyName() == null || request.getLobbyName().equals("") ? "null" : request.getLobbyName()) + "/room/" + (request.getRoomId() == null || request.getRoomId().equals("") ? "null" : request.getRoomId()) + "/log/estimate";
 
         List<NameValuePair> queryString = new ArrayList<>();
         if(request.getUserId() != null) queryString.add(new BasicNameValuePair("userId", String.valueOf(request.getUserId())));
@@ -139,6 +142,9 @@ public class Gs2ChatClient extends AbstractGs2Client<Gs2ChatClient> {
 				ENDPOINT,
 				CheckEstimateScanByteByRoomRequest.Constant.MODULE,
 				CheckEstimateScanByteByRoomRequest.Constant.FUNCTION);
+        if(request.getRequestId() != null) {
+            get.setHeader("X-GS2-REQUEST-ID", request.getRequestId());
+        }
 
 
 		return doRequest(get, CheckEstimateScanByteByRoomResult.class);
@@ -192,23 +198,23 @@ public class Gs2ChatClient extends AbstractGs2Client<Gs2ChatClient> {
 	public CreateLobbyResult createLobby(CreateLobbyRequest request) {
 
 		ObjectNode body = JsonNodeFactory.instance.objectNode()
+				.put("name", request.getName())
 				.put("serviceClass", request.getServiceClass())
-				.put("notificationType", request.getNotificationType())
-				.put("name", request.getName());
+				.put("notificationType", request.getNotificationType());
 
         if(request.getDescription() != null) body.put("description", request.getDescription());
-        if(request.getDeleteRoomTriggerScript() != null) body.put("deleteRoomTriggerScript", request.getDeleteRoomTriggerScript());
-        if(request.getCreateSubscribeDoneTriggerScript() != null) body.put("createSubscribeDoneTriggerScript", request.getCreateSubscribeDoneTriggerScript());
-        if(request.getDeleteRoomDoneTriggerScript() != null) body.put("deleteRoomDoneTriggerScript", request.getDeleteRoomDoneTriggerScript());
-        if(request.getSendMessageTriggerScript() != null) body.put("sendMessageTriggerScript", request.getSendMessageTriggerScript());
-        if(request.getCreateSubscribeTriggerScript() != null) body.put("createSubscribeTriggerScript", request.getCreateSubscribeTriggerScript());
-        if(request.getDeleteSubscribeTriggerScript() != null) body.put("deleteSubscribeTriggerScript", request.getDeleteSubscribeTriggerScript());
-        if(request.getSendMessageDoneTriggerScript() != null) body.put("sendMessageDoneTriggerScript", request.getSendMessageDoneTriggerScript());
-        if(request.getDeleteSubscribeDoneTriggerScript() != null) body.put("deleteSubscribeDoneTriggerScript", request.getDeleteSubscribeDoneTriggerScript());
-        if(request.getCreateRoomDoneTriggerScript() != null) body.put("createRoomDoneTriggerScript", request.getCreateRoomDoneTriggerScript());
-        if(request.getNotificationGameName() != null) body.put("notificationGameName", request.getNotificationGameName());
         if(request.getNotificationUrl() != null) body.put("notificationUrl", request.getNotificationUrl());
+        if(request.getNotificationGameName() != null) body.put("notificationGameName", request.getNotificationGameName());
         if(request.getCreateRoomTriggerScript() != null) body.put("createRoomTriggerScript", request.getCreateRoomTriggerScript());
+        if(request.getCreateRoomDoneTriggerScript() != null) body.put("createRoomDoneTriggerScript", request.getCreateRoomDoneTriggerScript());
+        if(request.getDeleteRoomTriggerScript() != null) body.put("deleteRoomTriggerScript", request.getDeleteRoomTriggerScript());
+        if(request.getDeleteRoomDoneTriggerScript() != null) body.put("deleteRoomDoneTriggerScript", request.getDeleteRoomDoneTriggerScript());
+        if(request.getCreateSubscribeTriggerScript() != null) body.put("createSubscribeTriggerScript", request.getCreateSubscribeTriggerScript());
+        if(request.getCreateSubscribeDoneTriggerScript() != null) body.put("createSubscribeDoneTriggerScript", request.getCreateSubscribeDoneTriggerScript());
+        if(request.getDeleteSubscribeTriggerScript() != null) body.put("deleteSubscribeTriggerScript", request.getDeleteSubscribeTriggerScript());
+        if(request.getDeleteSubscribeDoneTriggerScript() != null) body.put("deleteSubscribeDoneTriggerScript", request.getDeleteSubscribeDoneTriggerScript());
+        if(request.getSendMessageTriggerScript() != null) body.put("sendMessageTriggerScript", request.getSendMessageTriggerScript());
+        if(request.getSendMessageDoneTriggerScript() != null) body.put("sendMessageDoneTriggerScript", request.getSendMessageDoneTriggerScript());
 		HttpPost post = createHttpPost(
 				Gs2Constant.ENDPOINT_HOST + "/lobby",
 				credential,
@@ -216,6 +222,9 @@ public class Gs2ChatClient extends AbstractGs2Client<Gs2ChatClient> {
 				CreateLobbyRequest.Constant.MODULE,
 				CreateLobbyRequest.Constant.FUNCTION,
 				body.toString());
+        if(request.getRequestId() != null) {
+            post.setHeader("X-GS2-REQUEST-ID", request.getRequestId());
+        }
 
 
 		return doRequest(post, CreateLobbyResult.class);
@@ -241,15 +250,18 @@ public class Gs2ChatClient extends AbstractGs2Client<Gs2ChatClient> {
 		ObjectNode body = JsonNodeFactory.instance.objectNode();
 
         if(request.getEnableOfflineTransfer() != null) body.put("enableOfflineTransfer", request.getEnableOfflineTransfer());
-        if(request.getPassword() != null) body.put("password", request.getPassword());
         if(request.getOfflineTransferSound() != null) body.put("offlineTransferSound", request.getOfflineTransferSound());
+        if(request.getPassword() != null) body.put("password", request.getPassword());
 		HttpPost post = createHttpPost(
-				Gs2Constant.ENDPOINT_HOST + "/lobby/" + (request.getLobbyName() == null ? "null" : request.getLobbyName()) + "/room/" + (request.getRoomId() == null ? "null" : request.getRoomId()) + "/subscribe",
+				Gs2Constant.ENDPOINT_HOST + "/lobby/" + (request.getLobbyName() == null || request.getLobbyName().equals("") ? "null" : request.getLobbyName()) + "/room/" + (request.getRoomId() == null || request.getRoomId().equals("") ? "null" : request.getRoomId()) + "/subscribe",
 				credential,
 				ENDPOINT,
 				CreateMySubscribeRequest.Constant.MODULE,
 				CreateMySubscribeRequest.Constant.FUNCTION,
 				body.toString());
+        if(request.getRequestId() != null) {
+            post.setHeader("X-GS2-REQUEST-ID", request.getRequestId());
+        }
 
         post.setHeader("X-GS2-ACCESS-TOKEN", request.getAccessToken());
 
@@ -289,15 +301,18 @@ public class Gs2ChatClient extends AbstractGs2Client<Gs2ChatClient> {
 		ObjectNode body = JsonNodeFactory.instance.objectNode();
 
         if(request.getRoomId() != null) body.put("roomId", request.getRoomId());
-        if(request.getPassword() != null) body.put("password", request.getPassword());
         if(request.getAllowUserIds() != null) body.put("allowUserIds", request.getAllowUserIds());
+        if(request.getPassword() != null) body.put("password", request.getPassword());
 		HttpPost post = createHttpPost(
-				Gs2Constant.ENDPOINT_HOST + "/lobby/" + (request.getLobbyName() == null ? "null" : request.getLobbyName()) + "/room",
+				Gs2Constant.ENDPOINT_HOST + "/lobby/" + (request.getLobbyName() == null || request.getLobbyName().equals("") ? "null" : request.getLobbyName()) + "/room",
 				credential,
 				ENDPOINT,
 				CreateRoomRequest.Constant.MODULE,
 				CreateRoomRequest.Constant.FUNCTION,
 				body.toString());
+        if(request.getRequestId() != null) {
+            post.setHeader("X-GS2-REQUEST-ID", request.getRequestId());
+        }
 
 
 		return doRequest(post, CreateRoomResult.class);
@@ -323,15 +338,18 @@ public class Gs2ChatClient extends AbstractGs2Client<Gs2ChatClient> {
 		ObjectNode body = JsonNodeFactory.instance.objectNode();
 
         if(request.getEnableOfflineTransfer() != null) body.put("enableOfflineTransfer", request.getEnableOfflineTransfer());
-        if(request.getPassword() != null) body.put("password", request.getPassword());
         if(request.getOfflineTransferSound() != null) body.put("offlineTransferSound", request.getOfflineTransferSound());
+        if(request.getPassword() != null) body.put("password", request.getPassword());
 		HttpPost post = createHttpPost(
-				Gs2Constant.ENDPOINT_HOST + "/lobby/" + (request.getLobbyName() == null ? "null" : request.getLobbyName()) + "/room/" + (request.getRoomId() == null ? "null" : request.getRoomId()) + "/user/" + (request.getUserId() == null ? "null" : request.getUserId()) + "/subscribe",
+				Gs2Constant.ENDPOINT_HOST + "/lobby/" + (request.getLobbyName() == null || request.getLobbyName().equals("") ? "null" : request.getLobbyName()) + "/room/" + (request.getRoomId() == null || request.getRoomId().equals("") ? "null" : request.getRoomId()) + "/user/" + (request.getUserId() == null || request.getUserId().equals("") ? "null" : request.getUserId()) + "/subscribe",
 				credential,
 				ENDPOINT,
 				CreateSubscribeRequest.Constant.MODULE,
 				CreateSubscribeRequest.Constant.FUNCTION,
 				body.toString());
+        if(request.getRequestId() != null) {
+            post.setHeader("X-GS2-REQUEST-ID", request.getRequestId());
+        }
 
 
 		return doRequest(post, CreateSubscribeResult.class);
@@ -349,7 +367,7 @@ public class Gs2ChatClient extends AbstractGs2Client<Gs2ChatClient> {
 
 	public void deleteLobby(DeleteLobbyRequest request) {
 
-	    String url = Gs2Constant.ENDPOINT_HOST + "/lobby/" + (request.getLobbyName() == null ? "null" : request.getLobbyName()) + "";
+	    String url = Gs2Constant.ENDPOINT_HOST + "/lobby/" + (request.getLobbyName() == null || request.getLobbyName().equals("") ? "null" : request.getLobbyName()) + "";
 
 
 
@@ -359,6 +377,9 @@ public class Gs2ChatClient extends AbstractGs2Client<Gs2ChatClient> {
 				ENDPOINT,
 				DeleteLobbyRequest.Constant.MODULE,
 				DeleteLobbyRequest.Constant.FUNCTION);
+        if(request.getRequestId() != null) {
+            delete.setHeader("X-GS2-REQUEST-ID", request.getRequestId());
+        }
 
 
 		doRequest(delete, null);
@@ -376,7 +397,7 @@ public class Gs2ChatClient extends AbstractGs2Client<Gs2ChatClient> {
 
 	public void deleteMySubscribe(DeleteMySubscribeRequest request) {
 
-	    String url = Gs2Constant.ENDPOINT_HOST + "/lobby/" + (request.getLobbyName() == null ? "null" : request.getLobbyName()) + "/room/" + (request.getRoomId() == null ? "null" : request.getRoomId()) + "/user/self/subscribe";
+	    String url = Gs2Constant.ENDPOINT_HOST + "/lobby/" + (request.getLobbyName() == null || request.getLobbyName().equals("") ? "null" : request.getLobbyName()) + "/room/" + (request.getRoomId() == null || request.getRoomId().equals("") ? "null" : request.getRoomId()) + "/user/self/subscribe";
 
 
 
@@ -386,6 +407,9 @@ public class Gs2ChatClient extends AbstractGs2Client<Gs2ChatClient> {
 				ENDPOINT,
 				DeleteMySubscribeRequest.Constant.MODULE,
 				DeleteMySubscribeRequest.Constant.FUNCTION);
+        if(request.getRequestId() != null) {
+            delete.setHeader("X-GS2-REQUEST-ID", request.getRequestId());
+        }
 
         delete.setHeader("X-GS2-ACCESS-TOKEN", request.getAccessToken());
 
@@ -404,7 +428,7 @@ public class Gs2ChatClient extends AbstractGs2Client<Gs2ChatClient> {
 
 	public void deleteRoom(DeleteRoomRequest request) {
 
-	    String url = Gs2Constant.ENDPOINT_HOST + "/lobby/" + (request.getLobbyName() == null ? "null" : request.getLobbyName()) + "/room/" + (request.getRoomId() == null ? "null" : request.getRoomId()) + "";
+	    String url = Gs2Constant.ENDPOINT_HOST + "/lobby/" + (request.getLobbyName() == null || request.getLobbyName().equals("") ? "null" : request.getLobbyName()) + "/room/" + (request.getRoomId() == null || request.getRoomId().equals("") ? "null" : request.getRoomId()) + "";
 
 
 
@@ -414,6 +438,9 @@ public class Gs2ChatClient extends AbstractGs2Client<Gs2ChatClient> {
 				ENDPOINT,
 				DeleteRoomRequest.Constant.MODULE,
 				DeleteRoomRequest.Constant.FUNCTION);
+        if(request.getRequestId() != null) {
+            delete.setHeader("X-GS2-REQUEST-ID", request.getRequestId());
+        }
 
 
 		doRequest(delete, null);
@@ -431,7 +458,7 @@ public class Gs2ChatClient extends AbstractGs2Client<Gs2ChatClient> {
 
 	public void deleteSubscribe(DeleteSubscribeRequest request) {
 
-	    String url = Gs2Constant.ENDPOINT_HOST + "/lobby/" + (request.getLobbyName() == null ? "null" : request.getLobbyName()) + "/room/" + (request.getRoomId() == null ? "null" : request.getRoomId()) + "/user/" + (request.getUserId() == null ? "null" : request.getUserId()) + "/subscribe";
+	    String url = Gs2Constant.ENDPOINT_HOST + "/lobby/" + (request.getLobbyName() == null || request.getLobbyName().equals("") ? "null" : request.getLobbyName()) + "/room/" + (request.getRoomId() == null || request.getRoomId().equals("") ? "null" : request.getRoomId()) + "/user/" + (request.getUserId() == null || request.getUserId().equals("") ? "null" : request.getUserId()) + "/subscribe";
 
 
 
@@ -441,6 +468,9 @@ public class Gs2ChatClient extends AbstractGs2Client<Gs2ChatClient> {
 				ENDPOINT,
 				DeleteSubscribeRequest.Constant.MODULE,
 				DeleteSubscribeRequest.Constant.FUNCTION);
+        if(request.getRequestId() != null) {
+            delete.setHeader("X-GS2-REQUEST-ID", request.getRequestId());
+        }
 
 
 		doRequest(delete, null);
@@ -476,6 +506,9 @@ public class Gs2ChatClient extends AbstractGs2Client<Gs2ChatClient> {
 				ENDPOINT,
 				DescribeLobbyRequest.Constant.MODULE,
 				DescribeLobbyRequest.Constant.FUNCTION);
+        if(request.getRequestId() != null) {
+            get.setHeader("X-GS2-REQUEST-ID", request.getRequestId());
+        }
 
 
 		return doRequest(get, DescribeLobbyResult.class);
@@ -495,7 +528,7 @@ public class Gs2ChatClient extends AbstractGs2Client<Gs2ChatClient> {
 
 	public DescribeMessageResult describeMessage(DescribeMessageRequest request) {
 
-	    String url = Gs2Constant.ENDPOINT_HOST + "/lobby/" + (request.getLobbyName() == null ? "null" : request.getLobbyName()) + "/room/" + (request.getRoomId() == null ? "null" : request.getRoomId()) + "/message";
+	    String url = Gs2Constant.ENDPOINT_HOST + "/lobby/" + (request.getLobbyName() == null || request.getLobbyName().equals("") ? "null" : request.getLobbyName()) + "/room/" + (request.getRoomId() == null || request.getRoomId().equals("") ? "null" : request.getRoomId()) + "/message";
 
         List<NameValuePair> queryString = new ArrayList<>();
         if(request.getPassword() != null) queryString.add(new BasicNameValuePair("password", String.valueOf(request.getPassword())));
@@ -512,6 +545,9 @@ public class Gs2ChatClient extends AbstractGs2Client<Gs2ChatClient> {
 				ENDPOINT,
 				DescribeMessageRequest.Constant.MODULE,
 				DescribeMessageRequest.Constant.FUNCTION);
+        if(request.getRequestId() != null) {
+            get.setHeader("X-GS2-REQUEST-ID", request.getRequestId());
+        }
 
         get.setHeader("X-GS2-ACCESS-TOKEN", request.getAccessToken());
 
@@ -532,7 +568,7 @@ public class Gs2ChatClient extends AbstractGs2Client<Gs2ChatClient> {
 
 	public DescribeMessageNoAuthResult describeMessageNoAuth(DescribeMessageNoAuthRequest request) {
 
-	    String url = Gs2Constant.ENDPOINT_HOST + "/lobby/" + (request.getLobbyName() == null ? "null" : request.getLobbyName()) + "/room/" + (request.getRoomId() == null ? "null" : request.getRoomId()) + "/message/force";
+	    String url = Gs2Constant.ENDPOINT_HOST + "/lobby/" + (request.getLobbyName() == null || request.getLobbyName().equals("") ? "null" : request.getLobbyName()) + "/room/" + (request.getRoomId() == null || request.getRoomId().equals("") ? "null" : request.getRoomId()) + "/message/force";
 
         List<NameValuePair> queryString = new ArrayList<>();
         if(request.getStartAt() != null) queryString.add(new BasicNameValuePair("startAt", String.valueOf(request.getStartAt())));
@@ -548,6 +584,9 @@ public class Gs2ChatClient extends AbstractGs2Client<Gs2ChatClient> {
 				ENDPOINT,
 				DescribeMessageNoAuthRequest.Constant.MODULE,
 				DescribeMessageNoAuthRequest.Constant.FUNCTION);
+        if(request.getRequestId() != null) {
+            get.setHeader("X-GS2-REQUEST-ID", request.getRequestId());
+        }
 
 
 		return doRequest(get, DescribeMessageNoAuthResult.class);
@@ -567,7 +606,7 @@ public class Gs2ChatClient extends AbstractGs2Client<Gs2ChatClient> {
 
 	public DescribeMySubscribeResult describeMySubscribe(DescribeMySubscribeRequest request) {
 
-	    String url = Gs2Constant.ENDPOINT_HOST + "/lobby/" + (request.getLobbyName() == null ? "null" : request.getLobbyName()) + "/user/subscribe";
+	    String url = Gs2Constant.ENDPOINT_HOST + "/lobby/" + (request.getLobbyName() == null || request.getLobbyName().equals("") ? "null" : request.getLobbyName()) + "/user/subscribe";
 
         List<NameValuePair> queryString = new ArrayList<>();
         if(request.getPageToken() != null) queryString.add(new BasicNameValuePair("pageToken", String.valueOf(request.getPageToken())));
@@ -583,6 +622,9 @@ public class Gs2ChatClient extends AbstractGs2Client<Gs2ChatClient> {
 				ENDPOINT,
 				DescribeMySubscribeRequest.Constant.MODULE,
 				DescribeMySubscribeRequest.Constant.FUNCTION);
+        if(request.getRequestId() != null) {
+            get.setHeader("X-GS2-REQUEST-ID", request.getRequestId());
+        }
 
         get.setHeader("X-GS2-ACCESS-TOKEN", request.getAccessToken());
 
@@ -603,7 +645,7 @@ public class Gs2ChatClient extends AbstractGs2Client<Gs2ChatClient> {
 
 	public DescribeRoomResult describeRoom(DescribeRoomRequest request) {
 
-	    String url = Gs2Constant.ENDPOINT_HOST + "/lobby/" + (request.getLobbyName() == null ? "null" : request.getLobbyName()) + "/room";
+	    String url = Gs2Constant.ENDPOINT_HOST + "/lobby/" + (request.getLobbyName() == null || request.getLobbyName().equals("") ? "null" : request.getLobbyName()) + "/room";
 
         List<NameValuePair> queryString = new ArrayList<>();
         if(request.getPageToken() != null) queryString.add(new BasicNameValuePair("pageToken", String.valueOf(request.getPageToken())));
@@ -619,6 +661,9 @@ public class Gs2ChatClient extends AbstractGs2Client<Gs2ChatClient> {
 				ENDPOINT,
 				DescribeRoomRequest.Constant.MODULE,
 				DescribeRoomRequest.Constant.FUNCTION);
+        if(request.getRequestId() != null) {
+            get.setHeader("X-GS2-REQUEST-ID", request.getRequestId());
+        }
 
 
 		return doRequest(get, DescribeRoomResult.class);
@@ -648,6 +693,9 @@ public class Gs2ChatClient extends AbstractGs2Client<Gs2ChatClient> {
 				ENDPOINT,
 				DescribeServiceClassRequest.Constant.MODULE,
 				DescribeServiceClassRequest.Constant.FUNCTION);
+        if(request.getRequestId() != null) {
+            get.setHeader("X-GS2-REQUEST-ID", request.getRequestId());
+        }
 
 
 		return doRequest(get, DescribeServiceClassResult.class);
@@ -667,7 +715,7 @@ public class Gs2ChatClient extends AbstractGs2Client<Gs2ChatClient> {
 
 	public DescribeSubscribeByRoomIdResult describeSubscribeByRoomId(DescribeSubscribeByRoomIdRequest request) {
 
-	    String url = Gs2Constant.ENDPOINT_HOST + "/lobby/" + (request.getLobbyName() == null ? "null" : request.getLobbyName()) + "/room/" + (request.getRoomId() == null ? "null" : request.getRoomId()) + "/subscribe";
+	    String url = Gs2Constant.ENDPOINT_HOST + "/lobby/" + (request.getLobbyName() == null || request.getLobbyName().equals("") ? "null" : request.getLobbyName()) + "/room/" + (request.getRoomId() == null || request.getRoomId().equals("") ? "null" : request.getRoomId()) + "/subscribe";
 
         List<NameValuePair> queryString = new ArrayList<>();
         if(request.getPageToken() != null) queryString.add(new BasicNameValuePair("pageToken", String.valueOf(request.getPageToken())));
@@ -683,6 +731,9 @@ public class Gs2ChatClient extends AbstractGs2Client<Gs2ChatClient> {
 				ENDPOINT,
 				DescribeSubscribeByRoomIdRequest.Constant.MODULE,
 				DescribeSubscribeByRoomIdRequest.Constant.FUNCTION);
+        if(request.getRequestId() != null) {
+            get.setHeader("X-GS2-REQUEST-ID", request.getRequestId());
+        }
 
 
 		return doRequest(get, DescribeSubscribeByRoomIdResult.class);
@@ -702,7 +753,7 @@ public class Gs2ChatClient extends AbstractGs2Client<Gs2ChatClient> {
 
 	public DescribeSubscribeByUserIdResult describeSubscribeByUserId(DescribeSubscribeByUserIdRequest request) {
 
-	    String url = Gs2Constant.ENDPOINT_HOST + "/lobby/" + (request.getLobbyName() == null ? "null" : request.getLobbyName()) + "/user/" + (request.getUserId() == null ? "null" : request.getUserId()) + "/subscribe";
+	    String url = Gs2Constant.ENDPOINT_HOST + "/lobby/" + (request.getLobbyName() == null || request.getLobbyName().equals("") ? "null" : request.getLobbyName()) + "/user/" + (request.getUserId() == null || request.getUserId().equals("") ? "null" : request.getUserId()) + "/subscribe";
 
         List<NameValuePair> queryString = new ArrayList<>();
         if(request.getPageToken() != null) queryString.add(new BasicNameValuePair("pageToken", String.valueOf(request.getPageToken())));
@@ -718,6 +769,9 @@ public class Gs2ChatClient extends AbstractGs2Client<Gs2ChatClient> {
 				ENDPOINT,
 				DescribeSubscribeByUserIdRequest.Constant.MODULE,
 				DescribeSubscribeByUserIdRequest.Constant.FUNCTION);
+        if(request.getRequestId() != null) {
+            get.setHeader("X-GS2-REQUEST-ID", request.getRequestId());
+        }
 
 
 		return doRequest(get, DescribeSubscribeByUserIdResult.class);
@@ -737,7 +791,7 @@ public class Gs2ChatClient extends AbstractGs2Client<Gs2ChatClient> {
 
 	public GetLobbyResult getLobby(GetLobbyRequest request) {
 
-	    String url = Gs2Constant.ENDPOINT_HOST + "/lobby/" + (request.getLobbyName() == null ? "null" : request.getLobbyName()) + "";
+	    String url = Gs2Constant.ENDPOINT_HOST + "/lobby/" + (request.getLobbyName() == null || request.getLobbyName().equals("") ? "null" : request.getLobbyName()) + "";
 
 
 
@@ -747,6 +801,9 @@ public class Gs2ChatClient extends AbstractGs2Client<Gs2ChatClient> {
 				ENDPOINT,
 				GetLobbyRequest.Constant.MODULE,
 				GetLobbyRequest.Constant.FUNCTION);
+        if(request.getRequestId() != null) {
+            get.setHeader("X-GS2-REQUEST-ID", request.getRequestId());
+        }
 
 
 		return doRequest(get, GetLobbyResult.class);
@@ -766,7 +823,7 @@ public class Gs2ChatClient extends AbstractGs2Client<Gs2ChatClient> {
 
 	public GetLobbyStatusResult getLobbyStatus(GetLobbyStatusRequest request) {
 
-	    String url = Gs2Constant.ENDPOINT_HOST + "/lobby/" + (request.getLobbyName() == null ? "null" : request.getLobbyName()) + "/status";
+	    String url = Gs2Constant.ENDPOINT_HOST + "/lobby/" + (request.getLobbyName() == null || request.getLobbyName().equals("") ? "null" : request.getLobbyName()) + "/status";
 
 
 
@@ -776,6 +833,9 @@ public class Gs2ChatClient extends AbstractGs2Client<Gs2ChatClient> {
 				ENDPOINT,
 				GetLobbyStatusRequest.Constant.MODULE,
 				GetLobbyStatusRequest.Constant.FUNCTION);
+        if(request.getRequestId() != null) {
+            get.setHeader("X-GS2-REQUEST-ID", request.getRequestId());
+        }
 
 
 		return doRequest(get, GetLobbyStatusResult.class);
@@ -795,7 +855,7 @@ public class Gs2ChatClient extends AbstractGs2Client<Gs2ChatClient> {
 
 	public GetMySubscribeResult getMySubscribe(GetMySubscribeRequest request) {
 
-	    String url = Gs2Constant.ENDPOINT_HOST + "/lobby/" + (request.getLobbyName() == null ? "null" : request.getLobbyName()) + "/room/" + (request.getRoomId() == null ? "null" : request.getRoomId()) + "/user/self/subscribe";
+	    String url = Gs2Constant.ENDPOINT_HOST + "/lobby/" + (request.getLobbyName() == null || request.getLobbyName().equals("") ? "null" : request.getLobbyName()) + "/room/" + (request.getRoomId() == null || request.getRoomId().equals("") ? "null" : request.getRoomId()) + "/user/self/subscribe";
 
 
 
@@ -805,6 +865,9 @@ public class Gs2ChatClient extends AbstractGs2Client<Gs2ChatClient> {
 				ENDPOINT,
 				GetMySubscribeRequest.Constant.MODULE,
 				GetMySubscribeRequest.Constant.FUNCTION);
+        if(request.getRequestId() != null) {
+            get.setHeader("X-GS2-REQUEST-ID", request.getRequestId());
+        }
 
         get.setHeader("X-GS2-ACCESS-TOKEN", request.getAccessToken());
 
@@ -825,7 +888,7 @@ public class Gs2ChatClient extends AbstractGs2Client<Gs2ChatClient> {
 
 	public GetRoomResult getRoom(GetRoomRequest request) {
 
-	    String url = Gs2Constant.ENDPOINT_HOST + "/lobby/" + (request.getLobbyName() == null ? "null" : request.getLobbyName()) + "/room/" + (request.getRoomId() == null ? "null" : request.getRoomId()) + "";
+	    String url = Gs2Constant.ENDPOINT_HOST + "/lobby/" + (request.getLobbyName() == null || request.getLobbyName().equals("") ? "null" : request.getLobbyName()) + "/room/" + (request.getRoomId() == null || request.getRoomId().equals("") ? "null" : request.getRoomId()) + "";
 
 
 
@@ -835,6 +898,9 @@ public class Gs2ChatClient extends AbstractGs2Client<Gs2ChatClient> {
 				ENDPOINT,
 				GetRoomRequest.Constant.MODULE,
 				GetRoomRequest.Constant.FUNCTION);
+        if(request.getRequestId() != null) {
+            get.setHeader("X-GS2-REQUEST-ID", request.getRequestId());
+        }
 
 
 		return doRequest(get, GetRoomResult.class);
@@ -854,7 +920,7 @@ public class Gs2ChatClient extends AbstractGs2Client<Gs2ChatClient> {
 
 	public GetSubscribeResult getSubscribe(GetSubscribeRequest request) {
 
-	    String url = Gs2Constant.ENDPOINT_HOST + "/lobby/" + (request.getLobbyName() == null ? "null" : request.getLobbyName()) + "/room/" + (request.getRoomId() == null ? "null" : request.getRoomId()) + "/user/" + (request.getUserId() == null ? "null" : request.getUserId()) + "/subscribe";
+	    String url = Gs2Constant.ENDPOINT_HOST + "/lobby/" + (request.getLobbyName() == null || request.getLobbyName().equals("") ? "null" : request.getLobbyName()) + "/room/" + (request.getRoomId() == null || request.getRoomId().equals("") ? "null" : request.getRoomId()) + "/user/" + (request.getUserId() == null || request.getUserId().equals("") ? "null" : request.getUserId()) + "/subscribe";
 
 
 
@@ -864,6 +930,9 @@ public class Gs2ChatClient extends AbstractGs2Client<Gs2ChatClient> {
 				ENDPOINT,
 				GetSubscribeRequest.Constant.MODULE,
 				GetSubscribeRequest.Constant.FUNCTION);
+        if(request.getRequestId() != null) {
+            get.setHeader("X-GS2-REQUEST-ID", request.getRequestId());
+        }
 
 
 		return doRequest(get, GetSubscribeResult.class);
@@ -899,7 +968,7 @@ public class Gs2ChatClient extends AbstractGs2Client<Gs2ChatClient> {
 
 	public SearchLogByAllRoomResult searchLogByAllRoom(SearchLogByAllRoomRequest request) {
 
-	    String url = Gs2Constant.ENDPOINT_HOST + "/lobby/" + (request.getLobbyName() == null ? "null" : request.getLobbyName()) + "/log";
+	    String url = Gs2Constant.ENDPOINT_HOST + "/lobby/" + (request.getLobbyName() == null || request.getLobbyName().equals("") ? "null" : request.getLobbyName()) + "/log";
 
         List<NameValuePair> queryString = new ArrayList<>();
         if(request.getUserId() != null) queryString.add(new BasicNameValuePair("userId", String.valueOf(request.getUserId())));
@@ -920,6 +989,9 @@ public class Gs2ChatClient extends AbstractGs2Client<Gs2ChatClient> {
 				ENDPOINT,
 				SearchLogByAllRoomRequest.Constant.MODULE,
 				SearchLogByAllRoomRequest.Constant.FUNCTION);
+        if(request.getRequestId() != null) {
+            get.setHeader("X-GS2-REQUEST-ID", request.getRequestId());
+        }
 
 
 		return doRequest(get, SearchLogByAllRoomResult.class);
@@ -954,7 +1026,7 @@ public class Gs2ChatClient extends AbstractGs2Client<Gs2ChatClient> {
 
 	public SearchLogByRoomResult searchLogByRoom(SearchLogByRoomRequest request) {
 
-	    String url = Gs2Constant.ENDPOINT_HOST + "/lobby/" + (request.getLobbyName() == null ? "null" : request.getLobbyName()) + "/room/" + (request.getRoomId() == null ? "null" : request.getRoomId()) + "/log";
+	    String url = Gs2Constant.ENDPOINT_HOST + "/lobby/" + (request.getLobbyName() == null || request.getLobbyName().equals("") ? "null" : request.getLobbyName()) + "/room/" + (request.getRoomId() == null || request.getRoomId().equals("") ? "null" : request.getRoomId()) + "/log";
 
         List<NameValuePair> queryString = new ArrayList<>();
         if(request.getUserId() != null) queryString.add(new BasicNameValuePair("userId", String.valueOf(request.getUserId())));
@@ -975,6 +1047,9 @@ public class Gs2ChatClient extends AbstractGs2Client<Gs2ChatClient> {
 				ENDPOINT,
 				SearchLogByRoomRequest.Constant.MODULE,
 				SearchLogByRoomRequest.Constant.FUNCTION);
+        if(request.getRequestId() != null) {
+            get.setHeader("X-GS2-REQUEST-ID", request.getRequestId());
+        }
 
 
 		return doRequest(get, SearchLogByRoomResult.class);
@@ -997,15 +1072,18 @@ public class Gs2ChatClient extends AbstractGs2Client<Gs2ChatClient> {
 		ObjectNode body = JsonNodeFactory.instance.objectNode()
 				.put("message", request.getMessage());
 
-        if(request.getPassword() != null) body.put("password", request.getPassword());
         if(request.getMeta() != null) body.put("meta", request.getMeta());
+        if(request.getPassword() != null) body.put("password", request.getPassword());
 		HttpPost post = createHttpPost(
-				Gs2Constant.ENDPOINT_HOST + "/lobby/" + (request.getLobbyName() == null ? "null" : request.getLobbyName()) + "/room/" + (request.getRoomId() == null ? "null" : request.getRoomId()) + "/message",
+				Gs2Constant.ENDPOINT_HOST + "/lobby/" + (request.getLobbyName() == null || request.getLobbyName().equals("") ? "null" : request.getLobbyName()) + "/room/" + (request.getRoomId() == null || request.getRoomId().equals("") ? "null" : request.getRoomId()) + "/message",
 				credential,
 				ENDPOINT,
 				SendMessageRequest.Constant.MODULE,
 				SendMessageRequest.Constant.FUNCTION,
 				body.toString());
+        if(request.getRequestId() != null) {
+            post.setHeader("X-GS2-REQUEST-ID", request.getRequestId());
+        }
 
         post.setHeader("X-GS2-ACCESS-TOKEN", request.getAccessToken());
 
@@ -1027,17 +1105,20 @@ public class Gs2ChatClient extends AbstractGs2Client<Gs2ChatClient> {
 	public SendMessageNoAuthResult sendMessageNoAuth(SendMessageNoAuthRequest request) {
 
 		ObjectNode body = JsonNodeFactory.instance.objectNode()
-				.put("message", request.getMessage())
-				.put("userId", request.getUserId());
+				.put("userId", request.getUserId())
+				.put("message", request.getMessage());
 
         if(request.getMeta() != null) body.put("meta", request.getMeta());
 		HttpPost post = createHttpPost(
-				Gs2Constant.ENDPOINT_HOST + "/lobby/" + (request.getLobbyName() == null ? "null" : request.getLobbyName()) + "/room/" + (request.getRoomId() == null ? "null" : request.getRoomId()) + "/message/force",
+				Gs2Constant.ENDPOINT_HOST + "/lobby/" + (request.getLobbyName() == null || request.getLobbyName().equals("") ? "null" : request.getLobbyName()) + "/room/" + (request.getRoomId() == null || request.getRoomId().equals("") ? "null" : request.getRoomId()) + "/message/force",
 				credential,
 				ENDPOINT,
 				SendMessageNoAuthRequest.Constant.MODULE,
 				SendMessageNoAuthRequest.Constant.FUNCTION,
 				body.toString());
+        if(request.getRequestId() != null) {
+            post.setHeader("X-GS2-REQUEST-ID", request.getRequestId());
+        }
 
 
 		return doRequest(post, SendMessageNoAuthResult.class);
@@ -1061,26 +1142,29 @@ public class Gs2ChatClient extends AbstractGs2Client<Gs2ChatClient> {
 				.put("serviceClass", request.getServiceClass())
 				.put("notificationType", request.getNotificationType());
 
-        if(request.getDeleteSubscribeTriggerScript() != null) body.put("deleteSubscribeTriggerScript", request.getDeleteSubscribeTriggerScript());
-        if(request.getSendMessageDoneTriggerScript() != null) body.put("sendMessageDoneTriggerScript", request.getSendMessageDoneTriggerScript());
         if(request.getDescription() != null) body.put("description", request.getDescription());
-        if(request.getDeleteRoomTriggerScript() != null) body.put("deleteRoomTriggerScript", request.getDeleteRoomTriggerScript());
-        if(request.getCreateSubscribeDoneTriggerScript() != null) body.put("createSubscribeDoneTriggerScript", request.getCreateSubscribeDoneTriggerScript());
-        if(request.getDeleteRoomDoneTriggerScript() != null) body.put("deleteRoomDoneTriggerScript", request.getDeleteRoomDoneTriggerScript());
-        if(request.getSendMessageTriggerScript() != null) body.put("sendMessageTriggerScript", request.getSendMessageTriggerScript());
-        if(request.getDeleteSubscribeDoneTriggerScript() != null) body.put("deleteSubscribeDoneTriggerScript", request.getDeleteSubscribeDoneTriggerScript());
-        if(request.getCreateRoomDoneTriggerScript() != null) body.put("createRoomDoneTriggerScript", request.getCreateRoomDoneTriggerScript());
-        if(request.getNotificationGameName() != null) body.put("notificationGameName", request.getNotificationGameName());
         if(request.getNotificationUrl() != null) body.put("notificationUrl", request.getNotificationUrl());
+        if(request.getNotificationGameName() != null) body.put("notificationGameName", request.getNotificationGameName());
         if(request.getCreateRoomTriggerScript() != null) body.put("createRoomTriggerScript", request.getCreateRoomTriggerScript());
+        if(request.getCreateRoomDoneTriggerScript() != null) body.put("createRoomDoneTriggerScript", request.getCreateRoomDoneTriggerScript());
+        if(request.getDeleteRoomTriggerScript() != null) body.put("deleteRoomTriggerScript", request.getDeleteRoomTriggerScript());
+        if(request.getDeleteRoomDoneTriggerScript() != null) body.put("deleteRoomDoneTriggerScript", request.getDeleteRoomDoneTriggerScript());
         if(request.getCreateSubscribeTriggerScript() != null) body.put("createSubscribeTriggerScript", request.getCreateSubscribeTriggerScript());
+        if(request.getCreateSubscribeDoneTriggerScript() != null) body.put("createSubscribeDoneTriggerScript", request.getCreateSubscribeDoneTriggerScript());
+        if(request.getDeleteSubscribeTriggerScript() != null) body.put("deleteSubscribeTriggerScript", request.getDeleteSubscribeTriggerScript());
+        if(request.getDeleteSubscribeDoneTriggerScript() != null) body.put("deleteSubscribeDoneTriggerScript", request.getDeleteSubscribeDoneTriggerScript());
+        if(request.getSendMessageTriggerScript() != null) body.put("sendMessageTriggerScript", request.getSendMessageTriggerScript());
+        if(request.getSendMessageDoneTriggerScript() != null) body.put("sendMessageDoneTriggerScript", request.getSendMessageDoneTriggerScript());
 		HttpPut put = createHttpPut(
-				Gs2Constant.ENDPOINT_HOST + "/lobby/" + (request.getLobbyName() == null ? "null" : request.getLobbyName()) + "",
+				Gs2Constant.ENDPOINT_HOST + "/lobby/" + (request.getLobbyName() == null || request.getLobbyName().equals("") ? "null" : request.getLobbyName()) + "",
 				credential,
 				ENDPOINT,
 				UpdateLobbyRequest.Constant.MODULE,
 				UpdateLobbyRequest.Constant.FUNCTION,
 				body.toString());
+        if(request.getRequestId() != null) {
+            put.setHeader("X-GS2-REQUEST-ID", request.getRequestId());
+        }
 
 
 		return doRequest(put, UpdateLobbyResult.class);
