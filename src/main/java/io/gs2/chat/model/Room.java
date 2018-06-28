@@ -33,11 +33,11 @@ public class Room implements Serializable {
 	/** ルームID */
 	private String roomId;
 
-	/** メッセージの送受信にパスワードが必要か */
-	private Boolean needPassword;
-
 	/** 参加可能なユーザIDリスト */
 	private List<String> allowUserIds;
+
+	/** メッセージの送受信にパスワードが必要か */
+	private Boolean needPassword;
 
 	/** 作成日時(エポック秒) */
 	private Integer createAt;
@@ -62,24 +62,6 @@ public class Room implements Serializable {
 	}
 
 	/**
-	 * メッセージの送受信にパスワードが必要かを取得
-	 *
-	 * @return メッセージの送受信にパスワードが必要か
-	 */
-	public Boolean getNeedPassword() {
-		return needPassword;
-	}
-
-	/**
-	 * メッセージの送受信にパスワードが必要かを設定
-	 *
-	 * @param needPassword メッセージの送受信にパスワードが必要か
-	 */
-	public void setNeedPassword(Boolean needPassword) {
-		this.needPassword = needPassword;
-	}
-
-	/**
 	 * 参加可能なユーザIDリストを取得
 	 *
 	 * @return 参加可能なユーザIDリスト
@@ -95,6 +77,24 @@ public class Room implements Serializable {
 	 */
 	public void setAllowUserIds(List<String> allowUserIds) {
 		this.allowUserIds = allowUserIds;
+	}
+
+	/**
+	 * メッセージの送受信にパスワードが必要かを取得
+	 *
+	 * @return メッセージの送受信にパスワードが必要か
+	 */
+	public Boolean getNeedPassword() {
+		return needPassword;
+	}
+
+	/**
+	 * メッセージの送受信にパスワードが必要かを設定
+	 *
+	 * @param needPassword メッセージの送受信にパスワードが必要か
+	 */
+	public void setNeedPassword(Boolean needPassword) {
+		this.needPassword = needPassword;
 	}
 
 	/**

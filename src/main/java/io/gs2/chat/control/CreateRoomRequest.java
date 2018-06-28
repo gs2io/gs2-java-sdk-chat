@@ -37,11 +37,11 @@ public class CreateRoomRequest extends Gs2BasicRequest<CreateRoomRequest> {
 	/** ルームID（指定しない場合は自動的に採番されます） */
 	private String roomId;
 
-	/** ルームにアクセスする際にパスワードを要求する場合は文字列を指定 */
-	private String password;
-
 	/** ルームへのアクセスを許可するユーザIDリストをカンマ区切りで指定 */
 	private String allowUserIds;
+
+	/** ルームにアクセスする際にパスワードを要求する場合は文字列を指定 */
+	private String password;
 
 
 	/**
@@ -103,35 +103,6 @@ public class CreateRoomRequest extends Gs2BasicRequest<CreateRoomRequest> {
 	}
 
 	/**
-	 * ルームにアクセスする際にパスワードを要求する場合は文字列を指定を取得
-	 *
-	 * @return ルームにアクセスする際にパスワードを要求する場合は文字列を指定
-	 */
-	public String getPassword() {
-		return password;
-	}
-
-	/**
-	 * ルームにアクセスする際にパスワードを要求する場合は文字列を指定を設定
-	 *
-	 * @param password ルームにアクセスする際にパスワードを要求する場合は文字列を指定
-	 */
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	/**
-	 * ルームにアクセスする際にパスワードを要求する場合は文字列を指定を設定
-	 *
-	 * @param password ルームにアクセスする際にパスワードを要求する場合は文字列を指定
-	 * @return this
-	 */
-	public CreateRoomRequest withPassword(String password) {
-		setPassword(password);
-		return this;
-	}
-
-	/**
 	 * ルームへのアクセスを許可するユーザIDリストをカンマ区切りで指定を取得
 	 *
 	 * @return ルームへのアクセスを許可するユーザIDリストをカンマ区切りで指定
@@ -157,6 +128,35 @@ public class CreateRoomRequest extends Gs2BasicRequest<CreateRoomRequest> {
 	 */
 	public CreateRoomRequest withAllowUserIds(String allowUserIds) {
 		setAllowUserIds(allowUserIds);
+		return this;
+	}
+
+	/**
+	 * ルームにアクセスする際にパスワードを要求する場合は文字列を指定を取得
+	 *
+	 * @return ルームにアクセスする際にパスワードを要求する場合は文字列を指定
+	 */
+	public String getPassword() {
+		return password;
+	}
+
+	/**
+	 * ルームにアクセスする際にパスワードを要求する場合は文字列を指定を設定
+	 *
+	 * @param password ルームにアクセスする際にパスワードを要求する場合は文字列を指定
+	 */
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	/**
+	 * ルームにアクセスする際にパスワードを要求する場合は文字列を指定を設定
+	 *
+	 * @param password ルームにアクセスする際にパスワードを要求する場合は文字列を指定
+	 * @return this
+	 */
+	public CreateRoomRequest withPassword(String password) {
+		setPassword(password);
 		return this;
 	}
 

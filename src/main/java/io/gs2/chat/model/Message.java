@@ -30,21 +30,39 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties(ignoreUnknown=true)
 public class Message implements Serializable {
 
+	/** メッセージID */
+	private String messageId;
+
 	/** 発言者ユーザID */
 	private String userId;
 
 	/** メッセージテキスト */
 	private String message;
 
-	/** 作成日時(エポック秒) */
-	private Integer createAt;
-
 	/** メッセージメタデータ */
 	private String meta;
 
-	/** メッセージID */
-	private String messageId;
+	/** 作成日時(エポック秒) */
+	private Integer createAt;
 
+
+	/**
+	 * メッセージIDを取得
+	 *
+	 * @return メッセージID
+	 */
+	public String getMessageId() {
+		return messageId;
+	}
+
+	/**
+	 * メッセージIDを設定
+	 *
+	 * @param messageId メッセージID
+	 */
+	public void setMessageId(String messageId) {
+		this.messageId = messageId;
+	}
 
 	/**
 	 * 発言者ユーザIDを取得
@@ -83,24 +101,6 @@ public class Message implements Serializable {
 	}
 
 	/**
-	 * 作成日時(エポック秒)を取得
-	 *
-	 * @return 作成日時(エポック秒)
-	 */
-	public Integer getCreateAt() {
-		return createAt;
-	}
-
-	/**
-	 * 作成日時(エポック秒)を設定
-	 *
-	 * @param createAt 作成日時(エポック秒)
-	 */
-	public void setCreateAt(Integer createAt) {
-		this.createAt = createAt;
-	}
-
-	/**
 	 * メッセージメタデータを取得
 	 *
 	 * @return メッセージメタデータ
@@ -119,21 +119,21 @@ public class Message implements Serializable {
 	}
 
 	/**
-	 * メッセージIDを取得
+	 * 作成日時(エポック秒)を取得
 	 *
-	 * @return メッセージID
+	 * @return 作成日時(エポック秒)
 	 */
-	public String getMessageId() {
-		return messageId;
+	public Integer getCreateAt() {
+		return createAt;
 	}
 
 	/**
-	 * メッセージIDを設定
+	 * 作成日時(エポック秒)を設定
 	 *
-	 * @param messageId メッセージID
+	 * @param createAt 作成日時(エポック秒)
 	 */
-	public void setMessageId(String messageId) {
-		this.messageId = messageId;
+	public void setCreateAt(Integer createAt) {
+		this.createAt = createAt;
 	}
 
 }

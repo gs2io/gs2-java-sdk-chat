@@ -40,11 +40,11 @@ public class SendMessageRequest extends Gs2UserRequest<SendMessageRequest> {
 	/** メッセージテキスト */
 	private String message;
 
-	/** パスワード */
-	private String password;
-
 	/** メッセージメタデータ */
 	private String meta;
+
+	/** パスワード */
+	private String password;
 
 
 	/**
@@ -135,35 +135,6 @@ public class SendMessageRequest extends Gs2UserRequest<SendMessageRequest> {
 	}
 
 	/**
-	 * パスワードを取得
-	 *
-	 * @return パスワード
-	 */
-	public String getPassword() {
-		return password;
-	}
-
-	/**
-	 * パスワードを設定
-	 *
-	 * @param password パスワード
-	 */
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	/**
-	 * パスワードを設定
-	 *
-	 * @param password パスワード
-	 * @return this
-	 */
-	public SendMessageRequest withPassword(String password) {
-		setPassword(password);
-		return this;
-	}
-
-	/**
 	 * メッセージメタデータを取得
 	 *
 	 * @return メッセージメタデータ
@@ -189,6 +160,35 @@ public class SendMessageRequest extends Gs2UserRequest<SendMessageRequest> {
 	 */
 	public SendMessageRequest withMeta(String meta) {
 		setMeta(meta);
+		return this;
+	}
+
+	/**
+	 * パスワードを取得
+	 *
+	 * @return パスワード
+	 */
+	public String getPassword() {
+		return password;
+	}
+
+	/**
+	 * パスワードを設定
+	 *
+	 * @param password パスワード
+	 */
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	/**
+	 * パスワードを設定
+	 *
+	 * @param password パスワード
+	 * @return this
+	 */
+	public SendMessageRequest withPassword(String password) {
+		setPassword(password);
 		return this;
 	}
 

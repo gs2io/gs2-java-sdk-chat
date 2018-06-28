@@ -27,30 +27,12 @@ import io.gs2.chat.model.*;
 @JsonIgnoreProperties(ignoreUnknown=true)
 public class DescribeLobbyResult {
 
-	/** 次のページを読み込むためのトークン */
-	private String nextPageToken;
-
 	/** ロビー */
 	private List<Lobby> items;
 
+	/** 次のページを読み込むためのトークン */
+	private String nextPageToken;
 
-	/**
-	 * 次のページを読み込むためのトークンを取得
-	 *
-	 * @return 次のページを読み込むためのトークン
-	 */
-	public String getNextPageToken() {
-		return nextPageToken;
-	}
-
-	/**
-	 * 次のページを読み込むためのトークンを設定
-	 *
-	 * @param nextPageToken 次のページを読み込むためのトークン
-	 */
-	public void setNextPageToken(String nextPageToken) {
-		this.nextPageToken = nextPageToken;
-	}
 
 	/**
 	 * ロビーを取得
@@ -68,6 +50,24 @@ public class DescribeLobbyResult {
 	 */
 	public void setItems(List<Lobby> items) {
 		this.items = items;
+	}
+
+	/**
+	 * 次のページを読み込むためのトークンを取得
+	 *
+	 * @return 次のページを読み込むためのトークン
+	 */
+	public String getNextPageToken() {
+		return nextPageToken;
+	}
+
+	/**
+	 * 次のページを読み込むためのトークンを設定
+	 *
+	 * @param nextPageToken 次のページを読み込むためのトークン
+	 */
+	public void setNextPageToken(String nextPageToken) {
+		this.nextPageToken = nextPageToken;
 	}
 
 }

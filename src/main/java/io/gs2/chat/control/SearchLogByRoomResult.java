@@ -27,15 +27,33 @@ import io.gs2.chat.model.*;
 @JsonIgnoreProperties(ignoreUnknown=true)
 public class SearchLogByRoomResult {
 
+	/** メッセージログ */
+	private List<MessageLog> items;
+
 	/** 次のページを読み込むためのトークン */
 	private String nextPageToken;
 
-	/** メッセージ */
-	private List<MessageLog> items;
-
 	/** 検索時にスキャンしたログデータサイズ */
-	private Integer scanSize;
+	private Long scanSize;
 
+
+	/**
+	 * メッセージログを取得
+	 *
+	 * @return メッセージログ
+	 */
+	public List<MessageLog> getItems() {
+		return items;
+	}
+
+	/**
+	 * メッセージログを設定
+	 *
+	 * @param items メッセージログ
+	 */
+	public void setItems(List<MessageLog> items) {
+		this.items = items;
+	}
 
 	/**
 	 * 次のページを読み込むためのトークンを取得
@@ -56,29 +74,11 @@ public class SearchLogByRoomResult {
 	}
 
 	/**
-	 * メッセージを取得
-	 *
-	 * @return メッセージ
-	 */
-	public List<MessageLog> getItems() {
-		return items;
-	}
-
-	/**
-	 * メッセージを設定
-	 *
-	 * @param items メッセージ
-	 */
-	public void setItems(List<MessageLog> items) {
-		this.items = items;
-	}
-
-	/**
 	 * 検索時にスキャンしたログデータサイズを取得
 	 *
 	 * @return 検索時にスキャンしたログデータサイズ
 	 */
-	public Integer getScanSize() {
+	public Long getScanSize() {
 		return scanSize;
 	}
 
@@ -87,7 +87,7 @@ public class SearchLogByRoomResult {
 	 *
 	 * @param scanSize 検索時にスキャンしたログデータサイズ
 	 */
-	public void setScanSize(Integer scanSize) {
+	public void setScanSize(Long scanSize) {
 		this.scanSize = scanSize;
 	}
 

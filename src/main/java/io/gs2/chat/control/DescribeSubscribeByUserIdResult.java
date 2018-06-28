@@ -27,30 +27,12 @@ import io.gs2.chat.model.*;
 @JsonIgnoreProperties(ignoreUnknown=true)
 public class DescribeSubscribeByUserIdResult {
 
-	/** 次のページを読み込むためのトークン */
-	private String nextPageToken;
-
 	/** 購読 */
 	private List<Subscribe> items;
 
+	/** 次のページを読み込むためのトークン */
+	private String nextPageToken;
 
-	/**
-	 * 次のページを読み込むためのトークンを取得
-	 *
-	 * @return 次のページを読み込むためのトークン
-	 */
-	public String getNextPageToken() {
-		return nextPageToken;
-	}
-
-	/**
-	 * 次のページを読み込むためのトークンを設定
-	 *
-	 * @param nextPageToken 次のページを読み込むためのトークン
-	 */
-	public void setNextPageToken(String nextPageToken) {
-		this.nextPageToken = nextPageToken;
-	}
 
 	/**
 	 * 購読を取得
@@ -68,6 +50,24 @@ public class DescribeSubscribeByUserIdResult {
 	 */
 	public void setItems(List<Subscribe> items) {
 		this.items = items;
+	}
+
+	/**
+	 * 次のページを読み込むためのトークンを取得
+	 *
+	 * @return 次のページを読み込むためのトークン
+	 */
+	public String getNextPageToken() {
+		return nextPageToken;
+	}
+
+	/**
+	 * 次のページを読み込むためのトークンを設定
+	 *
+	 * @param nextPageToken 次のページを読み込むためのトークン
+	 */
+	public void setNextPageToken(String nextPageToken) {
+		this.nextPageToken = nextPageToken;
 	}
 
 }

@@ -28,7 +28,7 @@ import io.gs2.chat.model.*;
 public class CheckEstimateScanByteByAllRoomResult {
 
 	/** 予想されるスキャンサイズ */
-	private Integer scanSize;
+	private Long scanSize;
 
 
 	/**
@@ -36,7 +36,7 @@ public class CheckEstimateScanByteByAllRoomResult {
 	 *
 	 * @return 予想されるスキャンサイズ
 	 */
-	public Integer getScanSize() {
+	public Long getScanSize() {
 		return scanSize;
 	}
 
@@ -45,7 +45,7 @@ public class CheckEstimateScanByteByAllRoomResult {
 	 *
 	 * @param scanSize 予想されるスキャンサイズ
 	 */
-	public void setScanSize(Integer scanSize) {
+	public void setScanSize(Long scanSize) {
 		this.scanSize = scanSize;
 	}
 

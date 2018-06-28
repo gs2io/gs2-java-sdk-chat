@@ -18,7 +18,9 @@ package io.gs2.chat;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import io.gs2.model.Region;
 import io.gs2.util.EncodingUtil;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.methods.HttpDelete;
@@ -53,6 +55,319 @@ public class Gs2ChatClient extends AbstractGs2Client<Gs2ChatClient> {
 	 */
 	public Gs2ChatClient(IGs2Credential credential) {
 		super(credential);
+	}
+
+	/**
+	 * コンストラクタ。
+	 *
+	 * @param credential 認証情報
+	 * @param region リージョン
+	 */
+	public Gs2ChatClient(IGs2Credential credential, Region region) {
+		super(credential, region);
+	}
+
+	/**
+	 * コンストラクタ。
+	 *
+	 * @param credential 認証情報
+	 * @param region リージョン
+	 */
+	public Gs2ChatClient(IGs2Credential credential, String region) {
+		super(credential, region);
+	}
+
+
+	/**
+	 * ロビーを新規作成します<br>
+	 * <br>
+	 * GS2-Chat の使用を開始するには、まずはロビーを作成します。<br>
+	 * ロビーはチャットルームの集合体のような存在です。<br>
+	 * <br>
+	 * ロビーへの設定項目として購読しているルームに発言があったときの通知方式を指定できます。<br>
+	 * http/https を設定した場合は、新しい発言があるたびに指定されたURLに通知を出します。<br>
+	 * 通知は以下のフォーマットで通知されます。<br>
+	 * {<br>
+	 *   "_gs2_service": "GS2-Chat#Receive",<br>
+	 *   "notificationUserIds": [<br>
+	 *     通知先ユーザID<br>
+	 *   ],<br>
+	 *   "roomId": 発言されたルームID,<br>
+	 *   "userId": 発言したユーザのユーザID,<br>
+	 *   "message": {<br>
+	 *     "text": メッセージテキスト,<br>
+	 *     "meta": メタデータ,<br>
+	 *   }<br>
+	 * }<br>
+	 * GS2-InGamePushNotification を指定した場合は、新しい発言があるたびにプッシュ通知を出します。<br>
+	 * 通知は以下のフォーマットで通知されます。<br>
+	 * {<br>
+	 *   "subject": メッセージテキスト,<br>
+	 *   "body": {<br>
+	 *     "_gs2_service": "GS2-Chat#Receive",<br>
+	 *     "roomId": 発言されたルームID,<br>
+	 *     "userId": 発言したユーザのユーザID,<br>
+	 *     "message": {<br>
+	 *       "text": メッセージテキスト,<br>
+	 *       "meta": メタデータ,<br>
+	 *     }<br>
+	 *   }<br>
+	 * }<br>
+	 * <br>
+	 *
+	 * @param request リクエストパラメータ
+
+	 * @return 結果
+
+	 */
+
+	public CreateLobbyResult createLobby(CreateLobbyRequest request) {
+
+		ObjectNode body = JsonNodeFactory.instance.objectNode()
+				.put("name", request.getName())
+				.put("serviceClass", request.getServiceClass())
+				.put("notificationType", request.getNotificationType());
+        if(request.getDescription() != null) body.put("description", request.getDescription());
+        if(request.getNotificationUrl() != null) body.put("notificationUrl", request.getNotificationUrl());
+        if(request.getNotificationGameName() != null) body.put("notificationGameName", request.getNotificationGameName());
+        if(request.getLogging() != null) body.put("logging", request.getLogging());
+        if(request.getLoggingDate() != null) body.put("loggingDate", request.getLoggingDate());
+        if(request.getCreateRoomTriggerScript() != null) body.put("createRoomTriggerScript", request.getCreateRoomTriggerScript());
+        if(request.getCreateRoomDoneTriggerScript() != null) body.put("createRoomDoneTriggerScript", request.getCreateRoomDoneTriggerScript());
+        if(request.getDeleteRoomTriggerScript() != null) body.put("deleteRoomTriggerScript", request.getDeleteRoomTriggerScript());
+        if(request.getDeleteRoomDoneTriggerScript() != null) body.put("deleteRoomDoneTriggerScript", request.getDeleteRoomDoneTriggerScript());
+        if(request.getCreateSubscribeTriggerScript() != null) body.put("createSubscribeTriggerScript", request.getCreateSubscribeTriggerScript());
+        if(request.getCreateSubscribeDoneTriggerScript() != null) body.put("createSubscribeDoneTriggerScript", request.getCreateSubscribeDoneTriggerScript());
+        if(request.getDeleteSubscribeTriggerScript() != null) body.put("deleteSubscribeTriggerScript", request.getDeleteSubscribeTriggerScript());
+        if(request.getDeleteSubscribeDoneTriggerScript() != null) body.put("deleteSubscribeDoneTriggerScript", request.getDeleteSubscribeDoneTriggerScript());
+        if(request.getSendMessageTriggerScript() != null) body.put("sendMessageTriggerScript", request.getSendMessageTriggerScript());
+        if(request.getSendMessageDoneTriggerScript() != null) body.put("sendMessageDoneTriggerScript", request.getSendMessageDoneTriggerScript());
+
+		HttpPost post = createHttpPost(
+				Gs2Constant.ENDPOINT_HOST + "/lobby",
+				credential,
+				ENDPOINT,
+				CreateLobbyRequest.Constant.MODULE,
+				CreateLobbyRequest.Constant.FUNCTION,
+				body.toString());
+        if(request.getRequestId() != null) {
+            post.setHeader("X-GS2-REQUEST-ID", request.getRequestId());
+        }
+
+
+		return doRequest(post, CreateLobbyResult.class);
+
+	}
+
+
+	/**
+	 * ロビーを削除します<br>
+	 * <br>
+	 *
+	 * @param request リクエストパラメータ
+
+	 */
+
+	public void deleteLobby(DeleteLobbyRequest request) {
+
+	    String url = Gs2Constant.ENDPOINT_HOST + "/lobby/" + (request.getLobbyName() == null || request.getLobbyName().equals("") ? "null" : request.getLobbyName()) + "";
+
+
+
+		HttpDelete delete = createHttpDelete(
+				url,
+				credential,
+				ENDPOINT,
+				DeleteLobbyRequest.Constant.MODULE,
+				DeleteLobbyRequest.Constant.FUNCTION);
+        if(request.getRequestId() != null) {
+            delete.setHeader("X-GS2-REQUEST-ID", request.getRequestId());
+        }
+
+
+		doRequest(delete, null);
+
+	}
+
+
+	/**
+	 * ロビーの一覧を取得します<br>
+	 * <br>
+	 *
+	 * @param request リクエストパラメータ
+
+	 * @return 結果
+
+	 */
+
+	public DescribeLobbyResult describeLobby(DescribeLobbyRequest request) {
+
+	    String url = Gs2Constant.ENDPOINT_HOST + "/lobby";
+
+        List<NameValuePair> queryString = new ArrayList<>();
+        if(request.getPageToken() != null) queryString.add(new BasicNameValuePair("pageToken", String.valueOf(request.getPageToken())));
+        if(request.getLimit() != null) queryString.add(new BasicNameValuePair("limit", String.valueOf(request.getLimit())));
+
+
+		if(queryString.size() > 0) {
+			url += "?" + URLEncodedUtils.format(queryString, "UTF-8");
+		}
+		HttpGet get = createHttpGet(
+				url,
+				credential,
+				ENDPOINT,
+				DescribeLobbyRequest.Constant.MODULE,
+				DescribeLobbyRequest.Constant.FUNCTION);
+        if(request.getRequestId() != null) {
+            get.setHeader("X-GS2-REQUEST-ID", request.getRequestId());
+        }
+
+
+		return doRequest(get, DescribeLobbyResult.class);
+
+	}
+
+
+	/**
+	 * サービスクラスの一覧を取得します<br>
+	 * <br>
+	 *
+	 * @param request リクエストパラメータ
+
+	 * @return 結果
+
+	 */
+
+	public DescribeServiceClassResult describeServiceClass(DescribeServiceClassRequest request) {
+
+	    String url = Gs2Constant.ENDPOINT_HOST + "/lobby/serviceClass";
+
+
+
+		HttpGet get = createHttpGet(
+				url,
+				credential,
+				ENDPOINT,
+				DescribeServiceClassRequest.Constant.MODULE,
+				DescribeServiceClassRequest.Constant.FUNCTION);
+        if(request.getRequestId() != null) {
+            get.setHeader("X-GS2-REQUEST-ID", request.getRequestId());
+        }
+
+
+		return doRequest(get, DescribeServiceClassResult.class);
+
+	}
+
+
+	/**
+	 * ロビーを取得します<br>
+	 * <br>
+	 *
+	 * @param request リクエストパラメータ
+
+	 * @return 結果
+
+	 */
+
+	public GetLobbyResult getLobby(GetLobbyRequest request) {
+
+	    String url = Gs2Constant.ENDPOINT_HOST + "/lobby/" + (request.getLobbyName() == null || request.getLobbyName().equals("") ? "null" : request.getLobbyName()) + "";
+
+
+
+		HttpGet get = createHttpGet(
+				url,
+				credential,
+				ENDPOINT,
+				GetLobbyRequest.Constant.MODULE,
+				GetLobbyRequest.Constant.FUNCTION);
+        if(request.getRequestId() != null) {
+            get.setHeader("X-GS2-REQUEST-ID", request.getRequestId());
+        }
+
+
+		return doRequest(get, GetLobbyResult.class);
+
+	}
+
+
+	/**
+	 * ロビーの状態を取得します<br>
+	 * <br>
+	 *
+	 * @param request リクエストパラメータ
+
+	 * @return 結果
+
+	 */
+
+	public GetLobbyStatusResult getLobbyStatus(GetLobbyStatusRequest request) {
+
+	    String url = Gs2Constant.ENDPOINT_HOST + "/lobby/" + (request.getLobbyName() == null || request.getLobbyName().equals("") ? "null" : request.getLobbyName()) + "/status";
+
+
+
+		HttpGet get = createHttpGet(
+				url,
+				credential,
+				ENDPOINT,
+				GetLobbyStatusRequest.Constant.MODULE,
+				GetLobbyStatusRequest.Constant.FUNCTION);
+        if(request.getRequestId() != null) {
+            get.setHeader("X-GS2-REQUEST-ID", request.getRequestId());
+        }
+
+
+		return doRequest(get, GetLobbyStatusResult.class);
+
+	}
+
+
+	/**
+	 * ロビーを更新します<br>
+	 * <br>
+	 *
+	 * @param request リクエストパラメータ
+
+	 * @return 結果
+
+	 */
+
+	public UpdateLobbyResult updateLobby(UpdateLobbyRequest request) {
+
+		ObjectNode body = JsonNodeFactory.instance.objectNode()
+				.put("serviceClass", request.getServiceClass())
+				.put("notificationType", request.getNotificationType());
+        if(request.getDescription() != null) body.put("description", request.getDescription());
+        if(request.getNotificationUrl() != null) body.put("notificationUrl", request.getNotificationUrl());
+        if(request.getNotificationGameName() != null) body.put("notificationGameName", request.getNotificationGameName());
+        if(request.getLogging() != null) body.put("logging", request.getLogging());
+        if(request.getLoggingDate() != null) body.put("loggingDate", request.getLoggingDate());
+        if(request.getCreateRoomTriggerScript() != null) body.put("createRoomTriggerScript", request.getCreateRoomTriggerScript());
+        if(request.getCreateRoomDoneTriggerScript() != null) body.put("createRoomDoneTriggerScript", request.getCreateRoomDoneTriggerScript());
+        if(request.getDeleteRoomTriggerScript() != null) body.put("deleteRoomTriggerScript", request.getDeleteRoomTriggerScript());
+        if(request.getDeleteRoomDoneTriggerScript() != null) body.put("deleteRoomDoneTriggerScript", request.getDeleteRoomDoneTriggerScript());
+        if(request.getCreateSubscribeTriggerScript() != null) body.put("createSubscribeTriggerScript", request.getCreateSubscribeTriggerScript());
+        if(request.getCreateSubscribeDoneTriggerScript() != null) body.put("createSubscribeDoneTriggerScript", request.getCreateSubscribeDoneTriggerScript());
+        if(request.getDeleteSubscribeTriggerScript() != null) body.put("deleteSubscribeTriggerScript", request.getDeleteSubscribeTriggerScript());
+        if(request.getDeleteSubscribeDoneTriggerScript() != null) body.put("deleteSubscribeDoneTriggerScript", request.getDeleteSubscribeDoneTriggerScript());
+        if(request.getSendMessageTriggerScript() != null) body.put("sendMessageTriggerScript", request.getSendMessageTriggerScript());
+        if(request.getSendMessageDoneTriggerScript() != null) body.put("sendMessageDoneTriggerScript", request.getSendMessageDoneTriggerScript());
+		HttpPut put = createHttpPut(
+				Gs2Constant.ENDPOINT_HOST + "/lobby/" + (request.getLobbyName() == null || request.getLobbyName().equals("") ? "null" : request.getLobbyName()) + "",
+				credential,
+				ENDPOINT,
+				UpdateLobbyRequest.Constant.MODULE,
+				UpdateLobbyRequest.Constant.FUNCTION,
+				body.toString());
+        if(request.getRequestId() != null) {
+            put.setHeader("X-GS2-REQUEST-ID", request.getRequestId());
+        }
+
+
+		return doRequest(put, UpdateLobbyResult.class);
+
 	}
 
 
@@ -153,40 +468,23 @@ public class Gs2ChatClient extends AbstractGs2Client<Gs2ChatClient> {
 
 
 	/**
-	 * ロビーを新規作成します<br>
+	 * メッセージログを検索します。<br>
 	 * <br>
-	 * GS2-Chat の使用を開始するには、まずはロビーを作成します。<br>
-	 * ロビーはチャットルームの集合体のような存在です。<br>
+	 * メッセージログの検索には以下のパラメータを使用できます。<br>
+	 * * ユーザID<br>
+	 * * メッセージテキスト<br>
+	 * * メッセージメタデータ<br>
+	 * いずれも部分一致で検索できます。<br>
+	 * たとえば、メッセージメタデータに JSON フォーマットを使用している場合は JSON 文字列に対する部分一致検索が適用できます。<br>
+	 * 一方で、BLOB データを Base64 かけたようなデータの場合は検索対象とするのは困難です。<br>
 	 * <br>
-	 * ロビーへの設定項目として購読しているルームに発言があったときの通知方式を指定できます。<br>
-	 * http/https を設定した場合は、新しい発言があるたびに指定されたURLに通知を出します。<br>
-	 * 通知は以下のフォーマットで通知されます。<br>
-	 * {<br>
-	 *   "_gs2_service": "GS2-Chat#Receive",<br>
-	 *   "notificationUserIds": [<br>
-	 *     通知先ユーザID<br>
-	 *   ],<br>
-	 *   "roomId": 発言されたルームID,<br>
-	 *   "userId": 発言したユーザのユーザID,<br>
-	 *   "message": {<br>
-	 *     "text": メッセージテキスト,<br>
-	 *     "meta": メタデータ,<br>
-	 *   }<br>
-	 * }<br>
-	 * GS2-InGamePushNotification を指定した場合は、新しい発言があるたびにプッシュ通知を出します。<br>
-	 * 通知は以下のフォーマットで通知されます。<br>
-	 * {<br>
-	 *   "subject": メッセージテキスト,<br>
-	 *   "body": {<br>
-	 *     "_gs2_service": "GS2-Chat#Receive",<br>
-	 *     "roomId": 発言されたルームID,<br>
-	 *     "userId": 発言したユーザのユーザID,<br>
-	 *     "message": {<br>
-	 *       "text": メッセージテキスト,<br>
-	 *       "meta": メタデータ,<br>
-	 *     }<br>
-	 *   }<br>
-	 * }<br>
+	 * メッセージログ検索にかかる費用は、検索時にログデータを何バイトスキャンしたかで決定されます。<br>
+	 * そのため、発言者が滞在していたルームが特定できている場合は、本APIではなく『Gs2Chat:SearchLogByRoom』を使用する方が費用を節約できます。<br>
+	 * また、検索範囲を時間で指定できますが、ログデータは1日単位(UTC)で分割して保存されており、スキャン時には1日分全てがスキャン対象となります。<br>
+	 * つまり、特定の日付の5分間のログを検索するクエリを実行した場合、該当する1日分のログデータがスキャン対象となり、<br>
+	 * さらにその5分間が日付をまたぐような場合は2日分のログデータがスキャン対象となります。<br>
+	 * <br>
+	 * 検索結果が指定した取得最大件数以上の結果を持つ場合、実行後一定期間内であればページトークンを使用した続きのデータ取得が可能です。<br>
 	 * <br>
 	 *
 	 * @param request リクエストパラメータ
@@ -195,306 +493,19 @@ public class Gs2ChatClient extends AbstractGs2Client<Gs2ChatClient> {
 
 	 */
 
-	public CreateLobbyResult createLobby(CreateLobbyRequest request) {
+	public SearchLogByAllRoomResult searchLogByAllRoom(SearchLogByAllRoomRequest request) {
 
-		ObjectNode body = JsonNodeFactory.instance.objectNode()
-				.put("name", request.getName())
-				.put("serviceClass", request.getServiceClass())
-				.put("notificationType", request.getNotificationType());
-
-        if(request.getDescription() != null) body.put("description", request.getDescription());
-        if(request.getNotificationUrl() != null) body.put("notificationUrl", request.getNotificationUrl());
-        if(request.getNotificationGameName() != null) body.put("notificationGameName", request.getNotificationGameName());
-        if(request.getCreateRoomTriggerScript() != null) body.put("createRoomTriggerScript", request.getCreateRoomTriggerScript());
-        if(request.getCreateRoomDoneTriggerScript() != null) body.put("createRoomDoneTriggerScript", request.getCreateRoomDoneTriggerScript());
-        if(request.getDeleteRoomTriggerScript() != null) body.put("deleteRoomTriggerScript", request.getDeleteRoomTriggerScript());
-        if(request.getDeleteRoomDoneTriggerScript() != null) body.put("deleteRoomDoneTriggerScript", request.getDeleteRoomDoneTriggerScript());
-        if(request.getCreateSubscribeTriggerScript() != null) body.put("createSubscribeTriggerScript", request.getCreateSubscribeTriggerScript());
-        if(request.getCreateSubscribeDoneTriggerScript() != null) body.put("createSubscribeDoneTriggerScript", request.getCreateSubscribeDoneTriggerScript());
-        if(request.getDeleteSubscribeTriggerScript() != null) body.put("deleteSubscribeTriggerScript", request.getDeleteSubscribeTriggerScript());
-        if(request.getDeleteSubscribeDoneTriggerScript() != null) body.put("deleteSubscribeDoneTriggerScript", request.getDeleteSubscribeDoneTriggerScript());
-        if(request.getSendMessageTriggerScript() != null) body.put("sendMessageTriggerScript", request.getSendMessageTriggerScript());
-        if(request.getSendMessageDoneTriggerScript() != null) body.put("sendMessageDoneTriggerScript", request.getSendMessageDoneTriggerScript());
-		HttpPost post = createHttpPost(
-				Gs2Constant.ENDPOINT_HOST + "/lobby",
-				credential,
-				ENDPOINT,
-				CreateLobbyRequest.Constant.MODULE,
-				CreateLobbyRequest.Constant.FUNCTION,
-				body.toString());
-        if(request.getRequestId() != null) {
-            post.setHeader("X-GS2-REQUEST-ID", request.getRequestId());
-        }
-
-
-		return doRequest(post, CreateLobbyResult.class);
-
-	}
-
-
-	/**
-	 * ルームを購読します。<br>
-	 * <br>
-	 * ルームを購読すると、ルームに対する新着メッセージを受信したときに通知を受けることが出来ます。<br>
-	 * 通知方式はロビーの設定に依存します。<br>
-	 * <br>
-	 *
-	 * @param request リクエストパラメータ
-
-	 * @return 結果
-
-	 */
-
-	public CreateMySubscribeResult createMySubscribe(CreateMySubscribeRequest request) {
-
-		ObjectNode body = JsonNodeFactory.instance.objectNode();
-
-        if(request.getEnableOfflineTransfer() != null) body.put("enableOfflineTransfer", request.getEnableOfflineTransfer());
-        if(request.getOfflineTransferSound() != null) body.put("offlineTransferSound", request.getOfflineTransferSound());
-        if(request.getPassword() != null) body.put("password", request.getPassword());
-		HttpPost post = createHttpPost(
-				Gs2Constant.ENDPOINT_HOST + "/lobby/" + (request.getLobbyName() == null || request.getLobbyName().equals("") ? "null" : request.getLobbyName()) + "/room/" + (request.getRoomId() == null || request.getRoomId().equals("") ? "null" : request.getRoomId()) + "/subscribe",
-				credential,
-				ENDPOINT,
-				CreateMySubscribeRequest.Constant.MODULE,
-				CreateMySubscribeRequest.Constant.FUNCTION,
-				body.toString());
-        if(request.getRequestId() != null) {
-            post.setHeader("X-GS2-REQUEST-ID", request.getRequestId());
-        }
-
-        post.setHeader("X-GS2-ACCESS-TOKEN", request.getAccessToken());
-
-		return doRequest(post, CreateMySubscribeResult.class);
-
-	}
-
-
-	/**
-	 * ルームを作成します<br>
-	 * <br>
-	 * ルームには参加可能なユーザIDリストを設定することが出来ます。<br>
-	 * ここで指定されたユーザID以外のユーザがメッセージ情報を取得したり、メッセージを書き込もうとしても失敗するようになります。<br>
-	 * 何も指定しなければ、誰でも読み書きの出来る部屋になります。<br>
-	 * ルームを作成する際に参加するユーザが確定している場合に使用するといいでしょう。<br>
-	 * <br>
-	 * ルームにはパスワードを設定することが出来ます。<br>
-	 * パスワードが設定されたルームのメッセージ情報を取得したり、メッセージを書き込もうとするさいにパスワードを指定する必要があります。<br>
-	 * パスワードが一致しない場合は失敗します。<br>
-	 * 何も指定しなければ、メッセージの読み書きにパスワードを要求しません。<br>
-	 * ルームを作成する際には参加するユーザが確定できないけれど、アクセスを制限したい場合に使用するといいでしょう。<br>
-	 * <br>
-	 * ルームIDには任意の値を指定することが出来ます。<br>
-	 * たとえば、マッチメイキングを実行し構築されたギャザリングのユーザ向けにチャットルームを提供したい場合、<br>
-	 * ギャザリングIDをキーとしてルームを作成することで、クライアントがチャットにアクセスする際にIDの特定が容易になります。<br>
-	 * ルームIDを省略するとUUIDv4に基づいて自動的に採番されます。<br>
-	 * <br>
-	 *
-	 * @param request リクエストパラメータ
-
-	 * @return 結果
-
-	 */
-
-	public CreateRoomResult createRoom(CreateRoomRequest request) {
-
-		ObjectNode body = JsonNodeFactory.instance.objectNode();
-
-        if(request.getRoomId() != null) body.put("roomId", request.getRoomId());
-        if(request.getAllowUserIds() != null) body.put("allowUserIds", request.getAllowUserIds());
-        if(request.getPassword() != null) body.put("password", request.getPassword());
-		HttpPost post = createHttpPost(
-				Gs2Constant.ENDPOINT_HOST + "/lobby/" + (request.getLobbyName() == null || request.getLobbyName().equals("") ? "null" : request.getLobbyName()) + "/room",
-				credential,
-				ENDPOINT,
-				CreateRoomRequest.Constant.MODULE,
-				CreateRoomRequest.Constant.FUNCTION,
-				body.toString());
-        if(request.getRequestId() != null) {
-            post.setHeader("X-GS2-REQUEST-ID", request.getRequestId());
-        }
-
-
-		return doRequest(post, CreateRoomResult.class);
-
-	}
-
-
-	/**
-	 * ルームを購読します。<br>
-	 * <br>
-	 * ルームを購読すると、ルームに対する新着メッセージを受信したときに通知を受けることが出来ます。<br>
-	 * 通知方式はロビーの設定に依存します。<br>
-	 * <br>
-	 *
-	 * @param request リクエストパラメータ
-
-	 * @return 結果
-
-	 */
-
-	public CreateSubscribeResult createSubscribe(CreateSubscribeRequest request) {
-
-		ObjectNode body = JsonNodeFactory.instance.objectNode();
-
-        if(request.getEnableOfflineTransfer() != null) body.put("enableOfflineTransfer", request.getEnableOfflineTransfer());
-        if(request.getOfflineTransferSound() != null) body.put("offlineTransferSound", request.getOfflineTransferSound());
-        if(request.getPassword() != null) body.put("password", request.getPassword());
-		HttpPost post = createHttpPost(
-				Gs2Constant.ENDPOINT_HOST + "/lobby/" + (request.getLobbyName() == null || request.getLobbyName().equals("") ? "null" : request.getLobbyName()) + "/room/" + (request.getRoomId() == null || request.getRoomId().equals("") ? "null" : request.getRoomId()) + "/user/" + (request.getUserId() == null || request.getUserId().equals("") ? "null" : request.getUserId()) + "/subscribe",
-				credential,
-				ENDPOINT,
-				CreateSubscribeRequest.Constant.MODULE,
-				CreateSubscribeRequest.Constant.FUNCTION,
-				body.toString());
-        if(request.getRequestId() != null) {
-            post.setHeader("X-GS2-REQUEST-ID", request.getRequestId());
-        }
-
-
-		return doRequest(post, CreateSubscribeResult.class);
-
-	}
-
-
-	/**
-	 * ロビーを削除します<br>
-	 * <br>
-	 *
-	 * @param request リクエストパラメータ
-
-	 */
-
-	public void deleteLobby(DeleteLobbyRequest request) {
-
-	    String url = Gs2Constant.ENDPOINT_HOST + "/lobby/" + (request.getLobbyName() == null || request.getLobbyName().equals("") ? "null" : request.getLobbyName()) + "";
-
-
-
-		HttpDelete delete = createHttpDelete(
-				url,
-				credential,
-				ENDPOINT,
-				DeleteLobbyRequest.Constant.MODULE,
-				DeleteLobbyRequest.Constant.FUNCTION);
-        if(request.getRequestId() != null) {
-            delete.setHeader("X-GS2-REQUEST-ID", request.getRequestId());
-        }
-
-
-		doRequest(delete, null);
-
-	}
-
-
-	/**
-	 * 購読を解除する。<br>
-	 * <br>
-	 *
-	 * @param request リクエストパラメータ
-
-	 */
-
-	public void deleteMySubscribe(DeleteMySubscribeRequest request) {
-
-	    String url = Gs2Constant.ENDPOINT_HOST + "/lobby/" + (request.getLobbyName() == null || request.getLobbyName().equals("") ? "null" : request.getLobbyName()) + "/room/" + (request.getRoomId() == null || request.getRoomId().equals("") ? "null" : request.getRoomId()) + "/user/self/subscribe";
-
-
-
-		HttpDelete delete = createHttpDelete(
-				url,
-				credential,
-				ENDPOINT,
-				DeleteMySubscribeRequest.Constant.MODULE,
-				DeleteMySubscribeRequest.Constant.FUNCTION);
-        if(request.getRequestId() != null) {
-            delete.setHeader("X-GS2-REQUEST-ID", request.getRequestId());
-        }
-
-        delete.setHeader("X-GS2-ACCESS-TOKEN", request.getAccessToken());
-
-		doRequest(delete, null);
-
-	}
-
-
-	/**
-	 * ルームを削除します<br>
-	 * <br>
-	 *
-	 * @param request リクエストパラメータ
-
-	 */
-
-	public void deleteRoom(DeleteRoomRequest request) {
-
-	    String url = Gs2Constant.ENDPOINT_HOST + "/lobby/" + (request.getLobbyName() == null || request.getLobbyName().equals("") ? "null" : request.getLobbyName()) + "/room/" + (request.getRoomId() == null || request.getRoomId().equals("") ? "null" : request.getRoomId()) + "";
-
-
-
-		HttpDelete delete = createHttpDelete(
-				url,
-				credential,
-				ENDPOINT,
-				DeleteRoomRequest.Constant.MODULE,
-				DeleteRoomRequest.Constant.FUNCTION);
-        if(request.getRequestId() != null) {
-            delete.setHeader("X-GS2-REQUEST-ID", request.getRequestId());
-        }
-
-
-		doRequest(delete, null);
-
-	}
-
-
-	/**
-	 * 購読を解除する。<br>
-	 * <br>
-	 *
-	 * @param request リクエストパラメータ
-
-	 */
-
-	public void deleteSubscribe(DeleteSubscribeRequest request) {
-
-	    String url = Gs2Constant.ENDPOINT_HOST + "/lobby/" + (request.getLobbyName() == null || request.getLobbyName().equals("") ? "null" : request.getLobbyName()) + "/room/" + (request.getRoomId() == null || request.getRoomId().equals("") ? "null" : request.getRoomId()) + "/user/" + (request.getUserId() == null || request.getUserId().equals("") ? "null" : request.getUserId()) + "/subscribe";
-
-
-
-		HttpDelete delete = createHttpDelete(
-				url,
-				credential,
-				ENDPOINT,
-				DeleteSubscribeRequest.Constant.MODULE,
-				DeleteSubscribeRequest.Constant.FUNCTION);
-        if(request.getRequestId() != null) {
-            delete.setHeader("X-GS2-REQUEST-ID", request.getRequestId());
-        }
-
-
-		doRequest(delete, null);
-
-	}
-
-
-	/**
-	 * ロビーの一覧を取得します<br>
-	 * <br>
-	 *
-	 * @param request リクエストパラメータ
-
-	 * @return 結果
-
-	 */
-
-	public DescribeLobbyResult describeLobby(DescribeLobbyRequest request) {
-
-	    String url = Gs2Constant.ENDPOINT_HOST + "/lobby";
+	    String url = Gs2Constant.ENDPOINT_HOST + "/lobby/" + (request.getLobbyName() == null || request.getLobbyName().equals("") ? "null" : request.getLobbyName()) + "/log";
 
         List<NameValuePair> queryString = new ArrayList<>();
+        if(request.getUserId() != null) queryString.add(new BasicNameValuePair("userId", String.valueOf(request.getUserId())));
+        if(request.getMessage() != null) queryString.add(new BasicNameValuePair("message", String.valueOf(request.getMessage())));
+        if(request.getMeta() != null) queryString.add(new BasicNameValuePair("meta", String.valueOf(request.getMeta())));
+        if(request.getBegin() != null) queryString.add(new BasicNameValuePair("begin", String.valueOf(request.getBegin())));
+        if(request.getEnd() != null) queryString.add(new BasicNameValuePair("end", String.valueOf(request.getEnd())));
         if(request.getPageToken() != null) queryString.add(new BasicNameValuePair("pageToken", String.valueOf(request.getPageToken())));
         if(request.getLimit() != null) queryString.add(new BasicNameValuePair("limit", String.valueOf(request.getLimit())));
+        if(request.getUseCache() != null) queryString.add(new BasicNameValuePair("useCache", String.valueOf(request.getUseCache())));
 
 
 		if(queryString.size() > 0) {
@@ -504,14 +515,73 @@ public class Gs2ChatClient extends AbstractGs2Client<Gs2ChatClient> {
 				url,
 				credential,
 				ENDPOINT,
-				DescribeLobbyRequest.Constant.MODULE,
-				DescribeLobbyRequest.Constant.FUNCTION);
+				SearchLogByAllRoomRequest.Constant.MODULE,
+				SearchLogByAllRoomRequest.Constant.FUNCTION);
         if(request.getRequestId() != null) {
             get.setHeader("X-GS2-REQUEST-ID", request.getRequestId());
         }
 
 
-		return doRequest(get, DescribeLobbyResult.class);
+		return doRequest(get, SearchLogByAllRoomResult.class);
+
+	}
+
+
+	/**
+	 * メッセージログを検索します。<br>
+	 * <br>
+	 * メッセージログの検索には以下のパラメータを使用できます。<br>
+	 * * ユーザID<br>
+	 * * メッセージテキスト<br>
+	 * * メッセージメタデータ<br>
+	 * いずれも部分一致で検索できます。<br>
+	 * たとえば、メッセージメタデータに JSON フォーマットを使用している場合は JSON 文字列に対する部分一致検索が適用できます。<br>
+	 * 一方で、BLOB データを Base64 かけたようなデータの場合は検索対象とするのは困難です。<br>
+	 * <br>
+	 * メッセージログ検索にかかる費用は、検索時にログデータを何バイトスキャンしたかで決定されます。<br>
+	 * 検索範囲を時間で指定できますが、ログデータは1日単位(UTC)で分割して保存されており、スキャン時には1日分全てがスキャン対象となります。<br>
+	 * つまり、特定の日付の5分間のログを検索するクエリを実行した場合、該当する1日分のログデータがスキャン対象となり、<br>
+	 * さらにその5分間が日付をまたぐような場合は2日分のログデータがスキャン対象となります。<br>
+	 * <br>
+	 * 検索結果が指定した取得最大件数以上の結果を持つ場合、実行後一定期間内であればページトークンを使用した続きのデータ取得が可能です。<br>
+	 * <br>
+	 *
+	 * @param request リクエストパラメータ
+
+	 * @return 結果
+
+	 */
+
+	public SearchLogByRoomResult searchLogByRoom(SearchLogByRoomRequest request) {
+
+	    String url = Gs2Constant.ENDPOINT_HOST + "/lobby/" + (request.getLobbyName() == null || request.getLobbyName().equals("") ? "null" : request.getLobbyName()) + "/room/" + (request.getRoomId() == null || request.getRoomId().equals("") ? "null" : request.getRoomId()) + "/log";
+
+        List<NameValuePair> queryString = new ArrayList<>();
+        if(request.getUserId() != null) queryString.add(new BasicNameValuePair("userId", String.valueOf(request.getUserId())));
+        if(request.getMessage() != null) queryString.add(new BasicNameValuePair("message", String.valueOf(request.getMessage())));
+        if(request.getMeta() != null) queryString.add(new BasicNameValuePair("meta", String.valueOf(request.getMeta())));
+        if(request.getBegin() != null) queryString.add(new BasicNameValuePair("begin", String.valueOf(request.getBegin())));
+        if(request.getEnd() != null) queryString.add(new BasicNameValuePair("end", String.valueOf(request.getEnd())));
+        if(request.getPageToken() != null) queryString.add(new BasicNameValuePair("pageToken", String.valueOf(request.getPageToken())));
+        if(request.getLimit() != null) queryString.add(new BasicNameValuePair("limit", String.valueOf(request.getLimit())));
+        if(request.getUseCache() != null) queryString.add(new BasicNameValuePair("useCache", String.valueOf(request.getUseCache())));
+
+
+		if(queryString.size() > 0) {
+			url += "?" + URLEncodedUtils.format(queryString, "UTF-8");
+		}
+		HttpGet get = createHttpGet(
+				url,
+				credential,
+				ENDPOINT,
+				SearchLogByRoomRequest.Constant.MODULE,
+				SearchLogByRoomRequest.Constant.FUNCTION);
+        if(request.getRequestId() != null) {
+            get.setHeader("X-GS2-REQUEST-ID", request.getRequestId());
+        }
+
+
+		return doRequest(get, SearchLogByRoomResult.class);
 
 	}
 
@@ -595,7 +665,7 @@ public class Gs2ChatClient extends AbstractGs2Client<Gs2ChatClient> {
 
 
 	/**
-	 * ユーザが購読しているルームの一覧を取得します。<br>
+	 * メッセージを送信します。<br>
 	 * <br>
 	 *
 	 * @param request リクエストパラメータ
@@ -604,31 +674,141 @@ public class Gs2ChatClient extends AbstractGs2Client<Gs2ChatClient> {
 
 	 */
 
-	public DescribeMySubscribeResult describeMySubscribe(DescribeMySubscribeRequest request) {
+	public SendMessageResult sendMessage(SendMessageRequest request) {
 
-	    String url = Gs2Constant.ENDPOINT_HOST + "/lobby/" + (request.getLobbyName() == null || request.getLobbyName().equals("") ? "null" : request.getLobbyName()) + "/user/subscribe";
+		ObjectNode body = JsonNodeFactory.instance.objectNode()
+				.put("message", request.getMessage());
+        if(request.getMeta() != null) body.put("meta", request.getMeta());
+        if(request.getPassword() != null) body.put("password", request.getPassword());
 
-        List<NameValuePair> queryString = new ArrayList<>();
-        if(request.getPageToken() != null) queryString.add(new BasicNameValuePair("pageToken", String.valueOf(request.getPageToken())));
-        if(request.getLimit() != null) queryString.add(new BasicNameValuePair("limit", String.valueOf(request.getLimit())));
+		HttpPost post = createHttpPost(
+				Gs2Constant.ENDPOINT_HOST + "/lobby/" + (request.getLobbyName() == null || request.getLobbyName().equals("") ? "null" : request.getLobbyName()) + "/room/" + (request.getRoomId() == null || request.getRoomId().equals("") ? "null" : request.getRoomId()) + "/message",
+				credential,
+				ENDPOINT,
+				SendMessageRequest.Constant.MODULE,
+				SendMessageRequest.Constant.FUNCTION,
+				body.toString());
+        if(request.getRequestId() != null) {
+            post.setHeader("X-GS2-REQUEST-ID", request.getRequestId());
+        }
+
+        post.setHeader("X-GS2-ACCESS-TOKEN", request.getAccessToken());
+
+		return doRequest(post, SendMessageResult.class);
+
+	}
 
 
-		if(queryString.size() > 0) {
-			url += "?" + URLEncodedUtils.format(queryString, "UTF-8");
-		}
-		HttpGet get = createHttpGet(
+	/**
+	 * メッセージを送信します。<br>
+	 * <br>
+	 *
+	 * @param request リクエストパラメータ
+
+	 * @return 結果
+
+	 */
+
+	public SendMessageNoAuthResult sendMessageNoAuth(SendMessageNoAuthRequest request) {
+
+		ObjectNode body = JsonNodeFactory.instance.objectNode()
+				.put("userId", request.getUserId())
+				.put("message", request.getMessage());
+        if(request.getMeta() != null) body.put("meta", request.getMeta());
+
+		HttpPost post = createHttpPost(
+				Gs2Constant.ENDPOINT_HOST + "/lobby/" + (request.getLobbyName() == null || request.getLobbyName().equals("") ? "null" : request.getLobbyName()) + "/room/" + (request.getRoomId() == null || request.getRoomId().equals("") ? "null" : request.getRoomId()) + "/message/force",
+				credential,
+				ENDPOINT,
+				SendMessageNoAuthRequest.Constant.MODULE,
+				SendMessageNoAuthRequest.Constant.FUNCTION,
+				body.toString());
+        if(request.getRequestId() != null) {
+            post.setHeader("X-GS2-REQUEST-ID", request.getRequestId());
+        }
+
+
+		return doRequest(post, SendMessageNoAuthResult.class);
+
+	}
+
+
+	/**
+	 * ルームを作成します<br>
+	 * <br>
+	 * ルームには参加可能なユーザIDリストを設定することが出来ます。<br>
+	 * ここで指定されたユーザID以外のユーザがメッセージ情報を取得したり、メッセージを書き込もうとしても失敗するようになります。<br>
+	 * 何も指定しなければ、誰でも読み書きの出来る部屋になります。<br>
+	 * ルームを作成する際に参加するユーザが確定している場合に使用するといいでしょう。<br>
+	 * <br>
+	 * ルームにはパスワードを設定することが出来ます。<br>
+	 * パスワードが設定されたルームのメッセージ情報を取得したり、メッセージを書き込もうとするさいにパスワードを指定する必要があります。<br>
+	 * パスワードが一致しない場合は失敗します。<br>
+	 * 何も指定しなければ、メッセージの読み書きにパスワードを要求しません。<br>
+	 * ルームを作成する際には参加するユーザが確定できないけれど、アクセスを制限したい場合に使用するといいでしょう。<br>
+	 * <br>
+	 * ルームIDには任意の値を指定することが出来ます。<br>
+	 * たとえば、マッチメイキングを実行し構築されたギャザリングのユーザ向けにチャットルームを提供したい場合、<br>
+	 * ギャザリングIDをキーとしてルームを作成することで、クライアントがチャットにアクセスする際にIDの特定が容易になります。<br>
+	 * ルームIDを省略するとUUIDv4に基づいて自動的に採番されます。<br>
+	 * <br>
+	 *
+	 * @param request リクエストパラメータ
+
+	 * @return 結果
+
+	 */
+
+	public CreateRoomResult createRoom(CreateRoomRequest request) {
+
+		ObjectNode body = JsonNodeFactory.instance.objectNode();
+        if(request.getRoomId() != null) body.put("roomId", request.getRoomId());
+        if(request.getAllowUserIds() != null) body.put("allowUserIds", request.getAllowUserIds());
+        if(request.getPassword() != null) body.put("password", request.getPassword());
+
+		HttpPost post = createHttpPost(
+				Gs2Constant.ENDPOINT_HOST + "/lobby/" + (request.getLobbyName() == null || request.getLobbyName().equals("") ? "null" : request.getLobbyName()) + "/room",
+				credential,
+				ENDPOINT,
+				CreateRoomRequest.Constant.MODULE,
+				CreateRoomRequest.Constant.FUNCTION,
+				body.toString());
+        if(request.getRequestId() != null) {
+            post.setHeader("X-GS2-REQUEST-ID", request.getRequestId());
+        }
+
+
+		return doRequest(post, CreateRoomResult.class);
+
+	}
+
+
+	/**
+	 * ルームを削除します<br>
+	 * <br>
+	 *
+	 * @param request リクエストパラメータ
+
+	 */
+
+	public void deleteRoom(DeleteRoomRequest request) {
+
+	    String url = Gs2Constant.ENDPOINT_HOST + "/lobby/" + (request.getLobbyName() == null || request.getLobbyName().equals("") ? "null" : request.getLobbyName()) + "/room/" + (request.getRoomId() == null || request.getRoomId().equals("") ? "null" : request.getRoomId()) + "";
+
+
+
+		HttpDelete delete = createHttpDelete(
 				url,
 				credential,
 				ENDPOINT,
-				DescribeMySubscribeRequest.Constant.MODULE,
-				DescribeMySubscribeRequest.Constant.FUNCTION);
+				DeleteRoomRequest.Constant.MODULE,
+				DeleteRoomRequest.Constant.FUNCTION);
         if(request.getRequestId() != null) {
-            get.setHeader("X-GS2-REQUEST-ID", request.getRequestId());
+            delete.setHeader("X-GS2-REQUEST-ID", request.getRequestId());
         }
 
-        get.setHeader("X-GS2-ACCESS-TOKEN", request.getAccessToken());
 
-		return doRequest(get, DescribeMySubscribeResult.class);
+		doRequest(delete, null);
 
 	}
 
@@ -672,7 +852,7 @@ public class Gs2ChatClient extends AbstractGs2Client<Gs2ChatClient> {
 
 
 	/**
-	 * サービスクラスの一覧を取得します<br>
+	 * ルームを取得します<br>
 	 * <br>
 	 *
 	 * @param request リクエストパラメータ
@@ -681,9 +861,9 @@ public class Gs2ChatClient extends AbstractGs2Client<Gs2ChatClient> {
 
 	 */
 
-	public DescribeServiceClassResult describeServiceClass(DescribeServiceClassRequest request) {
+	public GetRoomResult getRoom(GetRoomRequest request) {
 
-	    String url = Gs2Constant.ENDPOINT_HOST + "/lobby/serviceClass";
+	    String url = Gs2Constant.ENDPOINT_HOST + "/lobby/" + (request.getLobbyName() == null || request.getLobbyName().equals("") ? "null" : request.getLobbyName()) + "/room/" + (request.getRoomId() == null || request.getRoomId().equals("") ? "null" : request.getRoomId()) + "";
 
 
 
@@ -691,14 +871,189 @@ public class Gs2ChatClient extends AbstractGs2Client<Gs2ChatClient> {
 				url,
 				credential,
 				ENDPOINT,
-				DescribeServiceClassRequest.Constant.MODULE,
-				DescribeServiceClassRequest.Constant.FUNCTION);
+				GetRoomRequest.Constant.MODULE,
+				GetRoomRequest.Constant.FUNCTION);
         if(request.getRequestId() != null) {
             get.setHeader("X-GS2-REQUEST-ID", request.getRequestId());
         }
 
 
-		return doRequest(get, DescribeServiceClassResult.class);
+		return doRequest(get, GetRoomResult.class);
+
+	}
+
+
+	/**
+	 * ルームを購読します。<br>
+	 * <br>
+	 * ルームを購読すると、ルームに対する新着メッセージを受信したときに通知を受けることが出来ます。<br>
+	 * 通知方式はロビーの設定に依存します。<br>
+	 * <br>
+	 *
+	 * @param request リクエストパラメータ
+
+	 * @return 結果
+
+	 */
+
+	public CreateMySubscribeResult createMySubscribe(CreateMySubscribeRequest request) {
+
+		ObjectNode body = JsonNodeFactory.instance.objectNode();
+        if(request.getEnableOfflineTransfer() != null) body.put("enableOfflineTransfer", request.getEnableOfflineTransfer());
+        if(request.getOfflineTransferSound() != null) body.put("offlineTransferSound", request.getOfflineTransferSound());
+        if(request.getPassword() != null) body.put("password", request.getPassword());
+
+		HttpPost post = createHttpPost(
+				Gs2Constant.ENDPOINT_HOST + "/lobby/" + (request.getLobbyName() == null || request.getLobbyName().equals("") ? "null" : request.getLobbyName()) + "/room/" + (request.getRoomId() == null || request.getRoomId().equals("") ? "null" : request.getRoomId()) + "/subscribe",
+				credential,
+				ENDPOINT,
+				CreateMySubscribeRequest.Constant.MODULE,
+				CreateMySubscribeRequest.Constant.FUNCTION,
+				body.toString());
+        if(request.getRequestId() != null) {
+            post.setHeader("X-GS2-REQUEST-ID", request.getRequestId());
+        }
+
+        post.setHeader("X-GS2-ACCESS-TOKEN", request.getAccessToken());
+
+		return doRequest(post, CreateMySubscribeResult.class);
+
+	}
+
+
+	/**
+	 * ルームを購読します。<br>
+	 * <br>
+	 * ルームを購読すると、ルームに対する新着メッセージを受信したときに通知を受けることが出来ます。<br>
+	 * 通知方式はロビーの設定に依存します。<br>
+	 * <br>
+	 *
+	 * @param request リクエストパラメータ
+
+	 * @return 結果
+
+	 */
+
+	public CreateSubscribeResult createSubscribe(CreateSubscribeRequest request) {
+
+		ObjectNode body = JsonNodeFactory.instance.objectNode();
+        if(request.getEnableOfflineTransfer() != null) body.put("enableOfflineTransfer", request.getEnableOfflineTransfer());
+        if(request.getOfflineTransferSound() != null) body.put("offlineTransferSound", request.getOfflineTransferSound());
+        if(request.getPassword() != null) body.put("password", request.getPassword());
+
+		HttpPost post = createHttpPost(
+				Gs2Constant.ENDPOINT_HOST + "/lobby/" + (request.getLobbyName() == null || request.getLobbyName().equals("") ? "null" : request.getLobbyName()) + "/room/" + (request.getRoomId() == null || request.getRoomId().equals("") ? "null" : request.getRoomId()) + "/user/" + (request.getUserId() == null || request.getUserId().equals("") ? "null" : request.getUserId()) + "/subscribe",
+				credential,
+				ENDPOINT,
+				CreateSubscribeRequest.Constant.MODULE,
+				CreateSubscribeRequest.Constant.FUNCTION,
+				body.toString());
+        if(request.getRequestId() != null) {
+            post.setHeader("X-GS2-REQUEST-ID", request.getRequestId());
+        }
+
+
+		return doRequest(post, CreateSubscribeResult.class);
+
+	}
+
+
+	/**
+	 * 購読を解除する。<br>
+	 * <br>
+	 *
+	 * @param request リクエストパラメータ
+
+	 */
+
+	public void deleteMySubscribe(DeleteMySubscribeRequest request) {
+
+	    String url = Gs2Constant.ENDPOINT_HOST + "/lobby/" + (request.getLobbyName() == null || request.getLobbyName().equals("") ? "null" : request.getLobbyName()) + "/room/" + (request.getRoomId() == null || request.getRoomId().equals("") ? "null" : request.getRoomId()) + "/user/self/subscribe";
+
+
+
+		HttpDelete delete = createHttpDelete(
+				url,
+				credential,
+				ENDPOINT,
+				DeleteMySubscribeRequest.Constant.MODULE,
+				DeleteMySubscribeRequest.Constant.FUNCTION);
+        if(request.getRequestId() != null) {
+            delete.setHeader("X-GS2-REQUEST-ID", request.getRequestId());
+        }
+
+        delete.setHeader("X-GS2-ACCESS-TOKEN", request.getAccessToken());
+
+		doRequest(delete, null);
+
+	}
+
+
+	/**
+	 * 購読を解除する。<br>
+	 * <br>
+	 *
+	 * @param request リクエストパラメータ
+
+	 */
+
+	public void deleteSubscribe(DeleteSubscribeRequest request) {
+
+	    String url = Gs2Constant.ENDPOINT_HOST + "/lobby/" + (request.getLobbyName() == null || request.getLobbyName().equals("") ? "null" : request.getLobbyName()) + "/room/" + (request.getRoomId() == null || request.getRoomId().equals("") ? "null" : request.getRoomId()) + "/user/" + (request.getUserId() == null || request.getUserId().equals("") ? "null" : request.getUserId()) + "/subscribe";
+
+
+
+		HttpDelete delete = createHttpDelete(
+				url,
+				credential,
+				ENDPOINT,
+				DeleteSubscribeRequest.Constant.MODULE,
+				DeleteSubscribeRequest.Constant.FUNCTION);
+        if(request.getRequestId() != null) {
+            delete.setHeader("X-GS2-REQUEST-ID", request.getRequestId());
+        }
+
+
+		doRequest(delete, null);
+
+	}
+
+
+	/**
+	 * ユーザが購読しているルームの一覧を取得します。<br>
+	 * <br>
+	 *
+	 * @param request リクエストパラメータ
+
+	 * @return 結果
+
+	 */
+
+	public DescribeMySubscribeResult describeMySubscribe(DescribeMySubscribeRequest request) {
+
+	    String url = Gs2Constant.ENDPOINT_HOST + "/lobby/" + (request.getLobbyName() == null || request.getLobbyName().equals("") ? "null" : request.getLobbyName()) + "/user/subscribe";
+
+        List<NameValuePair> queryString = new ArrayList<>();
+        if(request.getPageToken() != null) queryString.add(new BasicNameValuePair("pageToken", String.valueOf(request.getPageToken())));
+        if(request.getLimit() != null) queryString.add(new BasicNameValuePair("limit", String.valueOf(request.getLimit())));
+
+
+		if(queryString.size() > 0) {
+			url += "?" + URLEncodedUtils.format(queryString, "UTF-8");
+		}
+		HttpGet get = createHttpGet(
+				url,
+				credential,
+				ENDPOINT,
+				DescribeMySubscribeRequest.Constant.MODULE,
+				DescribeMySubscribeRequest.Constant.FUNCTION);
+        if(request.getRequestId() != null) {
+            get.setHeader("X-GS2-REQUEST-ID", request.getRequestId());
+        }
+
+        get.setHeader("X-GS2-ACCESS-TOKEN", request.getAccessToken());
+
+		return doRequest(get, DescribeMySubscribeResult.class);
 
 	}
 
@@ -780,70 +1135,6 @@ public class Gs2ChatClient extends AbstractGs2Client<Gs2ChatClient> {
 
 
 	/**
-	 * ロビーを取得します<br>
-	 * <br>
-	 *
-	 * @param request リクエストパラメータ
-
-	 * @return 結果
-
-	 */
-
-	public GetLobbyResult getLobby(GetLobbyRequest request) {
-
-	    String url = Gs2Constant.ENDPOINT_HOST + "/lobby/" + (request.getLobbyName() == null || request.getLobbyName().equals("") ? "null" : request.getLobbyName()) + "";
-
-
-
-		HttpGet get = createHttpGet(
-				url,
-				credential,
-				ENDPOINT,
-				GetLobbyRequest.Constant.MODULE,
-				GetLobbyRequest.Constant.FUNCTION);
-        if(request.getRequestId() != null) {
-            get.setHeader("X-GS2-REQUEST-ID", request.getRequestId());
-        }
-
-
-		return doRequest(get, GetLobbyResult.class);
-
-	}
-
-
-	/**
-	 * ロビーの状態を取得します<br>
-	 * <br>
-	 *
-	 * @param request リクエストパラメータ
-
-	 * @return 結果
-
-	 */
-
-	public GetLobbyStatusResult getLobbyStatus(GetLobbyStatusRequest request) {
-
-	    String url = Gs2Constant.ENDPOINT_HOST + "/lobby/" + (request.getLobbyName() == null || request.getLobbyName().equals("") ? "null" : request.getLobbyName()) + "/status";
-
-
-
-		HttpGet get = createHttpGet(
-				url,
-				credential,
-				ENDPOINT,
-				GetLobbyStatusRequest.Constant.MODULE,
-				GetLobbyStatusRequest.Constant.FUNCTION);
-        if(request.getRequestId() != null) {
-            get.setHeader("X-GS2-REQUEST-ID", request.getRequestId());
-        }
-
-
-		return doRequest(get, GetLobbyStatusResult.class);
-
-	}
-
-
-	/**
 	 * 購読情報を取得する。<br>
 	 * <br>
 	 *
@@ -877,38 +1168,6 @@ public class Gs2ChatClient extends AbstractGs2Client<Gs2ChatClient> {
 
 
 	/**
-	 * ルームを取得します<br>
-	 * <br>
-	 *
-	 * @param request リクエストパラメータ
-
-	 * @return 結果
-
-	 */
-
-	public GetRoomResult getRoom(GetRoomRequest request) {
-
-	    String url = Gs2Constant.ENDPOINT_HOST + "/lobby/" + (request.getLobbyName() == null || request.getLobbyName().equals("") ? "null" : request.getLobbyName()) + "/room/" + (request.getRoomId() == null || request.getRoomId().equals("") ? "null" : request.getRoomId()) + "";
-
-
-
-		HttpGet get = createHttpGet(
-				url,
-				credential,
-				ENDPOINT,
-				GetRoomRequest.Constant.MODULE,
-				GetRoomRequest.Constant.FUNCTION);
-        if(request.getRequestId() != null) {
-            get.setHeader("X-GS2-REQUEST-ID", request.getRequestId());
-        }
-
-
-		return doRequest(get, GetRoomResult.class);
-
-	}
-
-
-	/**
 	 * 購読情報を取得する。<br>
 	 * <br>
 	 *
@@ -936,238 +1195,6 @@ public class Gs2ChatClient extends AbstractGs2Client<Gs2ChatClient> {
 
 
 		return doRequest(get, GetSubscribeResult.class);
-
-	}
-
-
-	/**
-	 * メッセージログを検索します。<br>
-	 * <br>
-	 * メッセージログの検索には以下のパラメータを使用できます。<br>
-	 * * ユーザID<br>
-	 * * メッセージテキスト<br>
-	 * * メッセージメタデータ<br>
-	 * いずれも部分一致で検索できます。<br>
-	 * たとえば、メッセージメタデータに JSON フォーマットを使用している場合は JSON 文字列に対する部分一致検索が適用できます。<br>
-	 * 一方で、BLOB データを Base64 かけたようなデータの場合は検索対象とするのは困難です。<br>
-	 * <br>
-	 * メッセージログ検索にかかる費用は、検索時にログデータを何バイトスキャンしたかで決定されます。<br>
-	 * そのため、発言者が滞在していたルームが特定できている場合は、本APIではなく『Gs2Chat:SearchLogByRoom』を使用する方が費用を節約できます。<br>
-	 * また、検索範囲を時間で指定できますが、ログデータは1日単位(UTC)で分割して保存されており、スキャン時には1日分全てがスキャン対象となります。<br>
-	 * つまり、特定の日付の5分間のログを検索するクエリを実行した場合、該当する1日分のログデータがスキャン対象となり、<br>
-	 * さらにその5分間が日付をまたぐような場合は2日分のログデータがスキャン対象となります。<br>
-	 * <br>
-	 * 検索結果が指定した取得最大件数以上の結果を持つ場合、実行後一定期間内であればページトークンを使用した続きのデータ取得が可能です。<br>
-	 * <br>
-	 *
-	 * @param request リクエストパラメータ
-
-	 * @return 結果
-
-	 */
-
-	public SearchLogByAllRoomResult searchLogByAllRoom(SearchLogByAllRoomRequest request) {
-
-	    String url = Gs2Constant.ENDPOINT_HOST + "/lobby/" + (request.getLobbyName() == null || request.getLobbyName().equals("") ? "null" : request.getLobbyName()) + "/log";
-
-        List<NameValuePair> queryString = new ArrayList<>();
-        if(request.getUserId() != null) queryString.add(new BasicNameValuePair("userId", String.valueOf(request.getUserId())));
-        if(request.getMessage() != null) queryString.add(new BasicNameValuePair("message", String.valueOf(request.getMessage())));
-        if(request.getMeta() != null) queryString.add(new BasicNameValuePair("meta", String.valueOf(request.getMeta())));
-        if(request.getBegin() != null) queryString.add(new BasicNameValuePair("begin", String.valueOf(request.getBegin())));
-        if(request.getEnd() != null) queryString.add(new BasicNameValuePair("end", String.valueOf(request.getEnd())));
-        if(request.getPageToken() != null) queryString.add(new BasicNameValuePair("pageToken", String.valueOf(request.getPageToken())));
-        if(request.getLimit() != null) queryString.add(new BasicNameValuePair("limit", String.valueOf(request.getLimit())));
-
-
-		if(queryString.size() > 0) {
-			url += "?" + URLEncodedUtils.format(queryString, "UTF-8");
-		}
-		HttpGet get = createHttpGet(
-				url,
-				credential,
-				ENDPOINT,
-				SearchLogByAllRoomRequest.Constant.MODULE,
-				SearchLogByAllRoomRequest.Constant.FUNCTION);
-        if(request.getRequestId() != null) {
-            get.setHeader("X-GS2-REQUEST-ID", request.getRequestId());
-        }
-
-
-		return doRequest(get, SearchLogByAllRoomResult.class);
-
-	}
-
-
-	/**
-	 * メッセージログを検索します。<br>
-	 * <br>
-	 * メッセージログの検索には以下のパラメータを使用できます。<br>
-	 * * ユーザID<br>
-	 * * メッセージテキスト<br>
-	 * * メッセージメタデータ<br>
-	 * いずれも部分一致で検索できます。<br>
-	 * たとえば、メッセージメタデータに JSON フォーマットを使用している場合は JSON 文字列に対する部分一致検索が適用できます。<br>
-	 * 一方で、BLOB データを Base64 かけたようなデータの場合は検索対象とするのは困難です。<br>
-	 * <br>
-	 * メッセージログ検索にかかる費用は、検索時にログデータを何バイトスキャンしたかで決定されます。<br>
-	 * 検索範囲を時間で指定できますが、ログデータは1日単位(UTC)で分割して保存されており、スキャン時には1日分全てがスキャン対象となります。<br>
-	 * つまり、特定の日付の5分間のログを検索するクエリを実行した場合、該当する1日分のログデータがスキャン対象となり、<br>
-	 * さらにその5分間が日付をまたぐような場合は2日分のログデータがスキャン対象となります。<br>
-	 * <br>
-	 * 検索結果が指定した取得最大件数以上の結果を持つ場合、実行後一定期間内であればページトークンを使用した続きのデータ取得が可能です。<br>
-	 * <br>
-	 *
-	 * @param request リクエストパラメータ
-
-	 * @return 結果
-
-	 */
-
-	public SearchLogByRoomResult searchLogByRoom(SearchLogByRoomRequest request) {
-
-	    String url = Gs2Constant.ENDPOINT_HOST + "/lobby/" + (request.getLobbyName() == null || request.getLobbyName().equals("") ? "null" : request.getLobbyName()) + "/room/" + (request.getRoomId() == null || request.getRoomId().equals("") ? "null" : request.getRoomId()) + "/log";
-
-        List<NameValuePair> queryString = new ArrayList<>();
-        if(request.getUserId() != null) queryString.add(new BasicNameValuePair("userId", String.valueOf(request.getUserId())));
-        if(request.getMessage() != null) queryString.add(new BasicNameValuePair("message", String.valueOf(request.getMessage())));
-        if(request.getMeta() != null) queryString.add(new BasicNameValuePair("meta", String.valueOf(request.getMeta())));
-        if(request.getBegin() != null) queryString.add(new BasicNameValuePair("begin", String.valueOf(request.getBegin())));
-        if(request.getEnd() != null) queryString.add(new BasicNameValuePair("end", String.valueOf(request.getEnd())));
-        if(request.getPageToken() != null) queryString.add(new BasicNameValuePair("pageToken", String.valueOf(request.getPageToken())));
-        if(request.getLimit() != null) queryString.add(new BasicNameValuePair("limit", String.valueOf(request.getLimit())));
-
-
-		if(queryString.size() > 0) {
-			url += "?" + URLEncodedUtils.format(queryString, "UTF-8");
-		}
-		HttpGet get = createHttpGet(
-				url,
-				credential,
-				ENDPOINT,
-				SearchLogByRoomRequest.Constant.MODULE,
-				SearchLogByRoomRequest.Constant.FUNCTION);
-        if(request.getRequestId() != null) {
-            get.setHeader("X-GS2-REQUEST-ID", request.getRequestId());
-        }
-
-
-		return doRequest(get, SearchLogByRoomResult.class);
-
-	}
-
-
-	/**
-	 * メッセージを送信します。<br>
-	 * <br>
-	 *
-	 * @param request リクエストパラメータ
-
-	 * @return 結果
-
-	 */
-
-	public SendMessageResult sendMessage(SendMessageRequest request) {
-
-		ObjectNode body = JsonNodeFactory.instance.objectNode()
-				.put("message", request.getMessage());
-
-        if(request.getMeta() != null) body.put("meta", request.getMeta());
-        if(request.getPassword() != null) body.put("password", request.getPassword());
-		HttpPost post = createHttpPost(
-				Gs2Constant.ENDPOINT_HOST + "/lobby/" + (request.getLobbyName() == null || request.getLobbyName().equals("") ? "null" : request.getLobbyName()) + "/room/" + (request.getRoomId() == null || request.getRoomId().equals("") ? "null" : request.getRoomId()) + "/message",
-				credential,
-				ENDPOINT,
-				SendMessageRequest.Constant.MODULE,
-				SendMessageRequest.Constant.FUNCTION,
-				body.toString());
-        if(request.getRequestId() != null) {
-            post.setHeader("X-GS2-REQUEST-ID", request.getRequestId());
-        }
-
-        post.setHeader("X-GS2-ACCESS-TOKEN", request.getAccessToken());
-
-		return doRequest(post, SendMessageResult.class);
-
-	}
-
-
-	/**
-	 * メッセージを送信します。<br>
-	 * <br>
-	 *
-	 * @param request リクエストパラメータ
-
-	 * @return 結果
-
-	 */
-
-	public SendMessageNoAuthResult sendMessageNoAuth(SendMessageNoAuthRequest request) {
-
-		ObjectNode body = JsonNodeFactory.instance.objectNode()
-				.put("userId", request.getUserId())
-				.put("message", request.getMessage());
-
-        if(request.getMeta() != null) body.put("meta", request.getMeta());
-		HttpPost post = createHttpPost(
-				Gs2Constant.ENDPOINT_HOST + "/lobby/" + (request.getLobbyName() == null || request.getLobbyName().equals("") ? "null" : request.getLobbyName()) + "/room/" + (request.getRoomId() == null || request.getRoomId().equals("") ? "null" : request.getRoomId()) + "/message/force",
-				credential,
-				ENDPOINT,
-				SendMessageNoAuthRequest.Constant.MODULE,
-				SendMessageNoAuthRequest.Constant.FUNCTION,
-				body.toString());
-        if(request.getRequestId() != null) {
-            post.setHeader("X-GS2-REQUEST-ID", request.getRequestId());
-        }
-
-
-		return doRequest(post, SendMessageNoAuthResult.class);
-
-	}
-
-
-	/**
-	 * ロビーを更新します<br>
-	 * <br>
-	 *
-	 * @param request リクエストパラメータ
-
-	 * @return 結果
-
-	 */
-
-	public UpdateLobbyResult updateLobby(UpdateLobbyRequest request) {
-
-		ObjectNode body = JsonNodeFactory.instance.objectNode()
-				.put("serviceClass", request.getServiceClass())
-				.put("notificationType", request.getNotificationType());
-
-        if(request.getDescription() != null) body.put("description", request.getDescription());
-        if(request.getNotificationUrl() != null) body.put("notificationUrl", request.getNotificationUrl());
-        if(request.getNotificationGameName() != null) body.put("notificationGameName", request.getNotificationGameName());
-        if(request.getCreateRoomTriggerScript() != null) body.put("createRoomTriggerScript", request.getCreateRoomTriggerScript());
-        if(request.getCreateRoomDoneTriggerScript() != null) body.put("createRoomDoneTriggerScript", request.getCreateRoomDoneTriggerScript());
-        if(request.getDeleteRoomTriggerScript() != null) body.put("deleteRoomTriggerScript", request.getDeleteRoomTriggerScript());
-        if(request.getDeleteRoomDoneTriggerScript() != null) body.put("deleteRoomDoneTriggerScript", request.getDeleteRoomDoneTriggerScript());
-        if(request.getCreateSubscribeTriggerScript() != null) body.put("createSubscribeTriggerScript", request.getCreateSubscribeTriggerScript());
-        if(request.getCreateSubscribeDoneTriggerScript() != null) body.put("createSubscribeDoneTriggerScript", request.getCreateSubscribeDoneTriggerScript());
-        if(request.getDeleteSubscribeTriggerScript() != null) body.put("deleteSubscribeTriggerScript", request.getDeleteSubscribeTriggerScript());
-        if(request.getDeleteSubscribeDoneTriggerScript() != null) body.put("deleteSubscribeDoneTriggerScript", request.getDeleteSubscribeDoneTriggerScript());
-        if(request.getSendMessageTriggerScript() != null) body.put("sendMessageTriggerScript", request.getSendMessageTriggerScript());
-        if(request.getSendMessageDoneTriggerScript() != null) body.put("sendMessageDoneTriggerScript", request.getSendMessageDoneTriggerScript());
-		HttpPut put = createHttpPut(
-				Gs2Constant.ENDPOINT_HOST + "/lobby/" + (request.getLobbyName() == null || request.getLobbyName().equals("") ? "null" : request.getLobbyName()) + "",
-				credential,
-				ENDPOINT,
-				UpdateLobbyRequest.Constant.MODULE,
-				UpdateLobbyRequest.Constant.FUNCTION,
-				body.toString());
-        if(request.getRequestId() != null) {
-            put.setHeader("X-GS2-REQUEST-ID", request.getRequestId());
-        }
-
-
-		return doRequest(put, UpdateLobbyResult.class);
 
 	}
 

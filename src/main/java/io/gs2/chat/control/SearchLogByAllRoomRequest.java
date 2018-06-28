@@ -55,6 +55,9 @@ public class SearchLogByAllRoomRequest extends Gs2BasicRequest<SearchLogByAllRoo
 	/** データの取得件数 */
 	private Integer limit;
 
+	/** クエリキャッシュを有効にするか */
+	private Boolean useCache;
+
 
 	/**
 	 * ロビーの名前を取得
@@ -285,6 +288,35 @@ public class SearchLogByAllRoomRequest extends Gs2BasicRequest<SearchLogByAllRoo
 	 */
 	public SearchLogByAllRoomRequest withLimit(Integer limit) {
 		setLimit(limit);
+		return this;
+	}
+
+	/**
+	 * クエリキャッシュを有効にするかを取得
+	 *
+	 * @return クエリキャッシュを有効にするか
+	 */
+	public Boolean getUseCache() {
+		return useCache;
+	}
+
+	/**
+	 * クエリキャッシュを有効にするかを設定
+	 *
+	 * @param useCache クエリキャッシュを有効にするか
+	 */
+	public void setUseCache(Boolean useCache) {
+		this.useCache = useCache;
+	}
+
+	/**
+	 * クエリキャッシュを有効にするかを設定
+	 *
+	 * @param useCache クエリキャッシュを有効にするか
+	 * @return this
+	 */
+	public SearchLogByAllRoomRequest withUseCache(Boolean useCache) {
+		setUseCache(useCache);
 		return this;
 	}
 

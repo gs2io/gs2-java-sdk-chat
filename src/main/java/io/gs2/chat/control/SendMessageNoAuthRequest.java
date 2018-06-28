@@ -37,14 +37,14 @@ public class SendMessageNoAuthRequest extends Gs2BasicRequest<SendMessageNoAuthR
 	/** ルームID */
 	private String roomId;
 
+	/** ユーザID */
+	private String userId;
+
 	/** メッセージテキスト */
 	private String message;
 
 	/** メッセージメタデータ */
 	private String meta;
-
-	/** ユーザID */
-	private String userId;
 
 
 	/**
@@ -106,6 +106,35 @@ public class SendMessageNoAuthRequest extends Gs2BasicRequest<SendMessageNoAuthR
 	}
 
 	/**
+	 * ユーザIDを取得
+	 *
+	 * @return ユーザID
+	 */
+	public String getUserId() {
+		return userId;
+	}
+
+	/**
+	 * ユーザIDを設定
+	 *
+	 * @param userId ユーザID
+	 */
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+
+	/**
+	 * ユーザIDを設定
+	 *
+	 * @param userId ユーザID
+	 * @return this
+	 */
+	public SendMessageNoAuthRequest withUserId(String userId) {
+		setUserId(userId);
+		return this;
+	}
+
+	/**
 	 * メッセージテキストを取得
 	 *
 	 * @return メッセージテキスト
@@ -160,35 +189,6 @@ public class SendMessageNoAuthRequest extends Gs2BasicRequest<SendMessageNoAuthR
 	 */
 	public SendMessageNoAuthRequest withMeta(String meta) {
 		setMeta(meta);
-		return this;
-	}
-
-	/**
-	 * ユーザIDを取得
-	 *
-	 * @return ユーザID
-	 */
-	public String getUserId() {
-		return userId;
-	}
-
-	/**
-	 * ユーザIDを設定
-	 *
-	 * @param userId ユーザID
-	 */
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
-
-	/**
-	 * ユーザIDを設定
-	 *
-	 * @param userId ユーザID
-	 * @return this
-	 */
-	public SendMessageNoAuthRequest withUserId(String userId) {
-		setUserId(userId);
 		return this;
 	}
 

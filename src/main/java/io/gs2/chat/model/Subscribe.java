@@ -33,11 +33,11 @@ public class Subscribe implements Serializable {
 	/** ルームID */
 	private String roomId;
 
-	/** オフライン転送を使用するか */
-	private Boolean enableOfflineTransfer;
-
 	/** ユーザID */
 	private String userId;
+
+	/** オフライン転送を使用するか */
+	private Boolean enableOfflineTransfer;
 
 	/** 通知音 */
 	private String offlineTransferSound;
@@ -65,24 +65,6 @@ public class Subscribe implements Serializable {
 	}
 
 	/**
-	 * オフライン転送を使用するかを取得
-	 *
-	 * @return オフライン転送を使用するか
-	 */
-	public Boolean getEnableOfflineTransfer() {
-		return enableOfflineTransfer;
-	}
-
-	/**
-	 * オフライン転送を使用するかを設定
-	 *
-	 * @param enableOfflineTransfer オフライン転送を使用するか
-	 */
-	public void setEnableOfflineTransfer(Boolean enableOfflineTransfer) {
-		this.enableOfflineTransfer = enableOfflineTransfer;
-	}
-
-	/**
 	 * ユーザIDを取得
 	 *
 	 * @return ユーザID
@@ -98,6 +80,24 @@ public class Subscribe implements Serializable {
 	 */
 	public void setUserId(String userId) {
 		this.userId = userId;
+	}
+
+	/**
+	 * オフライン転送を使用するかを取得
+	 *
+	 * @return オフライン転送を使用するか
+	 */
+	public Boolean getEnableOfflineTransfer() {
+		return enableOfflineTransfer;
+	}
+
+	/**
+	 * オフライン転送を使用するかを設定
+	 *
+	 * @param enableOfflineTransfer オフライン転送を使用するか
+	 */
+	public void setEnableOfflineTransfer(Boolean enableOfflineTransfer) {
+		this.enableOfflineTransfer = enableOfflineTransfer;
 	}
 
 	/**

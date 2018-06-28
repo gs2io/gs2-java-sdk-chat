@@ -21,7 +21,7 @@ import java.io.Serializable;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
- * メッセージ
+ * メッセージログ
  *
  * @author Game Server Services, Inc.
  *
@@ -30,60 +30,24 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties(ignoreUnknown=true)
 public class MessageLog implements Serializable {
 
-	/** 作成日時(エポック秒) */
-	private Integer createAt;
-
-	/** メッセージメタデータ */
-	private String meta;
-
 	/** メッセージID */
 	private String messageId;
 
 	/** ルームID */
 	private String roomId;
 
-	/** メッセージテキスト */
-	private String message;
-
 	/** 発言者ユーザID */
 	private String userId;
 
+	/** メッセージテキスト */
+	private String message;
 
-	/**
-	 * 作成日時(エポック秒)を取得
-	 *
-	 * @return 作成日時(エポック秒)
-	 */
-	public Integer getCreateAt() {
-		return createAt;
-	}
+	/** メッセージメタデータ */
+	private String meta;
 
-	/**
-	 * 作成日時(エポック秒)を設定
-	 *
-	 * @param createAt 作成日時(エポック秒)
-	 */
-	public void setCreateAt(Integer createAt) {
-		this.createAt = createAt;
-	}
+	/** 作成日時(エポック秒) */
+	private Integer createAt;
 
-	/**
-	 * メッセージメタデータを取得
-	 *
-	 * @return メッセージメタデータ
-	 */
-	public String getMeta() {
-		return meta;
-	}
-
-	/**
-	 * メッセージメタデータを設定
-	 *
-	 * @param meta メッセージメタデータ
-	 */
-	public void setMeta(String meta) {
-		this.meta = meta;
-	}
 
 	/**
 	 * メッセージIDを取得
@@ -122,6 +86,24 @@ public class MessageLog implements Serializable {
 	}
 
 	/**
+	 * 発言者ユーザIDを取得
+	 *
+	 * @return 発言者ユーザID
+	 */
+	public String getUserId() {
+		return userId;
+	}
+
+	/**
+	 * 発言者ユーザIDを設定
+	 *
+	 * @param userId 発言者ユーザID
+	 */
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+
+	/**
 	 * メッセージテキストを取得
 	 *
 	 * @return メッセージテキスト
@@ -140,21 +122,39 @@ public class MessageLog implements Serializable {
 	}
 
 	/**
-	 * 発言者ユーザIDを取得
+	 * メッセージメタデータを取得
 	 *
-	 * @return 発言者ユーザID
+	 * @return メッセージメタデータ
 	 */
-	public String getUserId() {
-		return userId;
+	public String getMeta() {
+		return meta;
 	}
 
 	/**
-	 * 発言者ユーザIDを設定
+	 * メッセージメタデータを設定
 	 *
-	 * @param userId 発言者ユーザID
+	 * @param meta メッセージメタデータ
 	 */
-	public void setUserId(String userId) {
-		this.userId = userId;
+	public void setMeta(String meta) {
+		this.meta = meta;
+	}
+
+	/**
+	 * 作成日時(エポック秒)を取得
+	 *
+	 * @return 作成日時(エポック秒)
+	 */
+	public Integer getCreateAt() {
+		return createAt;
+	}
+
+	/**
+	 * 作成日時(エポック秒)を設定
+	 *
+	 * @param createAt 作成日時(エポック秒)
+	 */
+	public void setCreateAt(Integer createAt) {
+		this.createAt = createAt;
 	}
 
 }
