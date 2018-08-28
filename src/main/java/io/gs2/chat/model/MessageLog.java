@@ -16,9 +16,13 @@
 
 package io.gs2.chat.model;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.io.Serializable;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.JsonNodeFactory;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 /**
  * メッセージログ
@@ -68,6 +72,17 @@ public class MessageLog implements Serializable {
 	}
 
 	/**
+	 * メッセージIDを設定
+	 *
+	 * @param messageId メッセージID
+	 * @return this
+	 */
+	public MessageLog withMessageId(String messageId) {
+		this.messageId = messageId;
+		return this;
+	}
+
+	/**
 	 * ルームIDを取得
 	 *
 	 * @return ルームID
@@ -83,6 +98,17 @@ public class MessageLog implements Serializable {
 	 */
 	public void setRoomId(String roomId) {
 		this.roomId = roomId;
+	}
+
+	/**
+	 * ルームIDを設定
+	 *
+	 * @param roomId ルームID
+	 * @return this
+	 */
+	public MessageLog withRoomId(String roomId) {
+		this.roomId = roomId;
+		return this;
 	}
 
 	/**
@@ -104,6 +130,17 @@ public class MessageLog implements Serializable {
 	}
 
 	/**
+	 * 発言者ユーザIDを設定
+	 *
+	 * @param userId 発言者ユーザID
+	 * @return this
+	 */
+	public MessageLog withUserId(String userId) {
+		this.userId = userId;
+		return this;
+	}
+
+	/**
 	 * メッセージテキストを取得
 	 *
 	 * @return メッセージテキスト
@@ -119,6 +156,17 @@ public class MessageLog implements Serializable {
 	 */
 	public void setMessage(String message) {
 		this.message = message;
+	}
+
+	/**
+	 * メッセージテキストを設定
+	 *
+	 * @param message メッセージテキスト
+	 * @return this
+	 */
+	public MessageLog withMessage(String message) {
+		this.message = message;
+		return this;
 	}
 
 	/**
@@ -140,6 +188,17 @@ public class MessageLog implements Serializable {
 	}
 
 	/**
+	 * メッセージメタデータを設定
+	 *
+	 * @param meta メッセージメタデータ
+	 * @return this
+	 */
+	public MessageLog withMeta(String meta) {
+		this.meta = meta;
+		return this;
+	}
+
+	/**
 	 * 作成日時(エポック秒)を取得
 	 *
 	 * @return 作成日時(エポック秒)
@@ -157,4 +216,29 @@ public class MessageLog implements Serializable {
 		this.createAt = createAt;
 	}
 
+	/**
+	 * 作成日時(エポック秒)を設定
+	 *
+	 * @param createAt 作成日時(エポック秒)
+	 * @return this
+	 */
+	public MessageLog withCreateAt(Integer createAt) {
+		this.createAt = createAt;
+		return this;
+	}
+
+
+    public ObjectNode toJson() {
+
+		ObjectNode body = JsonNodeFactory.instance.objectNode()
+
+            .put("messageId", this.getMessageId())
+            .put("roomId", this.getRoomId())
+            .put("userId", this.getUserId())
+            .put("message", this.getMessage())
+            .put("meta", this.getMeta())
+            .put("createAt", this.getCreateAt());
+
+        return body;
+    }
 }

@@ -16,9 +16,13 @@
 
 package io.gs2.chat.model;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.io.Serializable;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.JsonNodeFactory;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 /**
  * 購読
@@ -65,6 +69,17 @@ public class Subscribe implements Serializable {
 	}
 
 	/**
+	 * ルームIDを設定
+	 *
+	 * @param roomId ルームID
+	 * @return this
+	 */
+	public Subscribe withRoomId(String roomId) {
+		this.roomId = roomId;
+		return this;
+	}
+
+	/**
 	 * ユーザIDを取得
 	 *
 	 * @return ユーザID
@@ -80,6 +95,17 @@ public class Subscribe implements Serializable {
 	 */
 	public void setUserId(String userId) {
 		this.userId = userId;
+	}
+
+	/**
+	 * ユーザIDを設定
+	 *
+	 * @param userId ユーザID
+	 * @return this
+	 */
+	public Subscribe withUserId(String userId) {
+		this.userId = userId;
+		return this;
 	}
 
 	/**
@@ -101,6 +127,17 @@ public class Subscribe implements Serializable {
 	}
 
 	/**
+	 * オフライン転送を使用するかを設定
+	 *
+	 * @param enableOfflineTransfer オフライン転送を使用するか
+	 * @return this
+	 */
+	public Subscribe withEnableOfflineTransfer(Boolean enableOfflineTransfer) {
+		this.enableOfflineTransfer = enableOfflineTransfer;
+		return this;
+	}
+
+	/**
 	 * 通知音を取得
 	 *
 	 * @return 通知音
@@ -116,6 +153,17 @@ public class Subscribe implements Serializable {
 	 */
 	public void setOfflineTransferSound(String offlineTransferSound) {
 		this.offlineTransferSound = offlineTransferSound;
+	}
+
+	/**
+	 * 通知音を設定
+	 *
+	 * @param offlineTransferSound 通知音
+	 * @return this
+	 */
+	public Subscribe withOfflineTransferSound(String offlineTransferSound) {
+		this.offlineTransferSound = offlineTransferSound;
+		return this;
 	}
 
 	/**
@@ -136,4 +184,28 @@ public class Subscribe implements Serializable {
 		this.subscribeAt = subscribeAt;
 	}
 
+	/**
+	 * 購読日時(エポック秒)を設定
+	 *
+	 * @param subscribeAt 購読日時(エポック秒)
+	 * @return this
+	 */
+	public Subscribe withSubscribeAt(Integer subscribeAt) {
+		this.subscribeAt = subscribeAt;
+		return this;
+	}
+
+
+    public ObjectNode toJson() {
+
+		ObjectNode body = JsonNodeFactory.instance.objectNode()
+
+            .put("roomId", this.getRoomId())
+            .put("userId", this.getUserId())
+            .put("enableOfflineTransfer", this.getEnableOfflineTransfer())
+            .put("offlineTransferSound", this.getOfflineTransferSound())
+            .put("subscribeAt", this.getSubscribeAt());
+
+        return body;
+    }
 }

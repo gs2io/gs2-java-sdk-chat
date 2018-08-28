@@ -18,6 +18,7 @@ package io.gs2.chat.control;
 
 import org.json.JSONObject;
 import java.util.List;
+import io.gs2.chat.model.*;
 import io.gs2.chat.Gs2Chat;
 import io.gs2.control.Gs2BasicRequest;
 
@@ -28,7 +29,7 @@ import io.gs2.control.Gs2BasicRequest;
 public class CheckEstimateScanByteByRoomRequest extends Gs2BasicRequest<CheckEstimateScanByteByRoomRequest> {
 
 	public static class Constant extends Gs2Chat.Constant {
-		public static final String FUNCTION = "CheckEstimateScanByte";
+		public static final String FUNCTION = "CheckEstimateScanByteByRoom";
 	}
 
 	/** ロビーの名前 */

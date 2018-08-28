@@ -16,9 +16,13 @@
 
 package io.gs2.chat.model;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.io.Serializable;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.JsonNodeFactory;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 /**
  * ロビー
@@ -116,6 +120,17 @@ public class Lobby implements Serializable {
 	}
 
 	/**
+	 * ロビーGRNを設定
+	 *
+	 * @param lobbyId ロビーGRN
+	 * @return this
+	 */
+	public Lobby withLobbyId(String lobbyId) {
+		this.lobbyId = lobbyId;
+		return this;
+	}
+
+	/**
 	 * オーナーIDを取得
 	 *
 	 * @return オーナーID
@@ -131,6 +146,17 @@ public class Lobby implements Serializable {
 	 */
 	public void setOwnerId(String ownerId) {
 		this.ownerId = ownerId;
+	}
+
+	/**
+	 * オーナーIDを設定
+	 *
+	 * @param ownerId オーナーID
+	 * @return this
+	 */
+	public Lobby withOwnerId(String ownerId) {
+		this.ownerId = ownerId;
+		return this;
 	}
 
 	/**
@@ -152,6 +178,17 @@ public class Lobby implements Serializable {
 	}
 
 	/**
+	 * ゲーム名を設定
+	 *
+	 * @param name ゲーム名
+	 * @return this
+	 */
+	public Lobby withName(String name) {
+		this.name = name;
+		return this;
+	}
+
+	/**
 	 * 説明文を取得
 	 *
 	 * @return 説明文
@@ -167,6 +204,17 @@ public class Lobby implements Serializable {
 	 */
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	/**
+	 * 説明文を設定
+	 *
+	 * @param description 説明文
+	 * @return this
+	 */
+	public Lobby withDescription(String description) {
+		this.description = description;
+		return this;
 	}
 
 	/**
@@ -188,6 +236,17 @@ public class Lobby implements Serializable {
 	}
 
 	/**
+	 * サービスクラスを設定
+	 *
+	 * @param serviceClass サービスクラス
+	 * @return this
+	 */
+	public Lobby withServiceClass(String serviceClass) {
+		this.serviceClass = serviceClass;
+		return this;
+	}
+
+	/**
 	 * 通知方式を取得
 	 *
 	 * @return 通知方式
@@ -203,6 +262,17 @@ public class Lobby implements Serializable {
 	 */
 	public void setNotificationType(String notificationType) {
 		this.notificationType = notificationType;
+	}
+
+	/**
+	 * 通知方式を設定
+	 *
+	 * @param notificationType 通知方式
+	 * @return this
+	 */
+	public Lobby withNotificationType(String notificationType) {
+		this.notificationType = notificationType;
+		return this;
 	}
 
 	/**
@@ -224,6 +294,17 @@ public class Lobby implements Serializable {
 	}
 
 	/**
+	 * http/https を選択した際の通知先URLを設定
+	 *
+	 * @param notificationUrl http/https を選択した際の通知先URL
+	 * @return this
+	 */
+	public Lobby withNotificationUrl(String notificationUrl) {
+		this.notificationUrl = notificationUrl;
+		return this;
+	}
+
+	/**
 	 * gs2-in-game-push-notification を選択した際の GS2-InGamePushNotification のゲーム名を取得
 	 *
 	 * @return gs2-in-game-push-notification を選択した際の GS2-InGamePushNotification のゲーム名
@@ -239,6 +320,17 @@ public class Lobby implements Serializable {
 	 */
 	public void setNotificationGameName(String notificationGameName) {
 		this.notificationGameName = notificationGameName;
+	}
+
+	/**
+	 * gs2-in-game-push-notification を選択した際の GS2-InGamePushNotification のゲーム名を設定
+	 *
+	 * @param notificationGameName gs2-in-game-push-notification を選択した際の GS2-InGamePushNotification のゲーム名
+	 * @return this
+	 */
+	public Lobby withNotificationGameName(String notificationGameName) {
+		this.notificationGameName = notificationGameName;
+		return this;
 	}
 
 	/**
@@ -260,6 +352,17 @@ public class Lobby implements Serializable {
 	}
 
 	/**
+	 * ログを記録するかを設定
+	 *
+	 * @param logging ログを記録するか
+	 * @return this
+	 */
+	public Lobby withLogging(Boolean logging) {
+		this.logging = logging;
+		return this;
+	}
+
+	/**
 	 * ログを記録する日数を取得
 	 *
 	 * @return ログを記録する日数
@@ -275,6 +378,17 @@ public class Lobby implements Serializable {
 	 */
 	public void setLoggingDate(Integer loggingDate) {
 		this.loggingDate = loggingDate;
+	}
+
+	/**
+	 * ログを記録する日数を設定
+	 *
+	 * @param loggingDate ログを記録する日数
+	 * @return this
+	 */
+	public Lobby withLoggingDate(Integer loggingDate) {
+		this.loggingDate = loggingDate;
+		return this;
 	}
 
 	/**
@@ -296,6 +410,17 @@ public class Lobby implements Serializable {
 	}
 
 	/**
+	 * ルーム作成時 に実行されるGS2-Scriptを設定
+	 *
+	 * @param createRoomTriggerScript ルーム作成時 に実行されるGS2-Script
+	 * @return this
+	 */
+	public Lobby withCreateRoomTriggerScript(String createRoomTriggerScript) {
+		this.createRoomTriggerScript = createRoomTriggerScript;
+		return this;
+	}
+
+	/**
 	 * ルーム作成完了時 に実行されるGS2-Scriptを取得
 	 *
 	 * @return ルーム作成完了時 に実行されるGS2-Script
@@ -311,6 +436,17 @@ public class Lobby implements Serializable {
 	 */
 	public void setCreateRoomDoneTriggerScript(String createRoomDoneTriggerScript) {
 		this.createRoomDoneTriggerScript = createRoomDoneTriggerScript;
+	}
+
+	/**
+	 * ルーム作成完了時 に実行されるGS2-Scriptを設定
+	 *
+	 * @param createRoomDoneTriggerScript ルーム作成完了時 に実行されるGS2-Script
+	 * @return this
+	 */
+	public Lobby withCreateRoomDoneTriggerScript(String createRoomDoneTriggerScript) {
+		this.createRoomDoneTriggerScript = createRoomDoneTriggerScript;
+		return this;
 	}
 
 	/**
@@ -332,6 +468,17 @@ public class Lobby implements Serializable {
 	}
 
 	/**
+	 * ルーム削除時 に実行されるGS2-Scriptを設定
+	 *
+	 * @param deleteRoomTriggerScript ルーム削除時 に実行されるGS2-Script
+	 * @return this
+	 */
+	public Lobby withDeleteRoomTriggerScript(String deleteRoomTriggerScript) {
+		this.deleteRoomTriggerScript = deleteRoomTriggerScript;
+		return this;
+	}
+
+	/**
 	 * ルーム削除完了時 に実行されるGS2-Scriptを取得
 	 *
 	 * @return ルーム削除完了時 に実行されるGS2-Script
@@ -347,6 +494,17 @@ public class Lobby implements Serializable {
 	 */
 	public void setDeleteRoomDoneTriggerScript(String deleteRoomDoneTriggerScript) {
 		this.deleteRoomDoneTriggerScript = deleteRoomDoneTriggerScript;
+	}
+
+	/**
+	 * ルーム削除完了時 に実行されるGS2-Scriptを設定
+	 *
+	 * @param deleteRoomDoneTriggerScript ルーム削除完了時 に実行されるGS2-Script
+	 * @return this
+	 */
+	public Lobby withDeleteRoomDoneTriggerScript(String deleteRoomDoneTriggerScript) {
+		this.deleteRoomDoneTriggerScript = deleteRoomDoneTriggerScript;
+		return this;
 	}
 
 	/**
@@ -368,6 +526,17 @@ public class Lobby implements Serializable {
 	}
 
 	/**
+	 * ルーム購読時 に実行されるGS2-Scriptを設定
+	 *
+	 * @param createSubscribeTriggerScript ルーム購読時 に実行されるGS2-Script
+	 * @return this
+	 */
+	public Lobby withCreateSubscribeTriggerScript(String createSubscribeTriggerScript) {
+		this.createSubscribeTriggerScript = createSubscribeTriggerScript;
+		return this;
+	}
+
+	/**
 	 * ルーム購読完了時 に実行されるGS2-Scriptを取得
 	 *
 	 * @return ルーム購読完了時 に実行されるGS2-Script
@@ -383,6 +552,17 @@ public class Lobby implements Serializable {
 	 */
 	public void setCreateSubscribeDoneTriggerScript(String createSubscribeDoneTriggerScript) {
 		this.createSubscribeDoneTriggerScript = createSubscribeDoneTriggerScript;
+	}
+
+	/**
+	 * ルーム購読完了時 に実行されるGS2-Scriptを設定
+	 *
+	 * @param createSubscribeDoneTriggerScript ルーム購読完了時 に実行されるGS2-Script
+	 * @return this
+	 */
+	public Lobby withCreateSubscribeDoneTriggerScript(String createSubscribeDoneTriggerScript) {
+		this.createSubscribeDoneTriggerScript = createSubscribeDoneTriggerScript;
+		return this;
 	}
 
 	/**
@@ -404,6 +584,17 @@ public class Lobby implements Serializable {
 	}
 
 	/**
+	 * ルーム購読解除時 に実行されるGS2-Scriptを設定
+	 *
+	 * @param deleteSubscribeTriggerScript ルーム購読解除時 に実行されるGS2-Script
+	 * @return this
+	 */
+	public Lobby withDeleteSubscribeTriggerScript(String deleteSubscribeTriggerScript) {
+		this.deleteSubscribeTriggerScript = deleteSubscribeTriggerScript;
+		return this;
+	}
+
+	/**
 	 * ルーム購読解除完了時 に実行されるGS2-Scriptを取得
 	 *
 	 * @return ルーム購読解除完了時 に実行されるGS2-Script
@@ -419,6 +610,17 @@ public class Lobby implements Serializable {
 	 */
 	public void setDeleteSubscribeDoneTriggerScript(String deleteSubscribeDoneTriggerScript) {
 		this.deleteSubscribeDoneTriggerScript = deleteSubscribeDoneTriggerScript;
+	}
+
+	/**
+	 * ルーム購読解除完了時 に実行されるGS2-Scriptを設定
+	 *
+	 * @param deleteSubscribeDoneTriggerScript ルーム購読解除完了時 に実行されるGS2-Script
+	 * @return this
+	 */
+	public Lobby withDeleteSubscribeDoneTriggerScript(String deleteSubscribeDoneTriggerScript) {
+		this.deleteSubscribeDoneTriggerScript = deleteSubscribeDoneTriggerScript;
+		return this;
 	}
 
 	/**
@@ -440,6 +642,17 @@ public class Lobby implements Serializable {
 	}
 
 	/**
+	 * メッセージ送信時 に実行されるGS2-Scriptを設定
+	 *
+	 * @param sendMessageTriggerScript メッセージ送信時 に実行されるGS2-Script
+	 * @return this
+	 */
+	public Lobby withSendMessageTriggerScript(String sendMessageTriggerScript) {
+		this.sendMessageTriggerScript = sendMessageTriggerScript;
+		return this;
+	}
+
+	/**
 	 * メッセージ送信完了時 に実行されるGS2-Scriptを取得
 	 *
 	 * @return メッセージ送信完了時 に実行されるGS2-Script
@@ -455,6 +668,17 @@ public class Lobby implements Serializable {
 	 */
 	public void setSendMessageDoneTriggerScript(String sendMessageDoneTriggerScript) {
 		this.sendMessageDoneTriggerScript = sendMessageDoneTriggerScript;
+	}
+
+	/**
+	 * メッセージ送信完了時 に実行されるGS2-Scriptを設定
+	 *
+	 * @param sendMessageDoneTriggerScript メッセージ送信完了時 に実行されるGS2-Script
+	 * @return this
+	 */
+	public Lobby withSendMessageDoneTriggerScript(String sendMessageDoneTriggerScript) {
+		this.sendMessageDoneTriggerScript = sendMessageDoneTriggerScript;
+		return this;
 	}
 
 	/**
@@ -476,6 +700,17 @@ public class Lobby implements Serializable {
 	}
 
 	/**
+	 * 作成日時(エポック秒)を設定
+	 *
+	 * @param createAt 作成日時(エポック秒)
+	 * @return this
+	 */
+	public Lobby withCreateAt(Integer createAt) {
+		this.createAt = createAt;
+		return this;
+	}
+
+	/**
 	 * 最終更新日時(エポック秒)を取得
 	 *
 	 * @return 最終更新日時(エポック秒)
@@ -493,4 +728,45 @@ public class Lobby implements Serializable {
 		this.updateAt = updateAt;
 	}
 
+	/**
+	 * 最終更新日時(エポック秒)を設定
+	 *
+	 * @param updateAt 最終更新日時(エポック秒)
+	 * @return this
+	 */
+	public Lobby withUpdateAt(Integer updateAt) {
+		this.updateAt = updateAt;
+		return this;
+	}
+
+
+    public ObjectNode toJson() {
+
+		ObjectNode body = JsonNodeFactory.instance.objectNode()
+
+            .put("lobbyId", this.getLobbyId())
+            .put("ownerId", this.getOwnerId())
+            .put("name", this.getName())
+            .put("description", this.getDescription())
+            .put("serviceClass", this.getServiceClass())
+            .put("notificationType", this.getNotificationType())
+            .put("notificationUrl", this.getNotificationUrl())
+            .put("notificationGameName", this.getNotificationGameName())
+            .put("logging", this.getLogging())
+            .put("loggingDate", this.getLoggingDate())
+            .put("createRoomTriggerScript", this.getCreateRoomTriggerScript())
+            .put("createRoomDoneTriggerScript", this.getCreateRoomDoneTriggerScript())
+            .put("deleteRoomTriggerScript", this.getDeleteRoomTriggerScript())
+            .put("deleteRoomDoneTriggerScript", this.getDeleteRoomDoneTriggerScript())
+            .put("createSubscribeTriggerScript", this.getCreateSubscribeTriggerScript())
+            .put("createSubscribeDoneTriggerScript", this.getCreateSubscribeDoneTriggerScript())
+            .put("deleteSubscribeTriggerScript", this.getDeleteSubscribeTriggerScript())
+            .put("deleteSubscribeDoneTriggerScript", this.getDeleteSubscribeDoneTriggerScript())
+            .put("sendMessageTriggerScript", this.getSendMessageTriggerScript())
+            .put("sendMessageDoneTriggerScript", this.getSendMessageDoneTriggerScript())
+            .put("createAt", this.getCreateAt())
+            .put("updateAt", this.getUpdateAt());
+
+        return body;
+    }
 }
