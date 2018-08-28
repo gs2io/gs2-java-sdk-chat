@@ -18,6 +18,7 @@ package io.gs2.chat.control;
 
 import org.json.JSONObject;
 import java.util.List;
+import io.gs2.chat.model.*;
 import io.gs2.chat.Gs2Chat;
 import io.gs2.control.Gs2BasicRequest;
 
@@ -31,7 +32,7 @@ public class CreateLobbyRequest extends Gs2BasicRequest<CreateLobbyRequest> {
 		public static final String FUNCTION = "CreateLobby";
 	}
 
-	/** ゲーム名 */
+	/** ロビー名 */
 	private String name;
 
 	/** 説明文 */
@@ -87,27 +88,27 @@ public class CreateLobbyRequest extends Gs2BasicRequest<CreateLobbyRequest> {
 
 
 	/**
-	 * ゲーム名を取得
+	 * ロビー名を取得
 	 *
-	 * @return ゲーム名
+	 * @return ロビー名
 	 */
 	public String getName() {
 		return name;
 	}
 
 	/**
-	 * ゲーム名を設定
+	 * ロビー名を設定
 	 *
-	 * @param name ゲーム名
+	 * @param name ロビー名
 	 */
 	public void setName(String name) {
 		this.name = name;
 	}
 
 	/**
-	 * ゲーム名を設定
+	 * ロビー名を設定
 	 *
-	 * @param name ゲーム名
+	 * @param name ロビー名
 	 * @return this
 	 */
 	public CreateLobbyRequest withName(String name) {

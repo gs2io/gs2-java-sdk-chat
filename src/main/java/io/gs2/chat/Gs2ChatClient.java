@@ -18,7 +18,6 @@ package io.gs2.chat;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import io.gs2.model.Region;
 import io.gs2.util.EncodingUtil;
@@ -32,6 +31,7 @@ import org.apache.http.message.BasicNameValuePair;
 
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.fasterxml.jackson.databind.JsonNode;
 
 import io.gs2.AbstractGs2Client;
 import io.gs2.Gs2Constant;
@@ -75,6 +75,7 @@ public class Gs2ChatClient extends AbstractGs2Client<Gs2ChatClient> {
 	 */
 	public Gs2ChatClient(IGs2Credential credential, String region) {
 		super(credential, region);
+
 	}
 
 
@@ -338,11 +339,11 @@ public class Gs2ChatClient extends AbstractGs2Client<Gs2ChatClient> {
 
 		ObjectNode body = JsonNodeFactory.instance.objectNode()
 				.put("serviceClass", request.getServiceClass())
-				.put("notificationType", request.getNotificationType());
+				.put("notificationType", request.getNotificationType())
+				.put("logging", request.getLogging());
         if(request.getDescription() != null) body.put("description", request.getDescription());
         if(request.getNotificationUrl() != null) body.put("notificationUrl", request.getNotificationUrl());
         if(request.getNotificationGameName() != null) body.put("notificationGameName", request.getNotificationGameName());
-        if(request.getLogging() != null) body.put("logging", request.getLogging());
         if(request.getLoggingDate() != null) body.put("loggingDate", request.getLoggingDate());
         if(request.getCreateRoomTriggerScript() != null) body.put("createRoomTriggerScript", request.getCreateRoomTriggerScript());
         if(request.getCreateRoomDoneTriggerScript() != null) body.put("createRoomDoneTriggerScript", request.getCreateRoomDoneTriggerScript());
