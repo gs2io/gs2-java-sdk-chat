@@ -38,8 +38,8 @@ public class CreateRoomRequest extends Gs2BasicRequest<CreateRoomRequest> {
 	/** ルームID（指定しない場合は自動的に採番されます） */
 	private String roomId;
 
-	/** ルームへのアクセスを許可するユーザIDリストをカンマ区切りで指定 */
-	private String allowUserIds;
+	/** ルームへのアクセスを許可するユーザIDリストを指定 */
+	private List<String> allowUserIds;
 
 	/** ルームにアクセスする際にパスワードを要求する場合は文字列を指定 */
 	private String password;
@@ -104,30 +104,30 @@ public class CreateRoomRequest extends Gs2BasicRequest<CreateRoomRequest> {
 	}
 
 	/**
-	 * ルームへのアクセスを許可するユーザIDリストをカンマ区切りで指定を取得
+	 * ルームへのアクセスを許可するユーザIDリストを指定を取得
 	 *
-	 * @return ルームへのアクセスを許可するユーザIDリストをカンマ区切りで指定
+	 * @return ルームへのアクセスを許可するユーザIDリストを指定
 	 */
-	public String getAllowUserIds() {
+	public List<String> getAllowUserIds() {
 		return allowUserIds;
 	}
 
 	/**
-	 * ルームへのアクセスを許可するユーザIDリストをカンマ区切りで指定を設定
+	 * ルームへのアクセスを許可するユーザIDリストを指定を設定
 	 *
-	 * @param allowUserIds ルームへのアクセスを許可するユーザIDリストをカンマ区切りで指定
+	 * @param allowUserIds ルームへのアクセスを許可するユーザIDリストを指定
 	 */
-	public void setAllowUserIds(String allowUserIds) {
+	public void setAllowUserIds(List<String> allowUserIds) {
 		this.allowUserIds = allowUserIds;
 	}
 
 	/**
-	 * ルームへのアクセスを許可するユーザIDリストをカンマ区切りで指定を設定
+	 * ルームへのアクセスを許可するユーザIDリストを指定を設定
 	 *
-	 * @param allowUserIds ルームへのアクセスを許可するユーザIDリストをカンマ区切りで指定
+	 * @param allowUserIds ルームへのアクセスを許可するユーザIDリストを指定
 	 * @return this
 	 */
-	public CreateRoomRequest withAllowUserIds(String allowUserIds) {
+	public CreateRoomRequest withAllowUserIds(List<String> allowUserIds) {
 		setAllowUserIds(allowUserIds);
 		return this;
 	}

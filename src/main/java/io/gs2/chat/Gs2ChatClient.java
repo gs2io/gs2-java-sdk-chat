@@ -174,7 +174,6 @@ public class Gs2ChatClient extends AbstractGs2Client<Gs2ChatClient> {
 	    String url = Gs2Constant.ENDPOINT_HOST + "/lobby/" + (request.getLobbyName() == null || request.getLobbyName().equals("") ? "null" : request.getLobbyName()) + "";
 
 
-
 		HttpDelete delete = createHttpDelete(
 				url,
 				credential,
@@ -208,7 +207,6 @@ public class Gs2ChatClient extends AbstractGs2Client<Gs2ChatClient> {
         List<NameValuePair> queryString = new ArrayList<>();
         if(request.getPageToken() != null) queryString.add(new BasicNameValuePair("pageToken", String.valueOf(request.getPageToken())));
         if(request.getLimit() != null) queryString.add(new BasicNameValuePair("limit", String.valueOf(request.getLimit())));
-
 
 		if(queryString.size() > 0) {
 			url += "?" + URLEncodedUtils.format(queryString, "UTF-8");
@@ -244,7 +242,6 @@ public class Gs2ChatClient extends AbstractGs2Client<Gs2ChatClient> {
 	    String url = Gs2Constant.ENDPOINT_HOST + "/lobby/serviceClass";
 
 
-
 		HttpGet get = createHttpGet(
 				url,
 				credential,
@@ -276,7 +273,6 @@ public class Gs2ChatClient extends AbstractGs2Client<Gs2ChatClient> {
 	    String url = Gs2Constant.ENDPOINT_HOST + "/lobby/" + (request.getLobbyName() == null || request.getLobbyName().equals("") ? "null" : request.getLobbyName()) + "";
 
 
-
 		HttpGet get = createHttpGet(
 				url,
 				credential,
@@ -306,7 +302,6 @@ public class Gs2ChatClient extends AbstractGs2Client<Gs2ChatClient> {
 	public GetLobbyStatusResult getLobbyStatus(GetLobbyStatusRequest request) {
 
 	    String url = Gs2Constant.ENDPOINT_HOST + "/lobby/" + (request.getLobbyName() == null || request.getLobbyName().equals("") ? "null" : request.getLobbyName()) + "/status";
-
 
 
 		HttpGet get = createHttpGet(
@@ -400,7 +395,6 @@ public class Gs2ChatClient extends AbstractGs2Client<Gs2ChatClient> {
         if(request.getPageToken() != null) queryString.add(new BasicNameValuePair("pageToken", String.valueOf(request.getPageToken())));
         if(request.getLimit() != null) queryString.add(new BasicNameValuePair("limit", String.valueOf(request.getLimit())));
 
-
 		if(queryString.size() > 0) {
 			url += "?" + URLEncodedUtils.format(queryString, "UTF-8");
 		}
@@ -447,7 +441,6 @@ public class Gs2ChatClient extends AbstractGs2Client<Gs2ChatClient> {
         if(request.getEnd() != null) queryString.add(new BasicNameValuePair("end", String.valueOf(request.getEnd())));
         if(request.getPageToken() != null) queryString.add(new BasicNameValuePair("pageToken", String.valueOf(request.getPageToken())));
         if(request.getLimit() != null) queryString.add(new BasicNameValuePair("limit", String.valueOf(request.getLimit())));
-
 
 		if(queryString.size() > 0) {
 			url += "?" + URLEncodedUtils.format(queryString, "UTF-8");
@@ -508,7 +501,6 @@ public class Gs2ChatClient extends AbstractGs2Client<Gs2ChatClient> {
         if(request.getLimit() != null) queryString.add(new BasicNameValuePair("limit", String.valueOf(request.getLimit())));
         if(request.getUseCache() != null) queryString.add(new BasicNameValuePair("useCache", String.valueOf(request.getUseCache())));
 
-
 		if(queryString.size() > 0) {
 			url += "?" + URLEncodedUtils.format(queryString, "UTF-8");
 		}
@@ -567,7 +559,6 @@ public class Gs2ChatClient extends AbstractGs2Client<Gs2ChatClient> {
         if(request.getLimit() != null) queryString.add(new BasicNameValuePair("limit", String.valueOf(request.getLimit())));
         if(request.getUseCache() != null) queryString.add(new BasicNameValuePair("useCache", String.valueOf(request.getUseCache())));
 
-
 		if(queryString.size() > 0) {
 			url += "?" + URLEncodedUtils.format(queryString, "UTF-8");
 		}
@@ -606,7 +597,6 @@ public class Gs2ChatClient extends AbstractGs2Client<Gs2ChatClient> {
         if(request.getStartAt() != null) queryString.add(new BasicNameValuePair("startAt", String.valueOf(request.getStartAt())));
         if(request.getLimit() != null) queryString.add(new BasicNameValuePair("limit", String.valueOf(request.getLimit())));
 
-
 		if(queryString.size() > 0) {
 			url += "?" + URLEncodedUtils.format(queryString, "UTF-8");
 		}
@@ -644,7 +634,6 @@ public class Gs2ChatClient extends AbstractGs2Client<Gs2ChatClient> {
         List<NameValuePair> queryString = new ArrayList<>();
         if(request.getStartAt() != null) queryString.add(new BasicNameValuePair("startAt", String.valueOf(request.getStartAt())));
         if(request.getLimit() != null) queryString.add(new BasicNameValuePair("limit", String.valueOf(request.getLimit())));
-
 
 		if(queryString.size() > 0) {
 			url += "?" + URLEncodedUtils.format(queryString, "UTF-8");
@@ -764,8 +753,14 @@ public class Gs2ChatClient extends AbstractGs2Client<Gs2ChatClient> {
 
 		ObjectNode body = JsonNodeFactory.instance.objectNode();
         if(request.getRoomId() != null) body.put("roomId", request.getRoomId());
-        if(request.getAllowUserIds() != null) body.put("allowUserIds", request.getAllowUserIds());
         if(request.getPassword() != null) body.put("password", request.getPassword());
+        if(request.getAllowUserIds() != null) {
+            List<JsonNode> node = new ArrayList<>();
+            for(String item : request.getAllowUserIds()) {
+                node.add(JsonNodeFactory.instance.textNode(item));
+            }
+            body.set("allowUserIds", JsonNodeFactory.instance.arrayNode().addAll(node));
+		}
 
 		HttpPost post = createHttpPost(
 				Gs2Constant.ENDPOINT_HOST + "/lobby/" + (request.getLobbyName() == null || request.getLobbyName().equals("") ? "null" : request.getLobbyName()) + "/room",
@@ -795,7 +790,6 @@ public class Gs2ChatClient extends AbstractGs2Client<Gs2ChatClient> {
 	public void deleteRoom(DeleteRoomRequest request) {
 
 	    String url = Gs2Constant.ENDPOINT_HOST + "/lobby/" + (request.getLobbyName() == null || request.getLobbyName().equals("") ? "null" : request.getLobbyName()) + "/room/" + (request.getRoomId() == null || request.getRoomId().equals("") ? "null" : request.getRoomId()) + "";
-
 
 
 		HttpDelete delete = createHttpDelete(
@@ -832,7 +826,6 @@ public class Gs2ChatClient extends AbstractGs2Client<Gs2ChatClient> {
         if(request.getPageToken() != null) queryString.add(new BasicNameValuePair("pageToken", String.valueOf(request.getPageToken())));
         if(request.getLimit() != null) queryString.add(new BasicNameValuePair("limit", String.valueOf(request.getLimit())));
 
-
 		if(queryString.size() > 0) {
 			url += "?" + URLEncodedUtils.format(queryString, "UTF-8");
 		}
@@ -865,7 +858,6 @@ public class Gs2ChatClient extends AbstractGs2Client<Gs2ChatClient> {
 	public GetRoomResult getRoom(GetRoomRequest request) {
 
 	    String url = Gs2Constant.ENDPOINT_HOST + "/lobby/" + (request.getLobbyName() == null || request.getLobbyName().equals("") ? "null" : request.getLobbyName()) + "/room/" + (request.getRoomId() == null || request.getRoomId().equals("") ? "null" : request.getRoomId()) + "";
-
 
 
 		HttpGet get = createHttpGet(
@@ -972,7 +964,6 @@ public class Gs2ChatClient extends AbstractGs2Client<Gs2ChatClient> {
 	    String url = Gs2Constant.ENDPOINT_HOST + "/lobby/" + (request.getLobbyName() == null || request.getLobbyName().equals("") ? "null" : request.getLobbyName()) + "/room/" + (request.getRoomId() == null || request.getRoomId().equals("") ? "null" : request.getRoomId()) + "/user/self/subscribe";
 
 
-
 		HttpDelete delete = createHttpDelete(
 				url,
 				credential,
@@ -1001,7 +992,6 @@ public class Gs2ChatClient extends AbstractGs2Client<Gs2ChatClient> {
 	public void deleteSubscribe(DeleteSubscribeRequest request) {
 
 	    String url = Gs2Constant.ENDPOINT_HOST + "/lobby/" + (request.getLobbyName() == null || request.getLobbyName().equals("") ? "null" : request.getLobbyName()) + "/room/" + (request.getRoomId() == null || request.getRoomId().equals("") ? "null" : request.getRoomId()) + "/user/" + (request.getUserId() == null || request.getUserId().equals("") ? "null" : request.getUserId()) + "/subscribe";
-
 
 
 		HttpDelete delete = createHttpDelete(
@@ -1037,7 +1027,6 @@ public class Gs2ChatClient extends AbstractGs2Client<Gs2ChatClient> {
         List<NameValuePair> queryString = new ArrayList<>();
         if(request.getPageToken() != null) queryString.add(new BasicNameValuePair("pageToken", String.valueOf(request.getPageToken())));
         if(request.getLimit() != null) queryString.add(new BasicNameValuePair("limit", String.valueOf(request.getLimit())));
-
 
 		if(queryString.size() > 0) {
 			url += "?" + URLEncodedUtils.format(queryString, "UTF-8");
@@ -1077,7 +1066,6 @@ public class Gs2ChatClient extends AbstractGs2Client<Gs2ChatClient> {
         if(request.getPageToken() != null) queryString.add(new BasicNameValuePair("pageToken", String.valueOf(request.getPageToken())));
         if(request.getLimit() != null) queryString.add(new BasicNameValuePair("limit", String.valueOf(request.getLimit())));
 
-
 		if(queryString.size() > 0) {
 			url += "?" + URLEncodedUtils.format(queryString, "UTF-8");
 		}
@@ -1115,7 +1103,6 @@ public class Gs2ChatClient extends AbstractGs2Client<Gs2ChatClient> {
         if(request.getPageToken() != null) queryString.add(new BasicNameValuePair("pageToken", String.valueOf(request.getPageToken())));
         if(request.getLimit() != null) queryString.add(new BasicNameValuePair("limit", String.valueOf(request.getLimit())));
 
-
 		if(queryString.size() > 0) {
 			url += "?" + URLEncodedUtils.format(queryString, "UTF-8");
 		}
@@ -1150,7 +1137,6 @@ public class Gs2ChatClient extends AbstractGs2Client<Gs2ChatClient> {
 	    String url = Gs2Constant.ENDPOINT_HOST + "/lobby/" + (request.getLobbyName() == null || request.getLobbyName().equals("") ? "null" : request.getLobbyName()) + "/room/" + (request.getRoomId() == null || request.getRoomId().equals("") ? "null" : request.getRoomId()) + "/user/self/subscribe";
 
 
-
 		HttpGet get = createHttpGet(
 				url,
 				credential,
@@ -1181,7 +1167,6 @@ public class Gs2ChatClient extends AbstractGs2Client<Gs2ChatClient> {
 	public GetSubscribeResult getSubscribe(GetSubscribeRequest request) {
 
 	    String url = Gs2Constant.ENDPOINT_HOST + "/lobby/" + (request.getLobbyName() == null || request.getLobbyName().equals("") ? "null" : request.getLobbyName()) + "/room/" + (request.getRoomId() == null || request.getRoomId().equals("") ? "null" : request.getRoomId()) + "/user/" + (request.getUserId() == null || request.getUserId().equals("") ? "null" : request.getUserId()) + "/subscribe";
-
 
 
 		HttpGet get = createHttpGet(
